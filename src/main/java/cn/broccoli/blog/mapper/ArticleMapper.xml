@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.broccoli.blog.mapper.ArticleMapper" >
+ <resultMap id="ArticleListResult" type="cn.broccoli.blog.po.ArticleList" >
+   <result column="article_id" property="articleId"/>  
+    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
+    <result column="article_time" property="articleTime" jdbcType="TIMESTAMP" />
+    <result column="article_click" property="articleClick" jdbcType="INTEGER" />
+    <result column="sort_article_name" property="sortArticleName" jdbcType="VARCHAR" />
+    <result column="article_type" property="articleType" jdbcType="INTEGER" />
+    <result column="article_up" property="articleUp" jdbcType="TINYINT" />
+    <result column="user_nikename" property="userNikename" jdbcType="VARCHAR" />
+    <result column="article_support" property="articleSupport" jdbcType="TINYINT" />
+    <result column="article_label" property="articleLabel" jdbcType="VARCHAR" />
+    <result column="article_description" property="articleDescription" jdbcType="VARCHAR"/>
+    <result column="article_status" property="articleStatus" jdbcType="TINYINT" />
+  </resultMap>
+   
+  <resultMap id="articleDetails" type="cn.broccoli.blog.po.ArticleDetails" >
+   <result column="article_id" property="articleId"/> 
+    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
+    <result column="article_time" property="articleTime" jdbcType="TIMESTAMP" />
+    <result column="article_click" property="articleClick" jdbcType="INTEGER" />
+    <result column="sort_article_name" property="sortArticleName" jdbcType="VARCHAR" />
+   <result column="user_nikename" property="userNikename" jdbcType="VARCHAR" />
+    <result column="article_label" property="articleLabel" jdbcType="VARCHAR" />
+    <result column="article_content" property="articleContent" jdbcType="VARCHAR"/>
+  <result column="type_id" property="typeId" jdbcType="TINYINT" />
+  </resultMap>
+ <select id="selectByBlogger" resultMap="ArticleListResult">
+ SELECT 
+ A.article_id,
+ A.article_name,
+ A.article_time,
+ A.article_click,
+ AR.sort_article_name,
+ U.user_nikename,
+ A.article_type,
+ A.article_up,
+ A.article_support,
+ A.article_label,
+ A.article_status,
+ A.article_description
+ FROM 
+ (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id WHERE A.article_type=1 and A.article_status=0 and A.user_id=(select user_id from user where user_name= #{username}) GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},10; 
+  </select>
+   <select id="selectArticleByUserid" resultMap="ArticleListResult">
+ SELECT 
+ A.article_id,
+ A.article_name,
+ A.article_time,
+ A.article_click,
+ AR.sort_article_name,
+ U.user_nikename,
+ A.article_type,
+ A.article_up,
+ A.article_support,
+ A.article_label,
+ A.article_status,
+ A.article_description
+ FROM 
+ (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id WHERE  A.user_id=#{userid} GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},#{limit}; 
+  </select>
+  <select id="selectArticleCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+  select count(*) from article where user_id= #{userid}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="articleDetails">
+  SELECT  a.article_id, 
+        a.article_name,
+        a.article_time,
+        a.article_click,
+        a.article_label,
+				a.article_content,
+				u.user_nikename,
+				ar.sort_article_name 
+FROM 
+(article a inner join  user u on a.user_id=u.user_id)
+  inner join article_sort ar on a.sort_article_id=ar.sort_article_id where a.article_id=#{id} and a.article_status=0; 
+  </select>
+  <delete id="deleteArticleById" parameterType="java.util.List" >
+delete from article where article_id in
+<foreach collection="list" item="ids" open="(" close=")" separator=",">
+  #{ids.articleId}
+</foreach>
+</delete>
+
+  <insert id="insertArticle" parameterType="cn.broccoli.blog.po.Article" >
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleName != null" >
+        article_name,
+      </if>
+      <if test="articleTime != null" >
+        article_time,
+      </if>
+      <if test="articleIp != null" >
+        article_ip,
+      </if>
+      <if test="articleClick != null" >
+        article_click,
+      </if>
+      <if test="sortArticleId != null" >
+        sort_article_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="articleType != null" >
+        article_type,
+      </if>
+      <if test="articleUp != null" >
+        article_up,
+      </if>
+      <if test="articleSupport != null" >
+        article_support,
+      </if>
+      <if test="articleLabel != null" >
+        article_label,
+      </if>
+      <if test="articleContent != null" >
+        article_content,
+      </if>
+      <if test="articleDescription != null" >
+        article_description,
+      </if>
+      <if test="articleStatus != null" >
+        article_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+      <if test="articleName != null" >
+        #{articleName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleTime != null" >
+        #{articleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleIp != null" >
+        #{articleIp,jdbcType=VARCHAR},
+      </if>
+      <if test="articleClick != null" >
+        #{articleClick,jdbcType=INTEGER},
+      </if>
+      <if test="sortArticleId != null" >
+        #{sortArticleId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=TINYINT},
+      </if>
+      <if test="articleType != null" >
+        #{articleType,jdbcType=INTEGER},
+      </if>
+      <if test="articleUp != null" >
+        #{articleUp,jdbcType=TINYINT},
+      </if>
+      <if test="articleSupport != null" >
+        #{articleSupport,jdbcType=TINYINT},
+      </if>
+      <if test="articleLabel != null" >
+        #{articleLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="articleContent != null" >
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleDescription != null" >
+        #{articleDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleStatus != null" >
+         #{articleStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+    
+</mapper>
