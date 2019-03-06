@@ -23,20 +23,23 @@ layui.define(["table", "form"], function(t) {
     	  } else if(layEvent === 'del'){ //删除
     	    layer.confirm('真的删除ID为'+data.articleId+'的文章吗？', function(index){
     	      console.log(JSON.stringify(data));
-    	      console.log(JSON.stringify(obj));
     	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
     	      layer.close(index);
+    	      var arr=[];
+    	      arr.push(data);
+    	      console.log(arr);
+    	      console.log(JSON.stringify(arr));
     	      //向服务端发送删除指令 ajax
     	      e.ajax({
 					url : resPath+"/api/article/delete?r=" + Math.random(),
 					type : "Delete",
-					data :data,
+					data :JSON.stringify(arr),
 					contentType:"application/json",
 					dataType : "json",
 					success : function(res) {
 						if(res.code==0){
-							layer.msg('已删除'+res.msg);
-							table.reload('LAY-app-content-list');
+							layer.msg('已删除'+res.data);
+							i.reload('LAY-app-content-list');
 						}else{
 							layer.msg(res.msg);
 						}

@@ -26,28 +26,25 @@
 					<div class="layui-inline">
 						<label class="layui-form-label">文章ID</label>
 						<div class="layui-input-inline">
-							<input type="text" name="id" placeholder="请输入" autocomplete="off"
+							<input type="text" name="articleId" placeholder="请输入" autocomplete="off"
 								class="layui-input">
 						</div>
 					</div>
 
 					<div class="layui-inline">
-						<label class="layui-form-label">标题</label>
+						<label class="layui-form-label">文章标题</label>
 						<div class="layui-input-inline">
-							<input type="text" name="title" placeholder="请输入"
+							<input type="text" name="articleName" placeholder="请输入"
 								autocomplete="off" class="layui-input">
 						</div>
 					</div>
 					<div class="layui-inline">
-						<label class="layui-form-label">文章标签</label>
+						<label class="layui-form-label">文章状态</label>
 						<div class="layui-input-inline">
-							<select name="label">
-								<option value="">请选择标签</option>
-								<option value="0">美食</option>
-								<option value="1">新闻</option>
-								<option value="2">八卦</option>
-								<option value="3">体育</option>
-								<option value="4">音乐</option>
+							<select name="articleStatus">
+								<option value="">请选择文章状态</option>
+								<option value="0">待修改</option>
+								<option value="1">已发布</option>
 							</select>
 						</div>
 					</div>
@@ -95,6 +92,7 @@
 		function(data) {
 		var field = data.field;
 		//执行重载
+		console.log(field);
 		table.reload('LAY-app-content-list', {
 		where : field
 			});
@@ -111,7 +109,6 @@
 
 									layer.confirm('确定删除吗？', function(index) {
 
-										console.log(checkData);
 										//执行 Ajax 后重载
 										//修改接口参数为ID 不传obj checkData.articleId
 										$.ajax({

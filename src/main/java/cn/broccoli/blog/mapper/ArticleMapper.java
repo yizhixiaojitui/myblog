@@ -17,7 +17,7 @@ public interface ArticleMapper {
     
     int insertArticle(Article article);
     
-    List<ArticleList> selectArticleByUserid(@Param("userid")Integer userid,@Param("page") int page,@Param("limit") int limit);
+    List<ArticleList> selectArticleByUserid(@Param("userid")Integer userid,@Param("page") int page,@Param("limit") int limit,@Param("articleId")String articleId,@Param("articleName")String articleName,@Param("articleStatus")String articleStatus);
     
     boolean deleteArticleById(List<ArticleList> ids);
 }

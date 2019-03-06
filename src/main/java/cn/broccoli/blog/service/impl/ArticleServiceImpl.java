@@ -85,9 +85,10 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public List<ArticleList> findAllArticleList(int page, int limit) {
+	public List<ArticleList> findAllArticleList(int page, int limit,String articleId,String articleName,String articleStatus) {
 		int pageIndex=(page-1)*limit;
-		return  articleMapper.selectArticleByUserid(10001, pageIndex, limit);
+		System.out.println(articleId);
+		return  articleMapper.selectArticleByUserid(10001, pageIndex, limit,articleId,articleName,articleStatus);
 	}
 
 	/* (non-Javadoc)
@@ -95,6 +96,7 @@ public class ArticleServiceImpl implements ArticleService{
 	 */
 	@Override
 	public boolean removeArticleByIds(List<ArticleList> list) {
+		
 		return articleMapper.deleteArticleById(list);
 	}
 
