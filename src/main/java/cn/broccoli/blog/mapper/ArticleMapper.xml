@@ -59,7 +59,22 @@
  A.article_status,
  A.article_description
  FROM 
- (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id WHERE  A.user_id=#{userid} GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},#{limit}; 
+ (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id
+  <where>
+  A.user_id=#{userid} 
+  and A.article_status <![CDATA[ <> ]]> 2
+  <if test="articleId != null and articleId != ''" >
+        and A.article_id=#{articleId}
+  </if>
+  <if test="articleName != null and articleName !=''" >
+        and A.article_name=#{articleName}
+  </if>
+  <if test="articleStatus != null and articleStatus!=''" >
+        and A.article_status=#{articleStatus}
+  </if>
+  
+  </where>   
+  GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},#{limit}; 
   </select>
   <select id="selectArticleCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
   select count(*) from article where user_id= #{userid}

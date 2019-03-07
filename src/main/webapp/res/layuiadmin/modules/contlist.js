@@ -4,7 +4,7 @@ layui.define(["table", "form"], function(t) {
         i = layui.table,
         n = layui.form;
     i.render({
-        elem: "#LAY-app-content-list",
+        elem: "#drafts-content-list",
         url: resPath + "/api/article/getAllArticle",
         cols: [
             [{ type: "checkbox", fixed: "left" }, { field: "articleId", title: "文章ID", sort: !0 }, { field: "articleName", title: "文章标题", minWidth: 100 }, { field: "userNikename", title: "作者" },{ field: "articleClick",  title: "查看人数", sort: !0 }, { field: "sortArticleName", title: "分类" }, { field: "articleTime", title: "发布时间", sort: !0 }, { field: "articleStatus", title: "发布状态", templet: "#buttonTpl", minWidth: 80, align: "center" }, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
@@ -13,7 +13,7 @@ layui.define(["table", "form"], function(t) {
         limit: 10,
         limits: [10, 15, 20, 25, 30],
         text: "对不起，加载出现异常！"
-    }), i.on('tool(LAY-app-content-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+    }), i.on('tool(drafts-content-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
     	  var data = obj.data; //获得当前行数据
     	  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
     	  var tr = JSON.stringify(obj.tr); //获得当前行 tr 的DOM对象
@@ -39,7 +39,7 @@ layui.define(["table", "form"], function(t) {
 					success : function(res) {
 						if(res.code==0){
 							layer.msg('已删除'+res.data);
-							i.reload('LAY-app-content-list');
+							i.reload('drafts-content-list');
 						}else{
 							layer.msg(res.msg);
 						}

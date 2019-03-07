@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>layuiAdmin 内容系统 - 文章列表</title>
+<title>列表</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -43,8 +43,8 @@
 						<div class="layui-input-inline">
 							<select name="articleStatus">
 								<option value="">请选择文章状态</option>
-								<option value="0">待修改</option>
-								<option value="1">已发布</option>
+								<option value="0">已发布</option>
+								<option value="1">待修改</option>
 							</select>
 						</div>
 					</div>
@@ -62,7 +62,7 @@
 					<button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
 					<button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
 				</div>
-				<table id="LAY-app-content-list" lay-filter="LAY-app-content-list"></table>
+				<table id="drafts-content-list" lay-filter="drafts-content-list"></table>
 				<script type="text/html" id="buttonTpl">
           {{#  if(d.articleStatus){ }}
             <button class="layui-btn layui-btn-xs">已发布</button>
@@ -88,12 +88,12 @@
 		}).use([ 'index', 'contlist', 'table' ],function() {
 		var table = layui.table, form = layui.form;
 		//监听搜索
-		form.on('submit(LAY-app-contlist-search)',
+		form.on('submit(drafts-contlist-search)',
 		function(data) {
 		var field = data.field;
 		//执行重载
 		console.log(field);
-		table.reload('LAY-app-content-list', {
+		table.reload('drafts-content-list', {
 		where : field
 			});
 		});
@@ -101,7 +101,7 @@
 							var $ = layui.$, active = {
 								batchdel : function() {
 									var checkStatus = table
-											.checkStatus('LAY-app-content-list'), checkData = checkStatus.data; //得到选中的数据
+											.checkStatus('drafts-content-list'), checkData = checkStatus.data; //得到选中的数据
 
 									if (checkData.length === 0) {
 										return layer.msg('请选择数据');
@@ -120,7 +120,7 @@
 					success : function(res) {
 						if(res.code==0){
 							layer.msg('已删除'+res.msg);
-							table.reload('LAY-app-content-list');
+							table.reload('drafts-content-list');
 						}else{
 							layer.msg(res.msg);
 						}
