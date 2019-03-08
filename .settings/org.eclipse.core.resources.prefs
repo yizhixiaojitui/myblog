@@ -3,6 +3,7 @@ encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/resources/jdbc.properties=UTF-8
 encoding//src/main/resources/log4j.properties=UTF-8
+encoding//src/main/resources/redis.properties=UTF-8
 encoding//src/main/resources/spring-mvc.xml=UTF-8
 encoding//src/main/resources/spring-mybatis.xml=UTF-8
 encoding//src/main/webapp/404.html=UTF-8

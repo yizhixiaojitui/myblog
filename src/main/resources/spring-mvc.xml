@@ -65,6 +65,15 @@
         expression="execution(public plm.common.beans.ResultBean *(..))" />
       <aop:around method="handlerControllerMethod" pointcut-ref="target" />
     </aop:aspect>
+    
+  </aop:config>
+   <aop:config>
+    <aop:aspect id="myAop" ref="controllerAop">
+      <aop:pointcut id="target"
+        expression="execution(public plm.common.beans.PageResultBean *(..))" />
+      <aop:around method="handlerControllerMethod" pointcut-ref="target" />
+    </aop:aspect>
+    
   </aop:config>
     <!-- 配置ViewResolver 。可用多个ViewResolver 。使用order属性排序。 InternalResourceViewResolver 放在最后-->
     <bean id="contentNegotiationManager"  class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
