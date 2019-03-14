@@ -36,11 +36,11 @@ layui.define(['layer','util', 'jquery','flow'],function(exports){ //提示：模
 	                layui.each(res.data, function(index, item){
 	                  lis.push('<div class="body-box-15 mg-b-10 my-article-list"> <h3 class="mg-b-10"><a href="'+basePath+'/article/details/'+item.articleId+'" title="'+item.articleName+'">'+
 	                		  item.articleName+'</a></h3><div class="mg-b-10">');
-	                if(item.msg!=null){
+	                if(item.articleSupport==1){
 	                	lis.push(' <span class="layui-badge layui-bg-red">推荐</span>')
 	                }
 	                lis.push('<span class="layui-badge layui-bg-orange">'+item.sortArticleName+
-	                		'</span><span class="top-text"><i class="iconfont icon-time"></i>'+util.timeAgo(item.articleTime, onlyDate)+'</span><span class="top-text"><i class="iconfont icon-browse"></i>'+item.articleClick+'</span><span class="top-text"><i class="iconfont icon-message"></i>'+item.articleClick+'</span></div><p class="layui-elip layui-text">'+item.articleDescription+'</p></div><hr>')
+	                		'</span><span class="top-text"><i class="iconfont icon-time"></i>'+util.timeAgo(item.articleTime, true)+'</span><span class="top-text"><i class="iconfont icon-browse"></i>'+item.articleClick+'</span><span class="top-text"><i class="iconfont icon-message"></i>'+item.articleClick+'</span></div><p class="layui-elip layui-text">'+item.articleDescription+'</p></div><hr>')
 	                }); 
 	                
 	                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页

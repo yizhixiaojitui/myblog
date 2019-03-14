@@ -16,7 +16,10 @@ public class HomeController {
 	private ArticleService articleService;
 	
 	
-
+	@RequestMapping(value = "/login",method = RequestMethod.GET)  	
+	public ModelAndView Login() {
+		return new ModelAndView("user/login.jsp");
+	}
 	@RequestMapping(value = "/admin",method = RequestMethod.GET)  	
 	public ModelAndView admin() {
 		return new ModelAndView("index.jsp");

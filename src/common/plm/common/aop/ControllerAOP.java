@@ -28,6 +28,7 @@ public class ControllerAOP {
 			// 如果需要打印入参，可以从这里取出打印
 			// Object[] args = pjp.getArgs();
 
+			logger.info("************ControllerAOP***********");
 			// 本次操作用时（毫秒）
 			long elapsedTime = System.currentTimeMillis() - startTime;
 			logger.info("[{}]use time: {}", pjp.getSignature(), elapsedTime);
