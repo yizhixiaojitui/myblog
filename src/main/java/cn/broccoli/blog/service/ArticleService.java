@@ -26,4 +26,5 @@ public interface ArticleService {
 	 List<ArticleList> findAllArticleList(int page,int limit,String articleId,String articleName,String articleStatus);
 	 
 	 boolean removeArticleByIds(List<ArticleList> list);
+	 boolean test();
 }

@@ -19,6 +19,7 @@ import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.po.ArticleSort;
 import cn.broccoli.blog.service.ArticleService;
+import plm.common.exceptions.UnloginException;
 
 @Service("ArticleService")
 public class ArticleServiceImpl implements ArticleService{
@@ -98,6 +99,18 @@ public class ArticleServiceImpl implements ArticleService{
 	public boolean removeArticleByIds(List<ArticleList> list) {
 		
 		return articleMapper.deleteArticleById(list);
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.ArticleService#test()
+	 */
+	@Override
+	public boolean test() {
+		int i=1;
+		if(i==1) {
+		throw new UnloginException();
+		}
+		return false;
 	}
 
 }

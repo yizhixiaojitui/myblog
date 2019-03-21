@@ -245,6 +245,8 @@
             <artifactId>spring-data-redis</artifactId>
             <version>1.6.2.RELEASE</version>
         </dependency>
+        
+       
     </dependencies>
 
   <build>
