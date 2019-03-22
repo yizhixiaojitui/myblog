@@ -77,10 +77,8 @@ public class ArticleController {
 	@RequestMapping(value = "/api/article/getAllArticle", method = RequestMethod.GET)
 	@ResponseBody
 	public PageResultBean<List<ArticleList>> findAllArticleList( int page,Integer limit,String articleId,String articleName,String articleStatus) {
-		List<ArticleList> list=articleService.findAllArticleList(page,limit,articleId,articleName,articleStatus);
-		PageResultBean<List<ArticleList>> result=new PageResultBean<List<ArticleList>>(list);
-		result.setCount(articleService.findArticleCount("yizhixiaojitui"));
-		return result;
+		
+		return new PageResultBean<List<ArticleList>>(articleService.findArticleCount("yizhixiaojitui"), articleService.findAllArticleList(page,limit,articleId,articleName,articleStatus));
 	}
 	@RequestMapping(value = "/api/article/delete", method = RequestMethod.DELETE)
 	@ResponseBody

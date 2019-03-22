@@ -114,7 +114,11 @@ public class PageResultBean<T> implements Serializable {
 		super();
 		this.data = data;
 	}
-
+	public PageResultBean(int count,T data) {
+		super();
+		this.count=count;
+		this.data = data;
+	}
 	public PageResultBean(Throwable e) {
 		super();
 		this.msg = e.toString();

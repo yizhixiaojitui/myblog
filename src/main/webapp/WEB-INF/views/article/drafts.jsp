@@ -50,7 +50,7 @@
 					</div>
 					<div class="layui-inline">
 						<button class="layui-btn layuiadmin-btn-list" lay-submit
-							lay-filter="LAY-app-contlist-search">
+							lay-filter="drafts-contlist-search">
 							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
 						</button>
 					</div>
