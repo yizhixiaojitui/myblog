@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import cn.broccoli.blog.po.BlogMessage;
+import cn.broccoli.blog.service.AboutBlogService;
 import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.utils.RandomValidateCode;
 import plm.common.beans.ResultBean;
@@ -21,20 +24,27 @@ import plm.common.exceptions.UnloginException;
 public class HomeController {
 	@Autowired
 	private ArticleService articleService;
-	
+	@Autowired
+	private AboutBlogService aboutBlogService;
 	
 	@RequestMapping(value = "/login",method = RequestMethod.GET)  	
-	public ModelAndView Login() {
+	public ModelAndView LoginView() {
 		return new ModelAndView("user/login.jsp");
 	}
 	@RequestMapping(value = "/admin",method = RequestMethod.GET)  	
-	public ModelAndView admin() {
+	public ModelAndView adminView() {
 		return new ModelAndView("index.jsp");
 	}
 	//进入主页
 	@RequestMapping(value = "/blog/{name}",method = RequestMethod.GET)  	
-	public ModelAndView blog(@PathVariable String name) {
+	public ModelAndView blogView(@PathVariable String name) {
 		return new ModelAndView("blog/index.jsp");
+	}
+	@RequestMapping(value = "/blog/{name}/getbloginfo",method = RequestMethod.GET)
+	@ResponseBody
+	public ResultBean<BlogMessage> findBlogMessage(@PathVariable String name) {
+		
+		return new ResultBean<BlogMessage>(aboutBlogService.selectByPrimaryKey(name));
 	}
 	@RequestMapping(value = "/blog/{name}/article/details/{id}",method = RequestMethod.GET)
 	public ModelAndView articleDetail(@PathVariable String name,@PathVariable Integer id) {
@@ -43,7 +53,6 @@ public class HomeController {
 	//验证码
 	@RequestMapping(value = "/captcha",method = RequestMethod.GET)  	
 	public void vcode(HttpServletRequest request, HttpServletResponse response) {
-		
 		RandomValidateCode randomValidateCode = new RandomValidateCode();
 		randomValidateCode.getRandcode(request, response);//输出图片方法
 	}

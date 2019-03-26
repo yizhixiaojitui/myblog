@@ -27,4 +27,5 @@ public interface ArticleService {
 	 
 	 boolean removeArticleByIds(List<ArticleList> list);
 	 boolean test();
+	 
 }

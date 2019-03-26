@@ -42,7 +42,7 @@
  A.article_status,
  A.article_description
  FROM 
- (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id WHERE A.article_type=1 and A.article_status=0 and A.user_id=(select user_id from user where user_name= #{username}) GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},10; 
+ (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id WHERE A.article_type=1 and A.article_status=1 and A.user_id=(select user_id from user where user_name= #{username}) GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},10; 
   </select>
    <select id="selectArticleByUserid" resultMap="ArticleListResult">
  SELECT 
