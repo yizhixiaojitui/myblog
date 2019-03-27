@@ -31,4 +31,6 @@ public interface UserMapper {
     int countByName(String name);
     
     int selectIdByName(String name);
+    
+    User selectByUserName(String name);
 }

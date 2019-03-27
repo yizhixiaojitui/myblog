@@ -50,7 +50,7 @@ public class ControllerAOP {
 		}
 		// 没有登陆
 		else if (e instanceof UnloginException) {
-			result.setMsg("Unlogin");
+			result.setMsg(e.getMessage());
 			result.setCode(ResultBean.NO_LOGIN);
 		}
 		// 没有权限

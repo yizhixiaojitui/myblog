@@ -97,16 +97,20 @@
             //key: setter.request.tokenName
             //,value: res.data.access_token
           //});
-          
-          //登入成功的提示与跳转
-          layer.msg('登入成功', {
-            offset: '15px'
-            ,icon: 1
-            ,time: 1000
-          }, function(){
-          // location.href = '../'; //后台主页
-          console.log(res.msg);
-          });
+          if(res.code!=0){
+        	  layer.msg(res.msg);
+          }else{
+        	//登入成功的提示与跳转
+              layer.msg(res.msg, {
+                offset: '15px'
+                ,icon: 1
+                ,time: 1000
+              }, function(){
+            	  console.log(res.msg);
+               location.href = '${pageContext.request.contextPath }/admin'; //后台主页
+              });
+          }
+         
         }
       );
       

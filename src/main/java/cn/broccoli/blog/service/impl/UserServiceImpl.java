@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.broccoli.blog.mapper.UserMapper;
+import cn.broccoli.blog.po.User;
 import cn.broccoli.blog.service.UserService;
 import cn.broccoli.blog.utils.LoginHelper;
 import plm.common.exceptions.CheckException;
@@ -43,13 +44,19 @@ public class UserServiceImpl implements UserService{
 	public Map<String, String> LoginSignup(HttpServletRequest request,LoginHelper login) {
 		Map<String, String> result=new HashMap<String, String>();
 		HttpSession session=request.getSession();
-		result.put("access_token", "abcdefg");
+		
 		String randomcode=session.getAttribute("randomcode_key").toString();
-		if(!randomcode.equals(login.getVercode())) {
+		if(!randomcode.equalsIgnoreCase(login.getVercode())) {
 			System.out.println("验证码错误！！！");
 			throw new UnloginException("验证码错误");
 		}
-		
+		User user=userMapper.selectByUserName(login.getUsername());
+		if(null!=user&&user.getUserPwd().equals(login.getPassword())) {
+			result.put("access_token", "abcdefg");
+		}else {
+		throw new UnloginException("用户名或密码错误！");
+			
+		}
 		return result;
 	}
 

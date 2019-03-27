@@ -65,9 +65,9 @@
 				<table id="drafts-content-list" lay-filter="drafts-content-list"></table>
 				<script type="text/html" id="buttonTpl">
           {{#  if(d.articleStatus){ }}
-            <button class="layui-btn layui-btn-xs">已发布</button>
-          {{#  } else { }}
             <button class="layui-btn layui-btn-primary layui-btn-xs">待修改</button>
+          {{#  } else { }}
+            <button class="layui-btn  layui-btn-xs">已发布</button>
           {{#  } }}
         </script>
 				<script type="text/html" id="table-content-list">
