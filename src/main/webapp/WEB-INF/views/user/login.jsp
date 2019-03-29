@@ -92,14 +92,16 @@
       //请求登入接口
       $.post('${pageContext.request.contextPath }/login/signup',obj.field, function(res){
         
-          //请求成功后，写入 access_token
-          //layui.data(setter.tableName, {
-            //key: setter.request.tokenName
-            //,value: res.data.access_token
-          //});
+          
           if(res.code!=0){
+        	  $('#LAY-user-get-vercode').attr('src',resPath+"/captcha?t=" + (new Date).getTime());
         	  layer.msg(res.msg);
           }else{
+        	//请求成功后，写入 access_token 
+              layui.data(setter.tableName, {
+                key: setter.request.tokenName
+                ,value:res.data.access_token
+              });
         	//登入成功的提示与跳转
               layer.msg(res.msg, {
                 offset: '15px'
@@ -107,7 +109,7 @@
                 ,time: 1000
               }, function(){
             	  console.log(res.msg);
-               location.href = '${pageContext.request.contextPath }/admin'; //后台主页
+               	  location.href = '${pageContext.request.contextPath }/admin'; //后台主页
               });
           }
          
@@ -118,10 +120,10 @@
     
     
     //实际使用时记得删除该代码
-    layer.msg('为了方便演示，用户名密码可随意输入', {
-      offset: '15px'
-      ,icon: 1
-    });
+    //layer.msg('为了方便演示，用户名密码可随意输入', {
+   //   offset: '15px'
+   //   ,icon: 1
+   // });
     
   });
   </script>

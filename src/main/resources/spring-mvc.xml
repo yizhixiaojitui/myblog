@@ -116,6 +116,7 @@
                        /是web项目的根目录
                      --> 
                    <mvc:mapping path="/admin/**" /> 
+                   <mvc:mapping path="/api/**" />
                    <!-- 需排除拦截的地址 -->  
                   
                    <bean  class="cn.broccoli.blog.interceptor.AdminInterceptor"></bean> <!--这个类就是我们自定义的Interceptor -->

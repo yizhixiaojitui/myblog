@@ -8,7 +8,9 @@ layui.define(["table", "form"], function(t) {
         url: resPath + "/api/article/getAllArticle",
         cols: [
             [{ type: "checkbox", fixed: "left" }, { field: "articleId", title: "文章ID",width:80, sort: !0 }, { field: "articleName", title: "文章标题", minWidth: 100 }, { field: "userNikename", title: "作者" },{ field: "articleClick",  title: "查看人数", sort: !0 }, { field: "sortArticleName", title: "分类" }, { field: "articleTime",width:150, title: "发布时间", sort: !0,templet:"<div>{{layui.util.toDateString(d.articleTime,'yyyy-MM-dd HH:mm:ss')}}</div>" }, { field: "articleStatus", title: "发布状态", templet: "#buttonTpl", minWidth: 80, align: "center" }, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
-        ],
+        ],headers: { //通过 request 头传递
+            access_token: layui.data('layuiAdmin').access_token
+        },
         page: !0,
         limit: 10,
         limits: [10, 15, 20, 25, 30],
@@ -34,6 +36,9 @@ layui.define(["table", "form"], function(t) {
 					url : resPath+"/api/article/delete?r=" + Math.random(),
 					type : "Delete",
 					data :JSON.stringify(arr),
+					headers: { //通过 request 头传递
+			            access_token: layui.data('layuiAdmin').access_token
+			        },
 					contentType:"application/json",
 					dataType : "json",
 					success : function(res) {

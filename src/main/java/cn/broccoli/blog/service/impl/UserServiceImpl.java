@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import cn.broccoli.blog.mapper.UserMapper;
 import cn.broccoli.blog.po.User;
 import cn.broccoli.blog.service.UserService;
+import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.LoginHelper;
 import plm.common.exceptions.CheckException;
 import plm.common.exceptions.UnloginException;
@@ -21,7 +23,6 @@ public class UserServiceImpl implements UserService{
 	private static Logger logger = Logger.getLogger(UserServiceImpl.class);
 	@Autowired
 	private UserMapper userMapper;
-
 	@Override
 	public int selectIdByName(String name) {
 		int id=userMapper.countByName(name);
@@ -51,8 +52,14 @@ public class UserServiceImpl implements UserService{
 			throw new UnloginException("验证码错误");
 		}
 		User user=userMapper.selectByUserName(login.getUsername());
-		if(null!=user&&user.getUserPwd().equals(login.getPassword())) {
-			result.put("access_token", "abcdefg");
+		if(user==null) {
+			throw new UnloginException("用户名不存在或密码错误！");
+		}
+		if(user.getUserPwd().equals(login.getPassword())) {
+			String token=JWTUtil.generToken(user.getUserId().toString(),null, null);
+			System.out.println("========"+token);
+			session.setAttribute("access_token", token);
+			result.put("access_token", token);
 		}else {
 		throw new UnloginException("用户名或密码错误！");
 			

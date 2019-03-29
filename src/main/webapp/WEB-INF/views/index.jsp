@@ -573,7 +573,10 @@
 			base : '${pageContext.request.contextPath }/res/layuiadmin/' //静态资源所在路径
 		}).extend({
 			index : 'lib/index' //主入口模块
-		}).use('index');
+		}).use('index',function(){
+			var cate = layui.data('layuiAdmin');
+			console.log(cate.access_token)
+		});
 	</script>
 
 

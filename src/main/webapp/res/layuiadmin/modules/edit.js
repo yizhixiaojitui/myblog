@@ -38,6 +38,9 @@
 				url : resPath+"/api/article/sort/getlist?r=" + Math.random(),
 				type : "get",
 				dataType : "json",
+				headers: { //通过 request 头传递
+				    access_token: layui.data('layuiAdmin').access_token
+				  },
 				async : false,//这得注意是同步
 				success : function(res) {
 				resultData = res.data;
