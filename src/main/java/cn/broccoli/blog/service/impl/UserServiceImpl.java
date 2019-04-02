@@ -3,6 +3,7 @@ package cn.broccoli.blog.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService{
 	 * @see cn.broccoli.blog.service.UserService#LoginSignup()
 	 */
 	@Override
-	public Map<String, String> LoginSignup(HttpServletRequest request,LoginHelper login) {
+	public Map<String, String> LoginSignup(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
 		Map<String, String> result=new HashMap<String, String>();
 		HttpSession session=request.getSession();
 		
@@ -58,13 +59,24 @@ public class UserServiceImpl implements UserService{
 		if(user.getUserPwd().equals(login.getPassword())) {
 			String token=JWTUtil.generToken(user.getUserId().toString(),null, null);
 			System.out.println("========"+token);
-			session.setAttribute("access_token", token);
+			Cookie cookie = new Cookie("access_token",token);
+			cookie.setPath(request.getContextPath());
+			response.addCookie(cookie);
 			result.put("access_token", token);
 		}else {
 		throw new UnloginException("用户名或密码错误！");
 			
 		}
 		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.UserService#findUserById(java.lang.Integer)
+	 */
+	@Override
+	public User findUserById(Integer userId) {
+		// TODO Auto-generated method stub
+		return userMapper.selectByPrimaryKey(userId);
 	}
 
 }

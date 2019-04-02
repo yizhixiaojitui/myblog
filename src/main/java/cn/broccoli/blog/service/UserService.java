@@ -4,8 +4,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import cn.broccoli.blog.po.User;
 import cn.broccoli.blog.utils.LoginHelper;
 
 public interface UserService {
@@ -13,6 +13,7 @@ public interface UserService {
 
 	String countByName(String name);
 	
+	User findUserById(Integer userId);
 
-	Map<String, String> LoginSignup(HttpServletRequest request,LoginHelper login);
+	Map<String, String> LoginSignup(HttpServletRequest request,HttpServletResponse response,LoginHelper login);
 }

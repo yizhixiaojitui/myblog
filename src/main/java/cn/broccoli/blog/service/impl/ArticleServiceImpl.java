@@ -8,9 +8,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import cn.broccoli.blog.beans.PageResultBean;
-import cn.broccoli.blog.beans.ResultBean;
 import cn.broccoli.blog.mapper.ArticleMapper;
 import cn.broccoli.blog.mapper.ArticleSortMapper;
 import cn.broccoli.blog.mapper.UserMapper;

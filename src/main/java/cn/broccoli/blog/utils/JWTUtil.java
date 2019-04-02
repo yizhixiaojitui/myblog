@@ -6,6 +6,8 @@ package cn.broccoli.blog.utils;
 import java.security.Key;
 import java.util.Date;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
@@ -62,7 +64,7 @@ public class JWTUtil {
 	}
 
 	//该函数用于更新token
-	public String updateToken(String token) {
+	public static String updateToken(String token) {
 		//Claims就是包含了我们的Payload信息类
 		Claims claims = verifyToken(token);
 		String id = claims.getId();
@@ -77,5 +79,36 @@ public class JWTUtil {
 				.parseClaimsJws(token).getBody();
 		//将token解密出来,将payload信息包装成Claims类返回
 		return claims;
+	}
+	//是否过期
+	public  boolean isExpiration(String token) {
+		long nowMillis = System.currentTimeMillis();
+		Date now = new Date(nowMillis);
+		System.out.println(verifyToken(token).getExpiration());
+		System.out.println(now);
+		return verifyToken(token).getExpiration().before(now);
+	}
+	public String getCookieToken(HttpServletRequest request) {
+		Cookie[] cookies=request.getCookies();
+		if(null==cookies) {
+			return null;
+		}
+		for(Cookie cookie : cookies){
+			 if("access_token".equals(cookie.getName())) {
+				 return cookie.getValue();
+				}
+         }
+		return null;
+	}
+	public boolean checkToken(String token) {
+		if("".equals(token) ||null==token ) {
+			return false;
+		}
+		System.out.println("checkToken"+token);
+		if(!isExpiration(token)) {
+			System.out.println("isExpiration"+isExpiration(token));
+			return true;
+		}
+		return false;
 	}
 }

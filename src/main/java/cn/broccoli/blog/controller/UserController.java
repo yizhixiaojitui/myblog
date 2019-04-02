@@ -25,8 +25,8 @@ public class UserController {
 	private UserService userService;
 	@RequestMapping(value = "/login/signup",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultBean<Map<String, String>> Login(HttpServletRequest request,LoginHelper login) {
+	public ResultBean<Map<String, String>> Login(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
 		
-		return new ResultBean<Map<String,String>>(userService.LoginSignup(request, login));
+		return new ResultBean<Map<String,String>>(userService.LoginSignup(request, response,login));
 	}
 }
