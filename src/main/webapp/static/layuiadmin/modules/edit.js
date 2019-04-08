@@ -49,9 +49,11 @@
 					+ '</option>'
 			}
 				$("#article_sort").html(htmls);
+				form.render('select');
 		}
+				  
 	});
-			form.render('select');//需要渲染一下
+			//需要渲染一下
 			};
 			$("#addType").on(
 					"click",
@@ -74,6 +76,7 @@
 											  icon: 16
 											  ,shade: 0.01
 											},function(){
+												form.render('select');
 												layer.msg(res.msg);
 											});
 										

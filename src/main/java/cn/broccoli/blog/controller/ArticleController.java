@@ -18,6 +18,8 @@ import plm.common.beans.PageResultBean;
 import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.service.ArticleService;
+import cn.broccoli.blog.service.UserService;
+import cn.broccoli.blog.utils.JWTUtil;
 
 /**
  * @package cn.broccoli.blog.controller
@@ -29,7 +31,10 @@ import cn.broccoli.blog.service.ArticleService;
 public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
-	
+	@Autowired
+	private UserService userService;
+	@Autowired
+	JWTUtil jwtUtil;
 	// 分页查询用户的文章
 	/**
 	 * @param name
@@ -39,10 +44,7 @@ public class ArticleController {
 	@RequestMapping(value = "/blog/{name}/article", method = RequestMethod.GET)
 	@ResponseBody
 	public PageResultBean<List<ArticleList>> findArticleList(@PathVariable String name, int page) {
-		PageResultBean<List<ArticleList>> result=new PageResultBean<List<ArticleList>>(articleService.findArticleList(name, page));
-		result.setPageIndex(page);
-		result.setCount(articleService.findArticleCount(name));
-		return result;
+		return new PageResultBean<List<ArticleList>>(articleService.findArticleCount(userService.selectIdByName(name)), articleService.findArticleList(name, page));
 	}
 	//这个临时用户指定的自己的名称  以后从token中获取
 	/**查询文章分类
@@ -50,40 +52,40 @@ public class ArticleController {
 	 */
 	@RequestMapping(value = "/api/article/sort/getlist", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultBean<List<Map<Integer, String>>> findSortArticleList() {
+	public ResultBean<List<Map<Integer, String>>> findSortArticleList(HttpServletRequest request) {
 
-		return new ResultBean<List<Map<Integer, String>>>(articleService.findArticleSortList("yizhixiaojitui"));
+		return new ResultBean<List<Map<Integer, String>>>(articleService.findArticleSortList(jwtUtil.getUserId(request)));
 	}
 	
-	//这个临时用户指定的自己的名称  以后从token中获取
+	//确认数据库是否已添加
 	/**增加文章分类
 	 * @param articleSort
 	 * @return
 	 */
-	@RequestMapping(value = "/api/article/sort/addsort", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/article/sort/addsort", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultBean<Boolean> addSortArticle(String articleSort) {
+	public ResultBean<Boolean> addSortArticle(String articleSort,HttpServletRequest request) {
 
-		return new ResultBean<Boolean>(articleService.addArticleSort("yizhixiaojitui", articleSort));
+		return new ResultBean<Boolean>(articleService.addArticleSort(jwtUtil.getUserId(request), articleSort));
 	}
 	@RequestMapping(value = "/api/article/save", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultBean<Integer> saveArticle(@RequestBody Article article) {
+	public ResultBean<Integer> saveArticle(@RequestBody Article article,HttpServletRequest request) {
 		System.out.println(article.toString());
         System.out.println("saveArticle");
-        return new ResultBean<Integer>(articleService.saveArticle(article));
+        return new ResultBean<Integer>(articleService.saveArticle(article,request));
 	}
 	
 	@RequestMapping(value = "/api/article/getAllArticle", method = RequestMethod.GET)
 	@ResponseBody
-	public PageResultBean<List<ArticleList>> findAllArticleList( int page,Integer limit,String articleId,String articleName,String articleStatus) {
-		
-		return new PageResultBean<List<ArticleList>>(articleService.findArticleCount("yizhixiaojitui"), articleService.findAllArticleList(page,limit,articleId,articleName,articleStatus));
+	public PageResultBean<List<ArticleList>> findAllArticleList( HttpServletRequest request,int page,Integer limit,String articleId,String articleName,String articleStatus) {
+		Integer userid=jwtUtil.getUserId(request);
+		return new PageResultBean<List<ArticleList>>(articleService.findArticleCount(userid), articleService.findAllArticleList(userid,page,limit,articleId,articleName,articleStatus));
 	}
 	@RequestMapping(value = "/api/article/delete", method = RequestMethod.DELETE)
 	@ResponseBody
 	public ResultBean<Boolean> removeArticle(@RequestBody List<ArticleList> list) {
-		
+		//删除应该确认是否是自己的
 		return new ResultBean<Boolean>(articleService.removeArticleByIds(list));
 
 	}

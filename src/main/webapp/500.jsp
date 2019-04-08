@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>404 页面不存在</title>
+  <title>500</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -20,15 +20,16 @@
     
     <div class="layui-text">
       <h1>
-        <span class="layui-anim layui-anim-loop layui-anim-">4</span> 
+        <span class="layui-anim layui-anim-loop layui-anim-">5</span> 
         <span class="layui-anim layui-anim-loop layui-anim-rotate">0</span> 
-        <span class="layui-anim layui-anim-loop layui-anim-">4</span>
+        <span class="layui-anim layui-anim-loop layui-anim-">0</span>
       </h1>
     </div>
+    <button>页面走失了返回主页</button>
   </div>
 </div>
 
-  <script src="${pageContext.request.contextPath }/static/layui/layui.js"></script>
+  <script src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
   <script>
   layui.config({
     base: '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径

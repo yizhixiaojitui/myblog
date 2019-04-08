@@ -21,8 +21,14 @@ public class HomeInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-		if((String)pathVariables.get("name")!=null) {
-			String name=(String)pathVariables.get("name");
+		String name="";
+		try {
+			name=(String)pathVariables.get("name");
+		} catch (Exception e) {
+			name="";
+		}
+		if(!"".equals(name)||null!=name) {
+			
 			System.out.println("requestURL"+request.getRequestURL());
 			System.out.println("------preHandle--------"+name);
 			if(userMapper.countByName(name)==1) {
@@ -30,7 +36,7 @@ public class HomeInterceptor implements HandlerInterceptor{
 				return true;
 			}else {
 				
-				System.out.println("----校验失败，此用户不存在----");
+				System.out.println("----校验失败,'"+name+"' 此用户不存在----");
 				response.sendRedirect(request.getContextPath()+"/404.jsp");
 				return false;
 			}

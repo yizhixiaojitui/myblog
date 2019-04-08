@@ -75,18 +75,26 @@ public class JWTUtil {
 	}
 
 	public static Claims verifyToken(String token) {
-		Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(sercetKey))
-				.parseClaimsJws(token).getBody();
 		//将token解密出来,将payload信息包装成Claims类返回
-		return claims;
+		Claims claims;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(sercetKey))
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            claims = null;
+        }
+        return claims;
 	}
 	//是否过期
 	public  boolean isExpiration(String token) {
-		long nowMillis = System.currentTimeMillis();
-		Date now = new Date(nowMillis);
-		System.out.println(verifyToken(token).getExpiration());
-		System.out.println(now);
-		return verifyToken(token).getExpiration().before(now);
+		Claims claims=verifyToken(token);
+
+		if(null==claims) {
+			return false;
+		}
+		return claims.getExpiration().after(new Date());
 	}
 	public String getCookieToken(HttpServletRequest request) {
 		Cookie[] cookies=request.getCookies();
@@ -104,11 +112,13 @@ public class JWTUtil {
 		if("".equals(token) ||null==token ) {
 			return false;
 		}
-		System.out.println("checkToken"+token);
-		if(!isExpiration(token)) {
-			System.out.println("isExpiration"+isExpiration(token));
+		if(isExpiration(token)) {
 			return true;
 		}
 		return false;
+	}
+	//获取uid
+	public  Integer getUserId(HttpServletRequest request) {
+		return Integer.valueOf(verifyToken(getCookieToken(request)).getId());
 	}
 }

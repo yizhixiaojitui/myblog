@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.po.ArticleSort;
 import cn.broccoli.blog.service.ArticleService;
+import cn.broccoli.blog.utils.CusAccessObjectUtil;
+import cn.broccoli.blog.utils.JWTUtil;
 import plm.common.exceptions.UnloginException;
 
 @Service("ArticleService")
@@ -27,6 +31,8 @@ public class ArticleServiceImpl implements ArticleService{
 	private ArticleSortMapper articleSortMapper;
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	JWTUtil jwtUtil;
 
 	@Override
 	public List<ArticleList> getAll(String username, int pageIndex) {
@@ -50,43 +56,44 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public List<Map<Integer, String>> findArticleSortList(String username) {
-		return  articleSortMapper.selectByUserId(userMapper.selectIdByName(username));
+	public List<Map<Integer, String>> findArticleSortList(Integer userid) {
+		return  articleSortMapper.selectByUserId(userid);
 	}
 
 	@Override
-	public Boolean addArticleSort(String name, String articlesort) {
+	public Boolean addArticleSort(Integer userid, String articlesort) {
+		
 		ArticleSort articleSort=new ArticleSort();
 		articleSort.setSortArticleName(articlesort);
-		articleSort.setUserId(userMapper.selectIdByName(name));
+		articleSort.setUserId(userid);
 		boolean result=articleSortMapper.insert(articleSort);
 		return result;
 	}
 
 	@Override
-	public int findArticleCount(String name) {
-		int userid=userMapper.selectIdByName(name);
+	public int findArticleCount(Integer userid) {
 		return articleMapper.selectArticleCount(userid);
 	}
 
 	@Override
-	public int saveArticle(Article article) {
+	public int saveArticle(Article article,HttpServletRequest request) {
+		//获取真实ip地址
+		String ip=CusAccessObjectUtil.getIpAddress(request);
 		article.setArticleTime(new Date());
-		article.setUserId(10001);
-		article.setArticleIp("127.0.0.1");
+		article.setUserId(jwtUtil.getUserId(request));
+		article.setArticleIp(ip);
 		article.setArticleClick(0);
 		logger.info("==========="+article.toString());
-		int i=articleMapper.insertArticle(article);
+		int code=articleMapper.insertArticle(article);
 		logger.info("code:"+article.getArticleStatus());
-		return i;
+		return code;
 		
 	}
 
 	@Override
-	public List<ArticleList> findAllArticleList(int page, int limit,String articleId,String articleName,String articleStatus) {
+	public List<ArticleList> findAllArticleList(Integer userid,int page, int limit,String articleId,String articleName,String articleStatus) {
 		int pageIndex=(page-1)*limit;
-		System.out.println(articleId);
-		return  articleMapper.selectArticleByUserid(10001, pageIndex, limit,articleId,articleName,articleStatus);
+		return  articleMapper.selectArticleByUserid(userid, pageIndex, limit,articleId,articleName,articleStatus);
 	}
 
 	/* (non-Javadoc)
