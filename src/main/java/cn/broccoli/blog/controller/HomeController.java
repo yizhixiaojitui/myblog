@@ -27,10 +27,16 @@ public class HomeController {
 	@Autowired
 	private AboutBlogService aboutBlogService;
 	
+	/**登录页面
+	 * @return
+	 */
 	@RequestMapping(value = "/login",method = RequestMethod.GET)  	
-	public ModelAndView LoginView() {
+	public ModelAndView loginView() {
 		return new ModelAndView("user/login.jsp");
 	}
+	/**后台主页
+	 * @return
+	 */
 	@RequestMapping(value = "/admin",method = RequestMethod.GET)  	
 	public ModelAndView adminView() {
 		return new ModelAndView("index.jsp");
@@ -50,9 +56,13 @@ public class HomeController {
 	public ModelAndView articleDetail(@PathVariable String name,@PathVariable Integer id) {
 		return new ModelAndView("blog/detail.jsp","article",articleService.findArticleDetails(id));
 	}
-	//验证码
+	
+	/**验证码生成接口
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping(value = "/captcha",method = RequestMethod.GET)  	
-	public void vcode(HttpServletRequest request, HttpServletResponse response) {
+	public void validateCodeImage(HttpServletRequest request, HttpServletResponse response) {
 		RandomValidateCode randomValidateCode = new RandomValidateCode();
 		randomValidateCode.getRandcode(request, response);//输出图片方法
 	}

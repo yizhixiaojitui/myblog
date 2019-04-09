@@ -14,6 +14,7 @@
     <result column="article_label" property="articleLabel" jdbcType="VARCHAR" />
     <result column="article_description" property="articleDescription" jdbcType="VARCHAR"/>
     <result column="article_status" property="articleStatus" jdbcType="TINYINT" />
+    <result column="module_type" property="moduleType" jdbcType="TINYINT" />
   </resultMap>
    
   <resultMap id="articleDetails" type="cn.broccoli.blog.po.ArticleDetails" >
@@ -57,7 +58,8 @@
  A.article_support,
  A.article_label,
  A.article_status,
- A.article_description
+ A.article_description,
+ A.module_type
  FROM 
  (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id
   <where>
@@ -145,6 +147,9 @@ delete from article where article_id in
       <if test="articleStatus != null" >
         article_status,
       </if>
+      <if test="moduleType != null" >
+        module_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
 
@@ -189,6 +194,9 @@ delete from article where article_id in
       </if>
       <if test="articleStatus != null" >
          #{articleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="moduleType != null" >
+      #{moduleType,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>

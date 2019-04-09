@@ -139,7 +139,7 @@
 		//一般直接写在一个js文件中
 		
 				layui.use(
-						[ 'layer', 'form', 'jquery', 'element', 'layedit' ],
+						[ 'layer', 'form', 'jquery', 'element', 'layedit','code' ],
 						function() {
 							var layer = layui.layer, form = layui.form, element = layui.element, layedit = layui.layedit, $ = layui.$;
 
@@ -149,7 +149,9 @@
 										'italic', 'underline', '|', 'link',
 										'code', 'preview' ]
 							});
-							
+							layui.code({
+								  elem: 'pre' //默认值为.layui-code
+								});
 									$.get(
 											basePath + '/getbloginfo',
 											function(res) {

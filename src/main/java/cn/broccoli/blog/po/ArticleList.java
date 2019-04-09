@@ -13,6 +13,7 @@ public class ArticleList {
 	private Byte articleUp;
 	private Byte articleSupport;
 	private Byte articleStatus;
+	private Byte moduleType;
 
 	public Byte getArticleStatus() {
 		return articleStatus;
@@ -113,12 +114,23 @@ public class ArticleList {
 		this.sortArticleName = sortArticleName;
 	}
 
+	public Byte getModuleType() {
+		return moduleType;
+	}
+
+	public void setModuleType(Byte moduleType) {
+		this.moduleType = moduleType;
+	}
+
 	@Override
 	public String toString() {
 		return "ArticleList [articleId=" + articleId + ", articleName=" + articleName + ", articleTime=" + articleTime
-				+ ", articleClick=" + articleClick + ", sortArticleName=" + sortArticleName + ", articleType="
-				+ articleType + ", articleUp=" + articleUp + ", articleSupport=" + articleSupport + ", articleLabel="
+				+ ", articleClick=" + articleClick + ", sortArticleName=" + sortArticleName + ", userNikename="
+				+ userNikename + ", articleType=" + articleType + ", articleUp=" + articleUp + ", articleSupport="
+				+ articleSupport + ", articleStatus=" + articleStatus + ", moduleType=" + moduleType + ", articleLabel="
 				+ articleLabel + ", articleDescription=" + articleDescription + "]";
 	}
+
+	
 
 }

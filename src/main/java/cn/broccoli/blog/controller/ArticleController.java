@@ -57,7 +57,7 @@ public class ArticleController {
 		return new ResultBean<List<Map<Integer, String>>>(articleService.findArticleSortList(jwtUtil.getUserId(request)));
 	}
 	
-	//确认数据库是否已添加
+	//避免重复先要确认数据库是否已添加
 	/**增加文章分类
 	 * @param articleSort
 	 * @return
@@ -68,20 +68,36 @@ public class ArticleController {
 
 		return new ResultBean<Boolean>(articleService.addArticleSort(jwtUtil.getUserId(request), articleSort));
 	}
+	/**文章保存接口
+	 * @param article
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/api/article/save", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultBean<Integer> saveArticle(@RequestBody Article article,HttpServletRequest request) {
-		System.out.println(article.toString());
-        System.out.println("saveArticle");
         return new ResultBean<Integer>(articleService.saveArticle(article,request));
 	}
 	
+	/**后台文章列表查询
+	 * @param request
+	 * @param page
+	 * @param limit
+	 * @param articleId
+	 * @param articleName
+	 * @param articleStatus
+	 * @return
+	 */
 	@RequestMapping(value = "/api/article/getAllArticle", method = RequestMethod.GET)
 	@ResponseBody
 	public PageResultBean<List<ArticleList>> findAllArticleList( HttpServletRequest request,int page,Integer limit,String articleId,String articleName,String articleStatus) {
 		Integer userid=jwtUtil.getUserId(request);
 		return new PageResultBean<List<ArticleList>>(articleService.findArticleCount(userid), articleService.findAllArticleList(userid,page,limit,articleId,articleName,articleStatus));
 	}
+	/**批量删除文章接口
+	 * @param list
+	 * @return
+	 */
 	@RequestMapping(value = "/api/article/delete", method = RequestMethod.DELETE)
 	@ResponseBody
 	public ResultBean<Boolean> removeArticle(@RequestBody List<ArticleList> list) {

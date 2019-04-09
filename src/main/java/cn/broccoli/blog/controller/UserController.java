@@ -23,6 +23,12 @@ import plm.common.beans.ResultBean;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	/**登录验证
+	 * @param request
+	 * @param response
+	 * @param login
+	 * @return
+	 */
 	@RequestMapping(value = "/login/signup",method = RequestMethod.POST)
 	@ResponseBody
 	public ResultBean<Map<String, String>> Login(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {

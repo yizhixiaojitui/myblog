@@ -7,7 +7,7 @@ layui.define(["table", "form"], function(t) {
         elem: "#drafts-content-list",
         url: resPath + "/api/article/getAllArticle",
         cols: [
-            [{ type: "checkbox", fixed: "left" }, { field: "articleId", title: "文章ID",width:80, sort: !0 }, { field: "articleName", title: "文章标题", minWidth: 100 }, { field: "userNikename", title: "作者" },{ field: "articleClick",  title: "查看人数", sort: !0 }, { field: "sortArticleName", title: "分类" }, { field: "articleTime",width:150, title: "发布时间", sort: !0,templet:"<div>{{layui.util.toDateString(d.articleTime,'yyyy-MM-dd HH:mm:ss')}}</div>" }, { field: "articleStatus", title: "发布状态", templet: "#buttonTpl", minWidth: 80, align: "center" }, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
+            [{ type: "checkbox", fixed: "left" }, { field: "articleId", title: "ID",width:60, sort: !0 }, { field: "articleName", title: "标题", minWidth: 100 }, { field: "userNikename", title: "作者" },{ field: "articleClick",  title: "人数", sort: !0 }, { field: "sortArticleName", title: "分类" }, { field: "articleTime",width:150, title: "发布时间", sort: !0,templet:"<div>{{layui.util.toDateString(d.articleTime,'yyyy-MM-dd HH:mm:ss')}}</div>" }, { field: "articleStatus", title: "所属模块", templet: "#moduleTpl", minWidth: 60, align: "center" },{ field: "articleStatus", title: "发布状态", templet: "#buttonTpl", minWidth: 80, align: "center" }, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
         ],headers: { //通过 request 头传递
             access_token: layui.data('layuiAdmin').access_token
         },

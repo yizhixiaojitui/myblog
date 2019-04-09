@@ -19,16 +19,19 @@
 	<link rel="stylesheet"
 	href="${pageContext.request.contextPath }/static/layuiadmin/style/admin.css"
 	media="all">
+	<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/static/css/my.css"
+	media="all">
 </head>
 <body>
  <div class="layui-fluid">
-    <div class="layui-card">
+    <div class="layui-card pd-20">
 	<div class="layui-form pd-tb-10" >
 		<div class="layui-form-item">
 			<label class="layui-form-label">文章标题</label>
 			<div class="layui-input-block">
 				<input type="text" name="articleName" lay-verify="title"
-					autocomplete="off" placeholder="请输入标题" class="layui-input">
+					autocomplete="off" placeholder="请输入标题" class="layui-input" autofocus="autofocus">
 			</div>
 		</div>
 
@@ -57,7 +60,16 @@
 			<a href="javascript:;" id="addType">添加个人分类</a>
 		</div>
 
-
+<div class="layui-form-item">
+			<label class="layui-form-label">所属模块</label>
+			<div class="layui-input-block">
+				<select  name="moduleType"  >
+				<option value="1" >问题库</option>
+				<option value="2">随笔</option>
+				<option value="3">分享</option>
+				</select>
+			</div>
+		</div>
 
 		<div class="layui-form-item">
 			<label class="layui-form-label">文章标签</label>

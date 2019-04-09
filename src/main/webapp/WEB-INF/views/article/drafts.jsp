@@ -16,6 +16,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/static/layuiadmin/style/admin.css"
 	media="all">
+	<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/static/css/my.css"
+	media="all">
 </head>
 <body>
 
@@ -69,6 +72,15 @@
           {{#  } else { }}
             <button class="layui-btn  layui-btn-xs">已发布</button>
           {{#  } }}
+        </script>
+        <script type="text/html" id="moduleTpl">
+          {{#  if(d.moduleType==1){ }}
+            <span class="layui-bg-blue"><i class="layui-icon layui-icon-fonts-code"></i>问题库</span>
+          {{#  } if(d.moduleType==2) { }}
+            <span class="layui-badge"><i class="layui-icon layui-icon-snowflake"></i>随笔</span>
+          {{#  }if(d.moduleType==3){ }}
+ 			<span class="layui-bg-green"><i class="layui-icon layui-icon-component"></i>音乐</span>
+		  {{#  } }}
         </script>
 				<script type="text/html" id="table-content-list">
           <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>

@@ -19,6 +19,14 @@ public class ApiController {
 
 	//图片上传
 	// 这个临时用户指定的自己的名称 以后从token中获取
+	/**图片上传 接口
+	 * @param file
+	 * @param session
+	 * @param request
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/api/file/article/image/upload", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultBean<Map<String, String>> imageUpload(MultipartFile file, HttpSession session,

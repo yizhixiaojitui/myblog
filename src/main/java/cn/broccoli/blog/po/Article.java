@@ -32,7 +32,17 @@ public class Article {
     private Byte articleStatus;
 
     private String articleDescription;
-    public String getArticleDescription() {
+    
+    private Byte moduleType;
+    public Byte getModuleType() {
+		return moduleType;
+	}
+
+	public void setModuleType(Byte moduleType) {
+		this.moduleType = moduleType;
+	}
+
+	public String getArticleDescription() {
 		return articleDescription;
 	}
 
@@ -161,8 +171,10 @@ public class Article {
 				+ ", userId=" + userId + ", typeId=" + typeId + ", articleType=" + articleType + ", articleUp="
 				+ articleUp + ", articleSupport=" + articleSupport + ", articleLabel=" + articleLabel
 				+ ", articleContent=" + articleContent + ", articleStatus=" + articleStatus + ", articleDescription="
-				+ articleDescription + "]";
+				+ articleDescription + ", moduleType=" + moduleType + "]";
 	}
+
+
 
 	
     

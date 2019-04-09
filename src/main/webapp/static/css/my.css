@@ -127,6 +127,9 @@
 .pd-15-20 {
     padding: 15px 25px;
 }
+.pd-20{
+	padding: 20px 10px 20px 0px;
+}
 
 .line {
     height: 0;
