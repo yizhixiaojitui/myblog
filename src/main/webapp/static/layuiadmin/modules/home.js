@@ -9,7 +9,7 @@ layui.define(['layer','util', 'jquery','flow'],function(exports){ //提示：模
             	  var obj=res.data;
             	  document.title =obj.blogTitle;
             	  $('.layui-logo-brand').html('<a href="'+basePath+'"><h2>'+obj.blogName+'</h2></a>');
-            	 var htmlStr='<div class="my-blogger-img mg-b-20"> <a href="'+basePath+'"><img src="'+resPath+'/res/images/'+
+            	 var htmlStr='<div class="my-blogger-img mg-b-20"> <a href="'+basePath+'"><img src="'+resPath+'/static/images/'+
             			  obj.userImageUrl+'"></a></div><div class="my-blogger-detail center"><div class="mg-b-10"><span class="my-blogger-name">'
             			  +obj.userNikename+'</span><span class="my-blogger-sex">';
             	 if(obj.userSex==1){

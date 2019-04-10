@@ -4,10 +4,10 @@ layui.define(["table", "form"], function(t) {
         i = layui.table,
         n = layui.form;
     i.render({
-        elem: "#content-list",
-        url: resPath + "/api/article/getAllArticle",
+        elem: "#article-sort-list",
+        url: resPath + "/api/article/sort/getlist",
         cols: [
-            [{ type: "checkbox", fixed: "left" }, { field: "articleId", title: "ID",width:60, sort: !0 }, { field: "articleName", title: "标题", minWidth: 100 }, { field: "userNikename", title: "作者" },{ field: "articleClick",  title: "人数", sort: !0 }, { field: "sortArticleName", title: "分类" }, { field: "articleTime",width:150, title: "发布时间", sort: !0,templet:"<div>{{layui.util.toDateString(d.articleTime,'yyyy-MM-dd HH:mm:ss')}}</div>" }, { field: "articleStatus", title: "所属模块", templet: "#moduleTpl", minWidth: 60, align: "center" },{ field: "articleStatus", title: "发布状态", templet: "#buttonTpl", minWidth: 80, align: "center" }, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
+            [{ type: "checkbox", fixed: "left" }, { field: "sort_article_id", title: "ID", sort: !0 }, { field: "sort_article_name", title: "分类名称"}, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
         ],headers: { //通过 request 头传递
             access_token: layui.data('layuiAdmin').access_token
         },
@@ -15,7 +15,7 @@ layui.define(["table", "form"], function(t) {
         limit: 10,
         limits: [10, 15, 20, 25, 30],
         text: "对不起，加载出现异常！"
-    }), i.on('tool(content-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+    }), i.on('tool(article-sort-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
     	  var data = obj.data; //获得当前行数据
     	  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
     	  var tr = JSON.stringify(obj.tr); //获得当前行 tr 的DOM对象

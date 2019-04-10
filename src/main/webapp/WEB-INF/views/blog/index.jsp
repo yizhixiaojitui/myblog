@@ -69,11 +69,19 @@
 							</div>
 						</div>
 						<div class="layui-card border-box bgc-fff mg-b-10">
-							<div class="layui-card-header layui-bg-green">归档</div>
-							<div class="layui-card-body">
-								<a href="#">文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br> <a
-									href="#">文章名称文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br>
-								<a href="#">文章名称文章名称文章名称文章名称</a></br>
+							<div class="layui-card-header layui-bg-green">标签</div>
+							<div class="layui-card-body tags">
+							<ul>
+								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
+								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
+								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
+								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
+								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
+								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
+								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
+								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
+								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
+							</ul>
 							</div>
 						</div>
 						<div class="layui-card border-box bgc-fff mg-b-10">
@@ -86,10 +94,12 @@
 						</div>
 						<div class="layui-card border-box bgc-fff mg-b-10">
 							<div class="layui-card-header layui-bg-gray">友情链接</div>
-							<div class="layui-card-body">
-								<a href="#">文章名称文章名称文章名称</a> <a href="#">文章名称文章名称文章名称文章名称</a> <a
-									href="#">文章名称文章名称文章名称文章名称</a> <a href="#">文章名称文章名称文章名称文章名称</a>
-								<a href="#">文章名称文章名称文章名称文章名称</a>
+							<div class="layui-card-body links">
+								<ul>
+								<a href="https://www.yangqq.com/gerenwangzhan.html" target="_blank">个人网站</a>
+								<a href="https://www.yangqq.com/gerenwangzhan.html" target="_blank">个人网站</a>
+								<a href="https://www.yangqq.com/gerenwangzhan.html" target="_blank">个人网站</a>
+								</ul>
 							</div>
 						</div>
 					</div>

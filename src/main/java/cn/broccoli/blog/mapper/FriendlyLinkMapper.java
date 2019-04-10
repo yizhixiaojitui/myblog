@@ -27,4 +27,6 @@ public interface FriendlyLinkMapper {
     int updateByPrimaryKeySelective(FriendlyLink record);
 
     int updateByPrimaryKey(FriendlyLink record);
+    
+    List<FriendlyLink> selectAll();
 }

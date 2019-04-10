@@ -14,10 +14,6 @@ public class AdminController {
 	public ModelAndView articleEdit() {
 		return new ModelAndView("/article/edit.jsp");
 	}
-	@RequestMapping(value = "admin/article/drafts",method = RequestMethod.GET)  	
-	public ModelAndView articleDrafts() {
-		return new ModelAndView("article/drafts.jsp");
-	}
 	@RequestMapping(value = "admin/article/trash",method = RequestMethod.GET)  	
 	public ModelAndView articleTrash() {
 		return new ModelAndView("article/trash.jsp");
@@ -29,6 +25,18 @@ public class AdminController {
 	@RequestMapping(value = "admin/article",method = RequestMethod.GET)  	
 	public String adminarticle() {
 		return "article";
+	}
+	@RequestMapping(value = "content/list",method = RequestMethod.GET)  	
+	public ModelAndView articleList() {
+		return new ModelAndView("article/list.jsp");
+	}
+	@RequestMapping(value = "content/tags/list",method = RequestMethod.GET)  	
+	public ModelAndView articleSortList() {
+		return new ModelAndView("article/tags.jsp");
+	}
+	@RequestMapping(value = "set/friendlylink/list",method = RequestMethod.GET)  	
+	public ModelAndView adminFriendlyLink() {
+		return new ModelAndView("set/friendlylink.jsp");
 	}
 	
 	
