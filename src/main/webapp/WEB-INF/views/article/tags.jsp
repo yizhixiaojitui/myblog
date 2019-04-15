@@ -68,96 +68,87 @@
 	<script
 		src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
 	<script>
-		layui.config({
-			base : '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
-		}).extend({
-					index : 'lib/index' //主入口模块
-		}).use([ 'index', 'sortlist', 'table' ],function() {
-		var table = layui.table, form = layui.form;
-		//监听搜索
-		form.on('submit(drafts-contlist-search)',
-		function(data) {
-		var field = data.field;
-		//执行重载
-		console.log(field);
-		table.reload('article-sort-list', {
-		where : field
-			});
-		});
+	layui.config({
+		base: '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
+	}).extend({
+		index: 'lib/index' //主入口模块
+	}).use(['index', 'sortlist', 'table'],function() {
+    var table = layui.table,
+    form = layui.form;
+    //监听搜索
+    form.on('submit(drafts-contlist-search)',
+    function(data) {
+      var field = data.field;
+      //执行重载
+      console.log(field);
+      table.reload('article-sort-list', {
+        where: field
+      });
+    });
 
-							var $ = layui.$, active = {
-								batchdel : function() {
-									var checkStatus = table
-											.checkStatus('article-sort-list'), checkData = checkStatus.data; //得到选中的数据
+    var $ = layui.$,
+    active = {
+      batchdel: function() {
+        var checkStatus = table.checkStatus('article-sort-list'),
+        checkData = checkStatus.data; //得到选中的数据
+        if (checkData.length === 0) {
+          return layer.msg('请选择数据');
+        }
 
-									if (checkData.length === 0) {
-										return layer.msg('请选择数据');
-									}
+        layer.confirm('确定删除吗？',
+        function(index) {
 
-									layer.confirm('确定删除吗？', function(index) {
+          //执行 Ajax 后重载
+          //修改接口参数为ID 不传obj checkData.articleId
+          $.ajax({
+            url: resPath + "/api/article/delete?r=" + Math.random(),
+            type: "Delete",
+            data: JSON.stringify(checkData),
+            contentType: "application/json",
+            dataType: "json",
+            success: function(res) {
+              if (res.code == 0) {
+                layer.msg('已删除' + res.msg);
+                table.reload('article-sort-list');
+              } else {
+                layer.msg(res.msg);
+              }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              // 状态码
+              console.log(XMLHttpRequest.status);
+              // 状态
+              console.log(XMLHttpRequest.readyState);
+              // 错误信息   
+              console.log(textStatus);
+            }
+          });
 
-										//执行 Ajax 后重载
-										//修改接口参数为ID 不传obj checkData.articleId
-										$.ajax({
-					url : resPath+"/api/article/delete?r=" + Math.random(),
-					type : "Delete",
-					data :JSON.stringify(checkData),
-					contentType:"application/json",
-					dataType : "json",
-					success : function(res) {
-						if(res.code==0){
-							layer.msg('已删除'+res.msg);
-							table.reload('article-sort-list');
-						}else{
-							layer.msg(res.msg);
-						}
-					},
-					error : function(XMLHttpRequest, textStatus,
-							errorThrown) {
-						// 状态码
-						console.log(XMLHttpRequest.status);
-						// 状态
-						console.log(XMLHttpRequest.readyState);
-						// 错误信息   
-						console.log(textStatus);
-					}
-				});
+        });
+      },
+      add: function() {
+        layer.open({
+          type: 2,
+          title: '添加文章',
+          content: 'edit',
+          maxmin: true,
+          area: ['550px', '550px'],
+          btn: ['确定', '取消'],
+          yes: function(index, layero) {
+            //点击确认触发 iframe 内容中的按钮提交
+            var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
+            submit.click();
+          }
+        });
+      }
+    };
 
-										
-										
-									});
-								},
-								add : function() {
-									layer
-											.open({
-												type : 2,
-												title : '添加文章',
-												content : 'edit',
-												maxmin : true,
-												area : [ '550px', '550px' ],
-												btn : [ '确定', '取消' ],
-												yes : function(index, layero) {
-													//点击确认触发 iframe 内容中的按钮提交
-													var submit = layero
-															.find('iframe')
-															.contents()
-															.find(
-																	"#layuiadmin-app-form-submit");
-													submit.click();
-												}
-											});
-								}
-							};
+    $('.layui-btn.layuiadmin-btn-list').on('click',
+    function() {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
 
-							$('.layui-btn.layuiadmin-btn-list').on(
-									'click',
-									function() {
-										var type = $(this).data('type');
-										active[type] ? active[type].call(this)
-												: '';
-									});
-
-						});
-	</script>
+  });</script>
 </body>
 </html>

@@ -2803,7 +2803,8 @@ hr {
 .layedit-tool-d,
 .layedit-tool-face,
 .layedit-tool-image,
-.layedit-tool-unlink {
+.layedit-tool-unlink,
+.layedit-tool-iframe {
     font-size: 18px !important
 }
 

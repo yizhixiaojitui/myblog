@@ -84,21 +84,16 @@
 		where : field
 			});
 		});
-
-							var $ = layui.$, active = {
-								batchdel : function() {
-									var checkStatus = table
-											.checkStatus('friendlylink-list'), checkData = checkStatus.data; //得到选中的数据
-
-									if (checkData.length === 0) {
-										return layer.msg('请选择数据');
-									}
-
-									layer.confirm('确定删除吗？', function(index) {
-
-										//执行 Ajax 后重载
-										//修改接口参数为ID 不传obj checkData.articleId
-										$.ajax({
+		var $ = layui.$, active = {
+		batchdel : function() {
+			var checkStatus = table.checkStatus('friendlylink-list'), checkData = checkStatus.data; //得到选中的数据
+			if (checkData.length === 0) {
+					return layer.msg('请选择数据');
+			}
+			layer.confirm('确定删除吗？', function(index) {
+					//执行 Ajax 后重载
+					//修改接口参数为ID 不传obj checkData.articleId
+					$.ajax({
 					url : resPath+"/api/article/delete?r=" + Math.random(),
 					type : "Delete",
 					data :JSON.stringify(checkData),
@@ -122,36 +117,25 @@
 						console.log(textStatus);
 					}
 				});
-
-										
-										
-									});
-								},
-								add : function() {
-									layer
-											.open({
-												type : 2,
-												title : '添加文章',
-												content : 'edit',
-												maxmin : true,
-												area : [ '550px', '550px' ],
-												btn : [ '确定', '取消' ],
-												yes : function(index, layero) {
-													//点击确认触发 iframe 内容中的按钮提交
-													var submit = layero
-															.find('iframe')
-															.contents()
-															.find(
-																	"#layuiadmin-app-form-submit");
-													submit.click();
-												}
-											});
-								}
-							};
-
-							$('.layui-btn.layuiadmin-btn-list').on(
-									'click',
-									function() {
+			});
+		},add : function() {
+				layer.open({
+					type : 2,
+					title : '添加文章',
+					content : 'edit',
+					maxmin : true,
+					area : [ '550px', '550px' ],
+					btn : [ '确定', '取消' ],
+					yes : function(index, layero) {
+					//点击确认触发 iframe 内容中的按钮提交
+					var submit = layero.find('iframe').contents()
+								.find("#layuiadmin-app-form-submit");
+								submit.click();
+						}
+					});
+				}
+			};
+			$('.layui-btn.layuiadmin-btn-list').on('click',function() {
 										var type = $(this).data('type');
 										active[type] ? active[type].call(this)
 												: '';

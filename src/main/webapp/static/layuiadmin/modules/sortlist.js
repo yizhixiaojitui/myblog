@@ -7,66 +7,67 @@ layui.define(["table", "form"], function(t) {
         elem: "#article-sort-list",
         url: resPath + "/api/article/sort/getlist",
         cols: [
-            [{ type: "checkbox", fixed: "left" }, { field: "sort_article_id", title: "ID", sort: !0 }, { field: "sort_article_name", title: "分类名称"}, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
-        ],headers: { //通过 request 头传递
+            [{ type: "checkbox", fixed: "left" }, { field: "sort_article_id", title: "ID", sort: !0 }, { field: "sort_article_name", title: "分类名称" }, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
+        ],
+        headers: { //通过 request 头传递
             access_token: layui.data('layuiAdmin').access_token
         },
         page: !0,
         limit: 10,
         limits: [10, 15, 20, 25, 30],
         text: "对不起，加载出现异常！"
-    }), i.on('tool(article-sort-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-    	  var data = obj.data; //获得当前行数据
-    	  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-    	  var tr = JSON.stringify(obj.tr); //获得当前行 tr 的DOM对象
-    	 
-    	  if(layEvent === 'detail'){ //查看
-    	    //do somehing
-    	  } else if(layEvent === 'del'){ //删除
-    	    layer.confirm('真的删除ID为'+data.articleId+'的文章吗？', function(index){
-    	      console.log(JSON.stringify(data));
-    	      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-    	      layer.close(index);
-    	      var arr=[];
-    	      arr.push(data);
-    	      console.log(arr);
-    	      console.log(JSON.stringify(arr));
-    	      //向服务端发送删除指令 ajax
-    	      e.ajax({
-					url : resPath+"/api/article/delete?r=" + Math.random(),
-					type : "Delete",
-					data :JSON.stringify(arr),
-					headers: { //通过 request 头传递
-			            access_token: layui.data('layuiAdmin').access_token
-			        },
-					contentType:"application/json",
-					dataType : "json",
-					success : function(res) {
-						if(res.code==0){
-							layer.msg('已删除'+res.data);
-							i.reload('content-list');
-						}else{
-							layer.msg(res.msg);
-						}
-					},
-					error : function(XMLHttpRequest, textStatus,
-							errorThrown) {
-						// 状态码
-						console.log(XMLHttpRequest.status);
-						// 状态
-						console.log(XMLHttpRequest.readyState);
-						// 错误信息   
-						console.log(textStatus);
-					}
-				});
-    	    });
-    	  } else if(layEvent === 'edit'){ //编辑
-    	    //do something
-    	    
-    	    //同步更新缓存对应的值
-    	   
-    	  }
-    	}), i.render({
+    }), i.on('tool(article-sort-list)', function(obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        var data = obj.data; //获得当前行数据
+        var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+        var tr = JSON.stringify(obj.tr); //获得当前行 tr 的DOM对象
+
+        if (layEvent === 'detail') { //查看
+            //do somehing
+        } else if (layEvent === 'del') { //删除
+            layer.confirm('真的删除ID为' + data.articleId + '的文章吗？', function(index) {
+                console.log(JSON.stringify(data));
+                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                layer.close(index);
+                var arr = [];
+                arr.push(data);
+                console.log(arr);
+                console.log(JSON.stringify(arr));
+                //向服务端发送删除指令 ajax
+                e.ajax({
+                    url: resPath + "/api/article/delete?r=" + Math.random(),
+                    type: "Delete",
+                    data: JSON.stringify(arr),
+                    headers: { //通过 request 头传递
+                        access_token: layui.data('layuiAdmin').access_token
+                    },
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.code == 0) {
+                            layer.msg('已删除' + res.data);
+                            i.reload('content-list');
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus,
+                        errorThrown) {
+                        // 状态码
+                        console.log(XMLHttpRequest.status);
+                        // 状态
+                        console.log(XMLHttpRequest.readyState);
+                        // 错误信息   
+                        console.log(textStatus);
+                    }
+                });
+            });
+        } else if (layEvent === 'edit') { //编辑
+            //do something
+
+            //同步更新缓存对应的值
+
+        }
+    }), i.render({
         elem: "#LAY-app-content-tags",
         url: layui.setter.base + "json/content/tags.js",
         cols: [
