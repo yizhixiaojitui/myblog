@@ -76,7 +76,7 @@
     var table = layui.table,
     form = layui.form;
     //监听搜索
-    form.on('submit(drafts-contlist-search)',
+    form.on('submit(article-sort-search)',
     function(data) {
       var field = data.field;
       //执行重载
@@ -100,46 +100,48 @@
 
           //执行 Ajax 后重载
           //修改接口参数为ID 不传obj checkData.articleId
-          $.ajax({
-            url: resPath + "/api/article/delete?r=" + Math.random(),
-            type: "Delete",
-            data: JSON.stringify(checkData),
-            contentType: "application/json",
-            dataType: "json",
-            success: function(res) {
-              if (res.code == 0) {
-                layer.msg('已删除' + res.msg);
-                table.reload('article-sort-list');
-              } else {
-                layer.msg(res.msg);
-              }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              // 状态码
-              console.log(XMLHttpRequest.status);
-              // 状态
-              console.log(XMLHttpRequest.readyState);
-              // 错误信息   
-              console.log(textStatus);
-            }
-          });
+         layer.msg('hi');
 
         });
       },
       add: function() {
-        layer.open({
-          type: 2,
-          title: '添加文章',
-          content: 'edit',
-          maxmin: true,
-          area: ['550px', '550px'],
-          btn: ['确定', '取消'],
-          yes: function(index, layero) {
-            //点击确认触发 iframe 内容中的按钮提交
-            var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
-            submit.click();
-          }
-        });
+    	  layer.prompt({
+              title: '添加分类'
+          }, function(value, index, elem) {
+              $.ajax({
+                  url: resPath + "/api/article/sort/addsort?r=" + Math.random(),
+                  type: "post",
+                  data: {
+                      "articleSort": value
+                  },
+                  dataType: "json",
+                  success: function(res) {
+                      if (res.data == true) {
+                          layer.close(index);
+                          layer.msg('添加中...', {
+                              icon: 16,
+                              shade: 0.01
+                          }, function() {
+                        	  table.reload('article-sort-list');
+                              layer.msg(res.msg);
+                          });
+
+                      } else {
+                          layer.msg('添加失败！');
+                      }
+                  },
+                  error: function(XMLHttpRequest, textStatus,
+                      errorThrown) {
+                      // 状态码
+                      console.log(XMLHttpRequest.status);
+                      // 状态
+                      console.log(XMLHttpRequest.readyState);
+                      // 错误信息   
+                      console.log(textStatus);
+                  }
+              });
+
+          });
       }
     };
 

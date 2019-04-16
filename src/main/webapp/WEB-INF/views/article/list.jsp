@@ -152,6 +152,7 @@
         });
       },
       add: function() {
+    	  alert('q1');
         layer.open({
           type: 2,
           title: '添加文章',

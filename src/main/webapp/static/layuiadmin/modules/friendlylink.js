@@ -125,5 +125,5 @@ layui.define(["table", "form"], function(t) {
             },
             success: function(t, e) {}
         })
-    }), t("contlist", {})
+    }), t("friendlylink", {})
 });
