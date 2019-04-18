@@ -38,10 +38,19 @@ public class FriendlyLinkServiceImpl implements FriendlyLinkService {
 	 * @see cn.broccoli.blog.service.FriendlyLinkService#saveFriendlyLink(cn.broccoli.blog.po.FriendlyLink)
 	 */
 	@Override
-	public int saveFriendlyLink(FriendlyLink friendlyLink) {
+	public boolean saveFriendlyLink(FriendlyLink friendlyLink) {
 		// TODO Auto-generated method stub
 		//检查是否已添加
 		return friendlyLinkMapper.insert(friendlyLink);
+	}
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.FriendlyLinkService#removeFriendlyLink(java.util.List)
+	 */
+	@Override
+	public boolean removeFriendlyLink(List<FriendlyLink> list) {
+		// TODO Auto-generated method stub
+		//严格来说应该判断是否存在
+		return friendlyLinkMapper.deleteFriendlyLink(list);
 	}
 
 }

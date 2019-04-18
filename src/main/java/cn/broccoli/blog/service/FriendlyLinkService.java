@@ -12,5 +12,7 @@ public interface FriendlyLinkService {
 	
 	int findFriendlyLinkCount();
 	
-	int saveFriendlyLink(FriendlyLink friendlyLink);
+	boolean saveFriendlyLink(FriendlyLink friendlyLink);
+	
+	boolean removeFriendlyLink(List<FriendlyLink> list);
 }

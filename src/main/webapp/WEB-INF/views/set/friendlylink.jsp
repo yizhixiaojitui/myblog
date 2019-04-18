@@ -94,7 +94,7 @@
 					//执行 Ajax 后重载
 					//修改接口参数为ID 不传obj checkData.articleId
 					$.ajax({
-					url : resPath+"/api/article/delete?r=" + Math.random(),
+					url : resPath+"/api/friendlyLink/delete?r=" + Math.random(),
 					type : "Delete",
 					data :JSON.stringify(checkData),
 					contentType:"application/json",
@@ -102,7 +102,7 @@
 					success : function(res) {
 						if(res.code==0){
 							layer.msg('已删除'+res.msg);
-							table.reload('article-sort-list');
+							table.reload('friendlylink-list');
 						}else{
 							layer.msg(res.msg);
 						}
@@ -164,12 +164,11 @@
 							dataType : "json",
 							success : function(res) {
 								if(res.code==0){
-									layer.msg(res.msg);
-									console.log(res.msg);
-								}else{
-									console.log(res.msg);
-									layer.msg(res.msg);
+									table.reload('friendlylink-list');
+									layer.close(index);
 								}
+									layer.msg(res.msg);
+								
 							},
 							error : function(XMLHttpRequest, textStatus,
 									errorThrown) {

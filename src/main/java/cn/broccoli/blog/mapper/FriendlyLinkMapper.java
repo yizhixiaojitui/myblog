@@ -12,7 +12,7 @@ public interface FriendlyLinkMapper {
 
     int deleteByPrimaryKey(Short linkId);
 
-    int insert(FriendlyLink record);
+    boolean insert(FriendlyLink record);
 
     int insertSelective(FriendlyLink record);
 
@@ -33,6 +33,8 @@ public interface FriendlyLinkMapper {
     List<FriendlyLink> selectLinkByPage(@Param("page") int page,@Param("limit") int limit,@Param("linkId") String linkId,@Param("linkName") String linkName);
 
     int selectCount();
+    
+    boolean deleteFriendlyLink(List<FriendlyLink> ids);
     
    
 }

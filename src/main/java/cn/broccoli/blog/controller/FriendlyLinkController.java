@@ -34,8 +34,13 @@ public class FriendlyLinkController {
 	}
 	@RequestMapping(value = "/api/friendlyLink/save",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultBean<Integer> saveFriendlyLink(@RequestBody FriendlyLink friendlyLink){
-		return new ResultBean<Integer>(friendlyLinkService.saveFriendlyLink(friendlyLink));
+	public ResultBean<Boolean> saveFriendlyLink(@RequestBody FriendlyLink friendlyLink){
+		return new ResultBean<Boolean>(friendlyLinkService.saveFriendlyLink(friendlyLink));
+	}
+	@RequestMapping(value = "/api/friendlyLink/delete",method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResultBean<Boolean> removeFriendlyLink(@RequestBody List<FriendlyLink> list){
+		return new ResultBean<Boolean>(friendlyLinkService.removeFriendlyLink(list));
 	}
 	
 }

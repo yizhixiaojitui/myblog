@@ -24,14 +24,14 @@ layui.define(["table", "form"], function(t) {
         if (layEvent === 'detail') { //查看
             //do somehing
         } else if (layEvent === 'del') { //删除
-            layer.confirm('真的删除ID为' + data.articleId + '的文章吗？', function(index) {
+            layer.confirm('真的删除ID为:' + data.linkId + '的文章吗？', function(index) {
                 obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                 layer.close(index);
                 var arr = [];
                 arr.push(data);
                 //向服务端发送删除指令 ajax
                 e.ajax({
-                    url: resPath + "/api/article/delete?r=" + Math.random(),
+                    url: resPath + "/api/friendlyLink/delete?r=" + Math.random(),
                     type: "Delete",
                     data: JSON.stringify(arr),
                     headers: { //通过 request 头传递
@@ -41,8 +41,8 @@ layui.define(["table", "form"], function(t) {
                     dataType: "json",
                     success: function(res) {
                         if (res.code == 0) {
-                            layer.msg('已删除' + res.data);
-                            i.reload('content-list');
+                            layer.msg('已删除-' + res.data);
+                            i.reload('friendlylink-list');
                         } else {
                             layer.msg(res.msg);
                         }
