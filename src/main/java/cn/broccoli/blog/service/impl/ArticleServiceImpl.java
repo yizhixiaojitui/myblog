@@ -92,8 +92,8 @@ public class ArticleServiceImpl implements ArticleService{
 
 	@Override
 	public List<ArticleList> findAllArticleList(Integer userid,int page, int limit,String articleId,String articleName,String articleStatus) {
-		int pageIndex=(page-1)*limit;
-		return  articleMapper.selectArticleByUserid(userid, pageIndex, limit,articleId,articleName,articleStatus);
+		page=(page-1)*limit;
+		return  articleMapper.selectArticleByUserid(userid, page, limit,articleId,articleName,articleStatus);
 	}
 
 	/* (non-Javadoc)

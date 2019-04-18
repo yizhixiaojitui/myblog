@@ -119,18 +119,68 @@
 				});
 			});
 		},add : function() {
+			var html='<form id="linkinfo"><div style="margin-top: 20px;"><div class="layui-form-item">'
+			+'<div class="layui-inline"><label class="layui-form-label">名称</label>'
+			+'<div class="layui-input-inline">'
+			+'<input type="text" name="linkName" placeholder="请输入" autocomplete="off" class="layui-input">'
+			+'</div></div></div><div class="layui-form-item">'
+			+'<div class="layui-inline"><label class="layui-form-label">URL</label>'
+			+'<div class="layui-input-inline">'
+			+'<input type="text" name="linkUrl" placeholder="请输入" autocomplete="off" class="layui-input">'
+			+'</div></div></div><div class="layui-form-item">'
+			+'<div class="layui-inline"><label class="layui-form-label">排序</label>'
+			+'<div class="layui-input-inline">'
+			+'<input type="text" name="showOrder" placeholder="请输入" autocomplete="off" class="layui-input">'
+			+'</div></div></div></div></form>';
 				layer.open({
-					type : 2,
-					title : '添加文章',
-					content : 'edit',
+					type : 1,
+					title : '添加友情链接',
+					content : html,
 					maxmin : true,
-					area : [ '550px', '550px' ],
+					area : [ '380px', '280px' ],
 					btn : [ '确定', '取消' ],
 					yes : function(index, layero) {
-					//点击确认触发 iframe 内容中的按钮提交
-					var submit = layero.find('iframe').contents()
-								.find("#layuiadmin-app-form-submit");
-								submit.click();
+						$.fn.serializeObject = function () {
+							var o = {};
+							var a = this.serializeArray();
+							$.each(a, function () {
+								if (o[this.name] !== undefined) {
+									if (!o[this.name].push) {
+										o[this.name] = [o[this.name]];
+									}
+									o[this.name].push(this.value || '');
+								} else {
+									o[this.name] = this.value || '';
+								}
+							});
+							return o;
+						};
+						var data=$("#linkinfo").serializeObject();
+						$.ajax({
+							url : resPath+"/api/friendlyLink/save",
+							type : "post",
+							data : JSON.stringify(data),
+							contentType:"application/json",
+							dataType : "json",
+							success : function(res) {
+								if(res.code==0){
+									layer.msg(res.msg);
+									console.log(res.msg);
+								}else{
+									console.log(res.msg);
+									layer.msg(res.msg);
+								}
+							},
+							error : function(XMLHttpRequest, textStatus,
+									errorThrown) {
+								// 状态码
+								console.log(XMLHttpRequest.status);
+								// 状态
+								console.log(XMLHttpRequest.readyState);
+								// 错误信息   
+								console.log(textStatus);
+							}
+						});
 						}
 					});
 				}

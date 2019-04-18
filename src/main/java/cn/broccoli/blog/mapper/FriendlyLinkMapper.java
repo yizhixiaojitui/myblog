@@ -29,4 +29,10 @@ public interface FriendlyLinkMapper {
     int updateByPrimaryKey(FriendlyLink record);
     
     List<FriendlyLink> selectAll();
+    
+    List<FriendlyLink> selectLinkByPage(@Param("page") int page,@Param("limit") int limit,@Param("linkId") String linkId,@Param("linkName") String linkName);
+
+    int selectCount();
+    
+   
 }

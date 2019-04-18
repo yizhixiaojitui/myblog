@@ -5,7 +5,7 @@ layui.define(["table", "form"], function(t) {
         n = layui.form;
     i.render({
         elem: "#friendlylink-list",
-        url: resPath + "/friendlyLink",
+        url: resPath + "/api/friendlyLink/getlist",
         cols: [
             [{ type: "checkbox", fixed: "left" }, { field: "linkId", title: "ID", sort: !0 }, { field: "linkName", title: "名称" }, { field: "linkUrl", title: "地址" }, { field: "showOrder", title: "排序" }, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
         ],
@@ -25,13 +25,10 @@ layui.define(["table", "form"], function(t) {
             //do somehing
         } else if (layEvent === 'del') { //删除
             layer.confirm('真的删除ID为' + data.articleId + '的文章吗？', function(index) {
-                console.log(JSON.stringify(data));
                 obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                 layer.close(index);
                 var arr = [];
                 arr.push(data);
-                console.log(arr);
-                console.log(JSON.stringify(arr));
                 //向服务端发送删除指令 ajax
                 e.ajax({
                     url: resPath + "/api/article/delete?r=" + Math.random(),

@@ -74,6 +74,22 @@
     from friendly_link
     ORDER BY show_order ASC
   </select>
+  <select id="selectLinkByPage" resultMap="BaseResultMap">
+  select 
+    <include refid="Base_Column_List" />
+    from friendly_link
+    <where>
+	1=1
+  <if test="linkId != null and linkId != ''" >
+        and link_id=#{linkId}
+  </if>
+  <if test="linkName != null and linkName !=''" >
+        and link_name=#{linkName}
+  </if>
+  
+  </where>   
+    ORDER BY show_order ASC limit #{page},#{limit};
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.broccoli.blog.po.FriendlyLinkExample" >
     select
     <if test="distinct" >
@@ -87,6 +103,9 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+  select count(*) from friendly_link 
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
     select 
@@ -105,9 +124,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.broccoli.blog.po.FriendlyLink" >
-    insert into friendly_link (link_id, link_name, link_url, 
+    insert into friendly_link ( link_name, link_url, 
       show_order)
-    values (#{linkId,jdbcType=SMALLINT}, #{linkName,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR}, 
+    values (#{linkName,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR}, 
       #{showOrder,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="cn.broccoli.blog.po.FriendlyLink" >

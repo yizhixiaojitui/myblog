@@ -17,5 +17,31 @@ public class FriendlyLinkServiceImpl implements FriendlyLinkService {
 		// TODO Auto-generated method stub
 		return friendlyLinkMapper.selectAll();
 	}
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.FriendlyLinkService#findFriendlyLinkPage(int, java.lang.Integer, java.lang.Integer, java.lang.String)
+	 */
+	@Override
+	public List<FriendlyLink> findFriendlyLinkPage(Integer page, Integer limit, String linkId, String linkName) {
+		// TODO Auto-generated method stub
+		page=(page-1)*limit;
+		return friendlyLinkMapper.selectLinkByPage(page, limit, linkId, linkName);
+	}
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.FriendlyLinkService#findFriendlyLinkCount()
+	 */
+	@Override
+	public int findFriendlyLinkCount() {
+		// TODO Auto-generated method stub
+		return friendlyLinkMapper.selectCount();
+	}
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.FriendlyLinkService#saveFriendlyLink(cn.broccoli.blog.po.FriendlyLink)
+	 */
+	@Override
+	public int saveFriendlyLink(FriendlyLink friendlyLink) {
+		// TODO Auto-generated method stub
+		//检查是否已添加
+		return friendlyLinkMapper.insert(friendlyLink);
+	}
 
 }

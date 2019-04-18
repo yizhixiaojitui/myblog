@@ -485,7 +485,7 @@
 								class="layui-icon layui-icon-set"></i> <cite>设置</cite>
 						</a>
 							<dl class="layui-nav-child">
-								<dd class="layui-nav-itemed">
+								<dd >
 									<a href="javascript:;">系统设置</a>
 									<dl class="layui-nav-child">
 										<dd>
@@ -496,7 +496,7 @@
 										</dd>
 									</dl>
 								</dd>
-								<dd class="layui-nav-itemed">
+								<dd >
 									<a href="javascript:;">我的设置</a>
 									<dl class="layui-nav-child">
 										<dd>
@@ -505,11 +505,12 @@
 										<dd>
 											<a lay-href="set/user/password.html">修改密码</a>
 										</dd>
+										<dd>
+											<a lay-href="set/friendlylink/list">友情链接</a>
+										</dd>
 									</dl>
 								</dd>
-								<dd data-name="friendlylink/list" data-jump="friendlylink/list" class="">
-									<a href="javascript:;" lay-href="set/friendlylink/list">友情链接</a>
-								</dd>
+								
 							</dl></li>
 						<li data-name="get" class="layui-nav-item"><a
 							href="javascript:;" lay-href="//www.layui.com/admin/#get"

@@ -40,4 +40,10 @@ public class FriendlyLink {
     public void setShowOrder(Byte showOrder) {
         this.showOrder = showOrder;
     }
+
+	@Override
+	public String toString() {
+		return "FriendlyLink [linkId=" + linkId + ", linkName=" + linkName + ", linkUrl=" + linkUrl + ", showOrder="
+				+ showOrder + "]";
+	}
 }

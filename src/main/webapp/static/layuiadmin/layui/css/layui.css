@@ -3355,7 +3355,7 @@ hr {
 }
 
 .layui-table-cell .layui-form-checkbox[lay-skin=primary] {
-    top: -1px;
+    top: 5px;
     padding: 0
 }
 
@@ -3539,7 +3539,7 @@ select.layui-table-edit {
 }
 
 .layui-table-view .layui-form-checkbox {
-    top: -1px;
+    top: 5px;
     height: 26px;
     line-height: 26px
 }
