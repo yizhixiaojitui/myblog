@@ -2,6 +2,8 @@ package cn.broccoli.blog.mapper;
 
 import cn.broccoli.blog.po.ArticleSort;
 import cn.broccoli.blog.po.ArticleSortExample;
+import cn.broccoli.blog.utils.TagsList;
+
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,13 @@ public interface ArticleSortMapper {
     
     List<Map<Integer, String>> selectByUserId(@Param("userid")int userId);
     
+    List<TagsList> selectTagsBylimit(@Param("userid")Integer userid,@Param("page") int page,
+    		@Param("limit") int limit,@Param("sortArticleId")String sortArticleId,@Param("sortArticleName") String sortArticleName);
     
-    
+    int selectTagBylimitCount(@Param("userid")Integer userid,@Param("sortArticleId")String sortArticleId,@Param("sortArticleName") String sortArticleName);
+
+    boolean deleteTagsById(List<TagsList> ids);
+
+
+
 }

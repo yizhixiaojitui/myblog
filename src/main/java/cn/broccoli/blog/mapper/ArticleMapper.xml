@@ -66,21 +66,34 @@
   A.user_id=#{userid} 
   and A.article_status <![CDATA[ <> ]]> 2
   <if test="articleId != null and articleId != ''" >
-        and A.article_id=#{articleId}
+        and A.article_id LIKE CONCAT('%',#{articleId},'%') 
   </if>
   <if test="articleName != null and articleName !=''" >
-        and A.article_name=#{articleName}
+        and A.article_name LIKE CONCAT('%',#{articleName},'%') 
   </if>
   <if test="articleStatus != null and articleStatus!=''" >
-        and A.article_status=#{articleStatus}
+        and A.article_status LIKE CONCAT('%',#{articleStatus},'%')
   </if>
   
   </where>   
   GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},#{limit}; 
   </select>
-  <select id="selectArticleCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-  select count(*) from article where user_id= #{userid}
-  and article_status <![CDATA[ <> ]]> 2
+  <select id="selectArticleCount" resultType="java.lang.Integer" >
+  select count(*) from article A 
+ <where>
+  A.user_id=#{userid} 
+  and A.article_status <![CDATA[ <> ]]> 2
+  <if test="articleId != null and articleId != ''" >
+        and A.article_id LIKE CONCAT('%',#{articleId},'%') 
+  </if>
+  <if test="articleName != null and articleName !=''" >
+        and A.article_name LIKE CONCAT('%',#{articleName},'%') 
+  </if>
+  <if test="articleStatus != null and articleStatus!=''" >
+        and A.article_status LIKE CONCAT('%',#{articleStatus},'%')
+  </if>
+  
+  </where>
   </select>
   <select id="selectByPrimaryKey" resultMap="articleDetails">
   SELECT  a.article_id, 

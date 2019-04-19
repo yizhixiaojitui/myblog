@@ -20,6 +20,7 @@ import cn.broccoli.blog.po.ArticleSort;
 import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.utils.CusAccessObjectUtil;
 import cn.broccoli.blog.utils.JWTUtil;
+import cn.broccoli.blog.utils.TagsList;
 import plm.common.exceptions.UnloginException;
 
 @Service("ArticleService")
@@ -71,8 +72,8 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public int findArticleCount(Integer userid) {
-		return articleMapper.selectArticleCount(userid);
+	public int findArticleLimitCount(Integer userid,String articleId,String articleName,String articleStatus) {
+		return articleMapper.selectArticleCount(userid, articleId, articleName, articleStatus);
 	}
 
 	@Override
@@ -115,6 +116,41 @@ public class ArticleServiceImpl implements ArticleService{
 		throw new UnloginException();
 		}
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.ArticleService#findTagsList(java.lang.Integer, int, int, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<TagsList> findTagsList(Integer userid, int page, int limit, String sortArticleId, String sortArticleName) {
+		page=(page-1)*limit;
+		return articleSortMapper.selectTagsBylimit(userid, page, limit, sortArticleId, sortArticleName);
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.ArticleService#findArticleCount(java.lang.Integer)
+	 */
+	@Override
+	public int findArticleCount(Integer userid) {
+		// TODO Auto-generated method stub
+		return articleMapper.selectArticleCount(userid, null, null, null);
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.ArticleService#findTagsCount(java.lang.Integer, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public int findTagsCount(Integer userid, String sortArticleId, String sortArticleName) {
+		return articleSortMapper.selectTagBylimitCount(userid, sortArticleId, sortArticleName);
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.ArticleService#removeFriendlyLink(java.util.List)
+	 */
+	@Override
+	public boolean removeTags(List<TagsList> ids) {
+		// TODO Auto-generated method stub
+		return articleSortMapper.deleteTagsById(ids);
 	}
 
 }

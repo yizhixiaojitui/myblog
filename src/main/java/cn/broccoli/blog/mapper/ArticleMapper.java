@@ -13,7 +13,7 @@ public interface ArticleMapper {
     
     List<ArticleList> selectByBlogger(@Param("username")String username,@Param("page") int page);
     
-    int selectArticleCount(@Param("userid")Integer userid);
+    int selectArticleCount(@Param("userid")Integer userid,@Param("articleId")String articleId,@Param("articleName")String articleName,@Param("articleStatus")String articleStatus);
     
     int insertArticle(Article article);
     

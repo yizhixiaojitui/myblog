@@ -5,9 +5,9 @@ layui.define(["table", "form"], function(t) {
         n = layui.form;
     i.render({
         elem: "#article-sort-list",
-        url: resPath + "/api/article/sort/getlist",
+        url: resPath + "/api/article/tags/getlist",
         cols: [
-            [{ type: "checkbox", fixed: "left" }, { field: "sort_article_id", title: "ID", sort: !0 }, { field: "sort_article_name", title: "分类名称" }, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
+            [{ type: "checkbox", fixed: "left" }, { field: "sortArticleId", title: "ID", sort: !0 }, { field: "sortArticleName", title: "分类名称" }, { title: "操作", minWidth: 150, align: "center", fixed: "right", toolbar: "#table-content-list" }]
         ],
         headers: { //通过 request 头传递
             access_token: layui.data('layuiAdmin').access_token
@@ -24,17 +24,14 @@ layui.define(["table", "form"], function(t) {
         if (layEvent === 'detail') { //查看
             //do somehing
         } else if (layEvent === 'del') { //删除
-            layer.confirm('真的删除ID为' + data.articleId + '的文章吗？', function(index) {
-                console.log(JSON.stringify(data));
+            layer.confirm('真的删除ID为' + data.sortArticleId + '的文章吗？', function(index) {
                 obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                 layer.close(index);
                 var arr = [];
                 arr.push(data);
-                console.log(arr);
-                console.log(JSON.stringify(arr));
                 //向服务端发送删除指令 ajax
                 e.ajax({
-                    url: resPath + "/api/article/delete?r=" + Math.random(),
+                    url: resPath + "/api/article/tags/delete?r=" + Math.random(),
                     type: "Delete",
                     data: JSON.stringify(arr),
                     headers: { //通过 request 头传递
@@ -125,5 +122,5 @@ layui.define(["table", "form"], function(t) {
             },
             success: function(t, e) {}
         })
-    }), t("sortlist", {})
+    }), t("taglist", {})
 });

@@ -17,9 +17,11 @@ import plm.common.beans.ResultBean;
 import plm.common.beans.PageResultBean;
 import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleList;
+import cn.broccoli.blog.po.FriendlyLink;
 import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.service.UserService;
 import cn.broccoli.blog.utils.JWTUtil;
+import cn.broccoli.blog.utils.TagsList;
 
 /**
  * @package cn.broccoli.blog.controller
@@ -50,11 +52,17 @@ public class ArticleController {
 	/**查询文章分类
 	 * @return
 	 */
-	@RequestMapping(value = "/api/article/sort/getlist", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/article/tags/list", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultBean<List<Map<Integer, String>>> findSortArticleList(HttpServletRequest request) {
+	public ResultBean<List<Map<Integer, String>>> findTagsList(HttpServletRequest request) {
 
 		return new ResultBean<List<Map<Integer, String>>>(articleService.findArticleSortList(jwtUtil.getUserId(request)));
+	}
+	@RequestMapping(value = "/api/article/tags/getlist", method = RequestMethod.GET)
+	@ResponseBody
+	public PageResultBean<List<TagsList>> findTagsByLimitList(HttpServletRequest request,int page,int limit,String sortArticleId,String sortArticleName) {
+		Integer userid=jwtUtil.getUserId(request);
+		return new PageResultBean<List<TagsList>>(articleService.findTagsCount(userid, sortArticleId, sortArticleName), articleService.findTagsList(userid, page, limit, sortArticleId, sortArticleName));
 	}
 	
 	//避免重复先要确认数据库是否已添加
@@ -62,7 +70,7 @@ public class ArticleController {
 	 * @param articleSort
 	 * @return
 	 */
-	@RequestMapping(value = "/api/article/sort/addsort", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/article/tags/addtags", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultBean<Boolean> addSortArticle(String articleSort,HttpServletRequest request) {
 
@@ -92,7 +100,7 @@ public class ArticleController {
 	@ResponseBody
 	public PageResultBean<List<ArticleList>> findAllArticleList( HttpServletRequest request,int page,Integer limit,String articleId,String articleName,String articleStatus) {
 		Integer userid=jwtUtil.getUserId(request);
-		return new PageResultBean<List<ArticleList>>(articleService.findArticleCount(userid), articleService.findAllArticleList(userid,page,limit,articleId,articleName,articleStatus));
+		return new PageResultBean<List<ArticleList>>(articleService.findArticleLimitCount(userid, articleId, articleName, articleStatus), articleService.findAllArticleList(userid,page,limit,articleId,articleName,articleStatus));
 	}
 	/**批量删除文章接口
 	 * @param list
@@ -111,6 +119,10 @@ public class ArticleController {
 		
 		return new ResultBean<Boolean>(articleService.test());
 	}
-	
+	@RequestMapping(value = "/api/article/tags/delete",method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResultBean<Boolean> removeTags(@RequestBody List<TagsList> list){
+		return new ResultBean<Boolean>(articleService.removeTags(list));
+	}
 	
 }

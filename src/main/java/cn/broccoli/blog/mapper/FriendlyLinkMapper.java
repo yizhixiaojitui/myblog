@@ -32,7 +32,7 @@ public interface FriendlyLinkMapper {
     
     List<FriendlyLink> selectLinkByPage(@Param("page") int page,@Param("limit") int limit,@Param("linkId") String linkId,@Param("linkName") String linkName);
 
-    int selectCount();
+    int selectCount(@Param("linkId") String linkId,@Param("linkName") String linkName);
     
     boolean deleteFriendlyLink(List<FriendlyLink> ids);
     

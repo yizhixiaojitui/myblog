@@ -18,14 +18,9 @@
   <div class="layadmin-tips">
     <i class="layui-icon" face>&#xe664;</i>
     
-    <div class="layui-text">
-      <h1>
-        <span class="layui-anim layui-anim-loop layui-anim-">5</span> 
-        <span class="layui-anim layui-anim-loop layui-anim-rotate">0</span> 
-        <span class="layui-anim layui-anim-loop layui-anim-">0</span>
-      </h1>
+    <div class="layui-text" style="font-size: 20px;">
+      好像出错了呢
     </div>
-    <button>页面走失了返回主页</button>
   </div>
 </div>
 

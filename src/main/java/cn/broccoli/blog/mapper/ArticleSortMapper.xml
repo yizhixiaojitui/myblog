@@ -6,6 +6,11 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="sort_article_name" property="sortArticleName" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="LimitResultMap" type="cn.broccoli.blog.utils.TagsList" >
+    <id column="sort_article_id" property="sortArticleId" jdbcType="INTEGER" />
+   <result column="user_nikename" property="userNikename" jdbcType="VARCHAR" />
+    <result column="sort_article_name" property="sortArticleName" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -72,9 +77,44 @@
   select sort_article_id,sort_article_name FROM article_sort where user_id=#{userid};
   </select>
   
-  
-  
-  
+  <select id="selectTagsBylimit" resultMap="LimitResultMap">
+		select
+		A.sort_article_id,A.sort_article_name,U.user_nikename
+		from article_sort A inner join user U on A.user_id=U.user_id
+		<where>
+			U.user_id=#{userid}
+			<if test="sortArticleId != null and sortArticleId != ''">
+				and A.sort_article_id LIKE CONCAT('%',#{sortArticleId},'%') 
+			</if>
+			<if test="sortArticleName != null and sortArticleName !=''">
+				and A.sort_article_name LIKE CONCAT('%',#{sortArticleName},'%') 
+			</if>
+
+		</where>
+		 limit #{page},#{limit};
+	</select>
+   <select id="selectTagBylimitCount" resultType="java.lang.Integer">
+		select
+		count(*)
+		from article_sort A inner join user U on A.user_id=U.user_id
+		<where>
+			U.user_id=#{userid}
+			<if test="sortArticleId != null and sortArticleId != ''">
+				and A.sort_article_id LIKE CONCAT('%',#{sortArticleId},'%') 
+			</if>
+			<if test="sortArticleName != null and sortArticleName !=''">
+				and A.sort_article_name LIKE CONCAT('%',#{sortArticleName},'%') 
+			</if>
+
+		</where>
+	</select>
+  <delete id="deleteTagsById" parameterType="java.util.List">
+		delete from article_sort where sort_article_id in
+		<foreach collection="list" item="ids" open="(" close=")"
+			separator=",">
+			#{ids.sortArticleId}
+		</foreach>
+	</delete>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.broccoli.blog.po.ArticleSortExample" >
     select
     <if test="distinct" >

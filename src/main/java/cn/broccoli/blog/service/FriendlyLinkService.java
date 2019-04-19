@@ -10,7 +10,7 @@ public interface FriendlyLinkService {
 	
 	List<FriendlyLink> findFriendlyLinkPage(Integer page,Integer limit,String linkId,String linkName);
 	
-	int findFriendlyLinkCount();
+	int findFriendlyLinkCount(String linkId,String linkName);
 	
 	boolean saveFriendlyLink(FriendlyLink friendlyLink);
 	

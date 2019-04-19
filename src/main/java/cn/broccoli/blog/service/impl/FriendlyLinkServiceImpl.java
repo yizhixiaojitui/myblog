@@ -30,9 +30,9 @@ public class FriendlyLinkServiceImpl implements FriendlyLinkService {
 	 * @see cn.broccoli.blog.service.FriendlyLinkService#findFriendlyLinkCount()
 	 */
 	@Override
-	public int findFriendlyLinkCount() {
+	public int findFriendlyLinkCount(String linkId,String linkName) {
 		// TODO Auto-generated method stub
-		return friendlyLinkMapper.selectCount();
+		return friendlyLinkMapper.selectCount( linkId, linkName);
 	}
 	/* (non-Javadoc)
 	 * @see cn.broccoli.blog.service.FriendlyLinkService#saveFriendlyLink(cn.broccoli.blog.po.FriendlyLink)

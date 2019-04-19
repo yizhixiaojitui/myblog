@@ -30,7 +30,7 @@ public class FriendlyLinkController {
 	@RequestMapping(value = "/api/friendlyLink/getlist", method = RequestMethod.GET)
 	@ResponseBody
 	public PageResultBean<List<FriendlyLink>> findAllArticleList(int page,Integer limit,String linkId,String linkName) {
-		return new PageResultBean<List<FriendlyLink>>(friendlyLinkService.findFriendlyLinkCount(), friendlyLinkService.findFriendlyLinkPage(page, limit, linkId, linkName));
+		return new PageResultBean<List<FriendlyLink>>(friendlyLinkService.findFriendlyLinkCount( linkId, linkName), friendlyLinkService.findFriendlyLinkPage(page, limit, linkId, linkName));
 	}
 	@RequestMapping(value = "/api/friendlyLink/save",method = RequestMethod.POST)
 	@ResponseBody

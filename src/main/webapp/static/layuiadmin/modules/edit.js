@@ -58,7 +58,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
 
         var htmls = '<option value="">直接选择或搜索选择</option>'; //全局变量
         $.ajax({
-            url: resPath + "/api/article/sort/getlist?r=" + Math.random(),
+            url: resPath + "/api/article/tags/getlist?r=" + Math.random(),
             type: "get",
             dataType: "json",
             headers: { //通过 request 头传递
@@ -85,7 +85,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
                 title: '添加分类'
             }, function(value, index, elem) {
                 $.ajax({
-                    url: resPath + "/api/article/sort/addsort?r=" + Math.random(),
+                    url: resPath + "/api/article/tags/addtags?r=" + Math.random(),
                     type: "post",
                     data: {
                         "articleSort": value

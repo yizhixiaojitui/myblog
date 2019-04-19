@@ -1,4 +1,4 @@
-/** layuiAdmin.std-v1.2.1 LPPL License By http://www.layui.com/admin/ 加QQ：1293166442 获取源码版*/ ;
+/** layuiAdmin.std-v1.2.1 LPPL License By http://www.layui.com/admin/ */ ;
 layui.define(function(e) {
     layui.use(["admin", "carousel"], function() {
         var e = layui.$,

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
+import cn.broccoli.blog.utils.TagsList;
 
 public interface ArticleService {
 	 ArticleDetails findArticleDetails(Integer id);
@@ -21,6 +22,8 @@ public interface ArticleService {
 	 
 	 Boolean addArticleSort(Integer userid,String articlesort);
 	 
+	 int findArticleLimitCount(Integer userid,String articleId,String articleName,String articleStatus);
+	 
 	 int findArticleCount(Integer userid);
 	 
 	 int saveArticle(Article article,HttpServletRequest request);
@@ -30,4 +33,9 @@ public interface ArticleService {
 	 boolean removeArticleByIds(List<ArticleList> list);
 	 boolean test();
 	 
+	 List<TagsList> findTagsList(Integer userid,int page,int limit,String sortArticleId,String sortArticleName);
+	 
+	 int findTagsCount(Integer userid,String sortArticleId,String sortArticleName);
+	 
+	 boolean removeTags(List<TagsList> ids);
 }

@@ -29,7 +29,7 @@
 					<div class="layui-inline">
 						<label class="layui-form-label">分类ID</label>
 						<div class="layui-input-inline">
-							<input type="text" name="sort_article_id" placeholder="请输入" autocomplete="off"
+							<input type="text" name="sortArticleId" placeholder="请输入" autocomplete="off"
 								class="layui-input">
 						</div>
 					</div>
@@ -37,7 +37,7 @@
 					<div class="layui-inline">
 						<label class="layui-form-label">分类名称</label>
 						<div class="layui-input-inline">
-							<input type="text" name="sort_article_name" placeholder="请输入"
+							<input type="text" name="sortArticleName" placeholder="请输入"
 								autocomplete="off" class="layui-input">
 						</div>
 					</div>
@@ -72,7 +72,7 @@
 		base: '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
 	}).extend({
 		index: 'lib/index' //主入口模块
-	}).use(['index', 'sortlist', 'table'],function() {
+	}).use(['index', 'taglist', 'table'],function() {
     var table = layui.table,
     form = layui.form;
     //监听搜索
@@ -98,8 +98,32 @@
         layer.confirm('确定删除吗？',
         function(index) {
 
-          //执行 Ajax 后重载
-          //修改接口参数为ID 不传obj checkData.articleId
+        	//执行 Ajax 后重载
+			//修改接口参数为ID 不传obj checkData.articleId
+			$.ajax({
+			url : resPath+"/api/article/tags/delete?r=" + Math.random(),
+			type : "Delete",
+			data :JSON.stringify(checkData),
+			contentType:"application/json",
+			dataType : "json",
+			success : function(res) {
+				if(res.code==0){
+					layer.msg('已删除'+res.msg);
+					table.reload('article-sort-list');
+				}else{
+					layer.msg(res.msg);
+				}
+			},
+			error : function(XMLHttpRequest, textStatus,
+					errorThrown) {
+				// 状态码
+				console.log(XMLHttpRequest.status);
+				// 状态
+				console.log(XMLHttpRequest.readyState);
+				// 错误信息   
+				console.log(textStatus);
+			}
+		});
          layer.msg('hi');
 
         });

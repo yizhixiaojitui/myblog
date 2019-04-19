@@ -90,10 +90,10 @@
 		<where>
 			1=1
 			<if test="linkId != null and linkId != ''">
-				and link_id=#{linkId}
+				and link_id LIKE CONCAT('%',#{linkId},'%') 
 			</if>
 			<if test="linkName != null and linkName !=''">
-				and link_name=#{linkName}
+				and link_name LIKE CONCAT('%',#{linkName},'%') 
 			</if>
 
 		</where>
@@ -115,7 +115,20 @@
 		</if>
 	</select>
 	<select id="selectCount" resultType="java.lang.Integer">
-		select count(*) from friendly_link
+		select
+		count(*)
+		from friendly_link
+		<where>
+			1=1
+			<if test="linkId != null and linkId != ''">
+				and link_id LIKE CONCAT('%',#{linkId},'%') 
+			</if>
+			<if test="linkName != null and linkName !=''">
+				and link_name LIKE CONCAT('%',#{linkName},'%') 
+			</if>
+
+		</where>
+		 
 	</select>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Short">
