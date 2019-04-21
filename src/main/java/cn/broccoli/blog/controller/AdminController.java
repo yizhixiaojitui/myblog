@@ -24,7 +24,7 @@ public class AdminController {
 	}
 	@RequestMapping(value = "admin/article",method = RequestMethod.GET)  	
 	public String adminarticle() {
-		return "forward:/admin/console?id=10001";
+		return "forward:/index.jsp?id=10001";
 	}
 	@RequestMapping(value = "content/list",method = RequestMethod.GET)  	
 	public ModelAndView articleList() {

@@ -58,7 +58,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
 
         var htmls = '<option value="">直接选择或搜索选择</option>'; //全局变量
         $.ajax({
-            url: resPath + "/api/article/tags/getlist?r=" + Math.random(),
+            url: resPath + "/api/article/tags/list?r=" + Math.random(),
             type: "get",
             dataType: "json",
             headers: { //通过 request 头传递
@@ -92,8 +92,8 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
                     },
                     dataType: "json",
                     success: function(res) {
+                    	layer.close(index);
                         if (res.data == true) {
-                            layer.close(index);
                             getArticleSortList();
                             layer.msg('添加中...', {
                                 icon: 16,
@@ -104,7 +104,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
                             });
 
                         } else {
-                            layer.msg('添加失败！');
+                            layer.msg(res.msg);
                         }
                     },
                     error: function(XMLHttpRequest, textStatus,

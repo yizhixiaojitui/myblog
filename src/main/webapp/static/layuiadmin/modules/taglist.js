@@ -25,7 +25,7 @@ layui.define(["table", "form"], function(t) {
             //do somehing
         } else if (layEvent === 'del') { //删除
             layer.confirm('真的删除ID为' + data.sortArticleId + '的文章吗？', function(index) {
-                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+              
                 layer.close(index);
                 var arr = [];
                 arr.push(data);
@@ -41,8 +41,10 @@ layui.define(["table", "form"], function(t) {
                     dataType: "json",
                     success: function(res) {
                         if (res.code == 0) {
+                        	obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        	i.reload('article-sort-list');
                             layer.msg('已删除' + res.data);
-                            i.reload('content-list');
+                            
                         } else {
                             layer.msg(res.msg);
                         }

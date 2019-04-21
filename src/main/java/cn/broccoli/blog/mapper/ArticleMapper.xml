@@ -45,6 +45,13 @@
  FROM 
  (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id WHERE A.article_type=1 and A.article_status=0 and A.user_id=(select user_id from user where user_name= #{username}) GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},10; 
   </select>
+  <select id="selectByTagsID" resultType="java.lang.Integer">
+SELECT count(*) FROM article a INNER JOIN article_sort AR ON A.user_id=AR.user_id where a.sort_article_id in  
+ <foreach collection="list" item="ids" open="(" close=")" separator=",">
+  #{ids.sortArticleId}
+</foreach>
+GROUP BY A.article_id
+ </select>
    <select id="selectArticleByUserid" resultMap="ArticleListResult">
  SELECT 
  A.article_id,
@@ -108,6 +115,7 @@ FROM
 (article a inner join  user u on a.user_id=u.user_id)
   inner join article_sort ar on a.sort_article_id=ar.sort_article_id where a.article_id=#{id} and a.article_status=0; 
   </select>
+ 
   <delete id="deleteArticleById" parameterType="java.util.List" >
 delete from article where article_id in
 <foreach collection="list" item="ids" open="(" close=")" separator=",">

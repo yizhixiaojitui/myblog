@@ -45,7 +45,7 @@ public class ControllerAOP {
 		// 已知异常【注意：已知异常不要打印堆栈，否则会干扰日志】
 		// 校验出错，参数非法
 		if (e instanceof CheckException || e instanceof IllegalArgumentException) {
-			result.setMsg(e.getLocalizedMessage());
+			result.setMsg(e.getMessage());
 			result.setCode(ResultBean.CHECK_FAIL);
 		}
 		// 没有登陆

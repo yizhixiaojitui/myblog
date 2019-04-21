@@ -76,7 +76,11 @@
   <select id="selectByUserId"  resultType="java.util.HashMap" parameterType="java.lang.Integer">
   select sort_article_id,sort_article_name FROM article_sort where user_id=#{userid};
   </select>
-  
+  <select id="selectByName"  resultMap="BaseResultMap" >
+  select 
+  <include refid="Base_Column_List" />
+  FROM article_sort where user_id=#{userid} and  sort_article_name=#{name};
+  </select>
   <select id="selectTagsBylimit" resultMap="LimitResultMap">
 		select
 		A.sort_article_id,A.sort_article_name,U.user_nikename

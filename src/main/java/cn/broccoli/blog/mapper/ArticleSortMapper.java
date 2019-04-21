@@ -42,5 +42,6 @@ public interface ArticleSortMapper {
     boolean deleteTagsById(List<TagsList> ids);
 
 
+    ArticleSort selectByName(@Param("userid") Integer userid,@Param("name")String name);
 
 }

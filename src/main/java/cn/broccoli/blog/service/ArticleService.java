@@ -31,6 +31,7 @@ public interface ArticleService {
 	 List<ArticleList> findAllArticleList(Integer userid,int page,int limit,String articleId,String articleName,String articleStatus);
 	 
 	 boolean removeArticleByIds(List<ArticleList> list);
+	 
 	 boolean test();
 	 
 	 List<TagsList> findTagsList(Integer userid,int page,int limit,String sortArticleId,String sortArticleName);
@@ -38,4 +39,6 @@ public interface ArticleService {
 	 int findTagsCount(Integer userid,String sortArticleId,String sortArticleName);
 	 
 	 boolean removeTags(List<TagsList> ids);
+	 
+	 
 }

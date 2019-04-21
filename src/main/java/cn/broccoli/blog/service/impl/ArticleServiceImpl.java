@@ -21,6 +21,7 @@ import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.utils.CusAccessObjectUtil;
 import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.TagsList;
+import plm.common.exceptions.CheckException;
 import plm.common.exceptions.UnloginException;
 
 @Service("ArticleService")
@@ -64,6 +65,7 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public Boolean addArticleSort(Integer userid, String articlesort) {
 		
+		if(articleSortMapper.selectByName(userid, articlesort)!=null) throw new CheckException("分类已存在！请检查");
 		ArticleSort articleSort=new ArticleSort();
 		articleSort.setSortArticleName(articlesort);
 		articleSort.setUserId(userid);
@@ -75,6 +77,7 @@ public class ArticleServiceImpl implements ArticleService{
 	public int findArticleLimitCount(Integer userid,String articleId,String articleName,String articleStatus) {
 		return articleMapper.selectArticleCount(userid, articleId, articleName, articleStatus);
 	}
+
 
 	@Override
 	public int saveArticle(Article article,HttpServletRequest request) {
@@ -150,6 +153,9 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public boolean removeTags(List<TagsList> ids) {
 		// TODO Auto-generated method stub
+		//删除分类得检查是否有文章引用了这个分类
+		//if(articleMapper.selectByTagsID(ids)!=0) throw new CheckException("有文章使用了id请检查后在删除！");
+		
 		return articleSortMapper.deleteTagsById(ids);
 	}
 
