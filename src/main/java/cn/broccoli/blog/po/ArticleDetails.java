@@ -93,4 +93,18 @@ public class ArticleDetails {
 		this.userNikename = userNikename;
 	}
 
+	@Override
+	public String toString() {
+		return "ArticleDetails [articleId=" + articleId + ", articleName=" + articleName + ", articleTime="
+				+ articleTime + ", articleClick=" + articleClick + ", typeId=" + typeId + ", articleLabel="
+				+ articleLabel + ", articleContent=" + articleContent + ", sortArticleName=" + sortArticleName
+				+ ", userNikename=" + userNikename + ", getArticleId()=" + getArticleId() + ", getArticleName()="
+				+ getArticleName() + ", getArticleTime()=" + getArticleTime() + ", getArticleClick()="
+				+ getArticleClick() + ", getTypeId()=" + getTypeId() + ", getArticleLabel()=" + getArticleLabel()
+				+ ", getArticleContent()=" + getArticleContent() + ", getSortArticleName()=" + getSortArticleName()
+				+ ", getUserNikename()=" + getUserNikename() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
+
 }

@@ -46,7 +46,8 @@ public class AdminInterceptor implements HandlerInterceptor{
 					return true;
 				}
 			}
-			response.sendRedirect(contextPath+"/login");
+			response.sendRedirect(contextPath+"/account/login");
+			//request.getRequestDispatcher(request.getContextPath()+"/login").forward(request, response);
 			System.out.println("requestURL"+request.getRequestURL());
 			return false;
 		

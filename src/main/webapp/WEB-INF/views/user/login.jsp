@@ -86,7 +86,7 @@
     form.on('submit(LAY-user-login-submit)', function(obj){
     
       //请求登入接口
-      $.post('${pageContext.request.contextPath }/login/signup',obj.field, function(res){
+      $.post('${pageContext.request.contextPath }/account/login/signup',obj.field, function(res){
         
           
           if(res.code!=0){

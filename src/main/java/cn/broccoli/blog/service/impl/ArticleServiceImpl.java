@@ -53,6 +53,9 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public ArticleDetails findArticleDetails(Integer id) {
 		ArticleDetails ad=articleMapper.selectByPrimaryKey(id);
+		if(ad==null) {
+			
+		}
 		System.out.println("findArticleDetails"+ad);
 		return ad;
 	}
@@ -154,9 +157,12 @@ public class ArticleServiceImpl implements ArticleService{
 	public boolean removeTags(List<TagsList> ids) {
 		// TODO Auto-generated method stub
 		//删除分类得检查是否有文章引用了这个分类
-		//if(articleMapper.selectByTagsID(ids)!=0) throw new CheckException("有文章使用了id请检查后在删除！");
-		
+		int code=articleMapper.selectByTagsID(ids);
+		if(code!=0) {
+			throw new CheckException("有文章使用了id请检查后在删除！");
+		}else {
 		return articleSortMapper.deleteTagsById(ids);
+		}
 	}
 
 }

@@ -133,7 +133,7 @@
               title: '添加分类'
           }, function(value, index, elem) {
               $.ajax({
-                  url: resPath + "/api/article/sort/addsort?r=" + Math.random(),
+                  url: resPath + "/api/article/tags/addtags?r=" + Math.random(),
                   type: "post",
                   data: {
                       "articleSort": value

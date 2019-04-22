@@ -93,22 +93,25 @@
     </bean>
 	
 	
-	<mvc:interceptors> 
-           <mvc:interceptor>
+	
+    
+    <mvc:interceptors> 
+    <mvc:interceptor>
                    <!--  
                        /**的意思是所有文件夹及里面的子文件夹 
                        /*是所有文件夹，不含子文件夹 
                        /是web项目的根目录
                      --> 
-                   <mvc:mapping path="/blog/**" /> 
+                   <mvc:mapping path="/*/**" /> 
                    <!-- 需排除拦截的地址 -->  
-                   
+                   <mvc:exclude-mapping path="/admin/**"/> <!--不拦截的url -->  
+                   <mvc:exclude-mapping path="/api/**"/> <!--不拦截的url -->
+                   <mvc:exclude-mapping path="/static/**"/> <!--不拦截的url -->
+                   <mvc:exclude-mapping path="/account/**"/> 
+                   <mvc:exclude-mapping path="/home/**"/>
+                   <mvc:exclude-mapping path="/captcha/**"/>
                    <bean  class="cn.broccoli.blog.interceptor.HomeInterceptor"></bean> <!--这个类就是我们自定义的Interceptor -->
-          </mvc:interceptor> 
-          <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法  -->
-    </mvc:interceptors>
-    
-    <mvc:interceptors> 
+          </mvc:interceptor>
            <mvc:interceptor>
                    <!--  
                        /**的意思是所有文件夹及里面的子文件夹 
@@ -123,6 +126,7 @@
           </mvc:interceptor> 
           <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法  -->
     </mvc:interceptors>
+   
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->

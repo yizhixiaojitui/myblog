@@ -95,10 +95,7 @@
 						<div class="layui-card border-box bgc-fff mg-b-10">
 							<div class="layui-card-header layui-bg-gray">友情链接</div>
 							<div class="layui-card-body links">
-								<ul>
-								<a href="https://www.yangqq.com/gerenwangzhan.html" target="_blank">个人网站</a>
-								<a href="https://www.yangqq.com/gerenwangzhan.html" target="_blank">个人网站</a>
-								<a href="https://www.yangqq.com/gerenwangzhan.html" target="_blank">个人网站</a>
+								<ul id="links">
 								</ul>
 							</div>
 						</div>
@@ -118,12 +115,15 @@
 		src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
 	<script>
 		//一般直接写在一个js文件中
-
+		var username='${user}';
 		layui.config({
 			base : '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
 		}).extend({
 			index : 'lib/index' //主入口模块
-		}).use([ 'index', 'home' ]);
+		}).use([ 'index', 'home' ],function() {
+			
+			
+		});
 	</script>
 </body>
 

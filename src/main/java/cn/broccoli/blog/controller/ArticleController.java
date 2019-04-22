@@ -43,10 +43,10 @@ public class ArticleController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value = "/blog/{name}/article", method = RequestMethod.GET)
+	@RequestMapping(value = "/home/article", method = RequestMethod.GET)
 	@ResponseBody
-	public PageResultBean<List<ArticleList>> findArticleList(@PathVariable String name, int page) {
-		return new PageResultBean<List<ArticleList>>(articleService.findArticleCount(userService.selectIdByName(name)), articleService.findArticleList(name, page));
+	public PageResultBean<List<ArticleList>> findArticleList(String u, int page) {
+		return new PageResultBean<List<ArticleList>>(articleService.findArticleCount(userService.selectIdByName(u)), articleService.findArticleList(u, page));
 	}
 	//这个临时用户指定的自己的名称  以后从token中获取
 	/**查询文章分类

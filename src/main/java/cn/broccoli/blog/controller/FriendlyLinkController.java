@@ -22,7 +22,7 @@ public class FriendlyLinkController {
 
 	@Autowired
 	FriendlyLinkService friendlyLinkService;
-	@RequestMapping(value = "/friendlyLink",method = RequestMethod.GET)
+	@RequestMapping(value = "/home/friendlyLink",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultBean<List<FriendlyLink>> findFriendlyLinkAll(){
 		return new ResultBean<List<FriendlyLink>>(friendlyLinkService.findFriendlyLinkAll());

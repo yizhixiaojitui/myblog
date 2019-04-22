@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.BlogMessage;
 import cn.broccoli.blog.service.AboutBlogService;
 import cn.broccoli.blog.service.ArticleService;
@@ -30,7 +31,7 @@ public class HomeController {
 	/**登录页面
 	 * @return
 	 */
-	@RequestMapping(value = "/login",method = RequestMethod.GET)  	
+	@RequestMapping(value = "/account/login",method = RequestMethod.GET)  	
 	public ModelAndView loginView() {
 		return new ModelAndView("user/login.jsp");
 	}
@@ -42,19 +43,31 @@ public class HomeController {
 		return new ModelAndView("index.jsp");
 	}
 	//进入主页
-	@RequestMapping(value = "/blog/{name}",method = RequestMethod.GET)  	
+	@RequestMapping(value = "/{name}",method = RequestMethod.GET)  	
 	public ModelAndView blogView(@PathVariable String name) {
-		return new ModelAndView("blog/index.jsp");
+		ModelAndView view = new ModelAndView();
+		view.addObject("user", name);
+		view.setViewName("blog/index.jsp");
+		return view;
 	}
-	@RequestMapping(value = "/blog/{name}/getbloginfo",method = RequestMethod.GET)
+	@RequestMapping(value = "/home/getbloginfo",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultBean<BlogMessage> findBlogMessage(@PathVariable String name) {
+	public ResultBean<BlogMessage> findBlogMessage(String u) {
 		
-		return new ResultBean<BlogMessage>(aboutBlogService.selectByPrimaryKey(name));
+		return new ResultBean<BlogMessage>(aboutBlogService.selectByPrimaryKey(u));
 	}
-	@RequestMapping(value = "/blog/{name}/article/details/{id}",method = RequestMethod.GET)
+	@RequestMapping(value = "/{name}/article/details/{id}",method = RequestMethod.GET)
 	public ModelAndView articleDetail(@PathVariable String name,@PathVariable Integer id) {
-		return new ModelAndView("blog/detail.jsp","article",articleService.findArticleDetails(id));
+		ModelAndView view = new ModelAndView();
+		ArticleDetails ad=articleService.findArticleDetails(id);
+		if(ad==null) {
+			view.setViewName("/404.jsp");
+			return view;
+		}
+		view.setViewName("blog/detail.jsp");
+		view.addObject("article", ad);
+		view.addObject("user", name);
+		return view;
 	}
 	
 	/**验证码生成接口

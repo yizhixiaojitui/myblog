@@ -37,7 +37,8 @@ public class HomeInterceptor implements HandlerInterceptor{
 			}else {
 				
 				System.out.println("----校验失败,'"+name+"' 此用户不存在----");
-				response.sendRedirect(request.getContextPath()+"/404.jsp");
+				request.getRequestDispatcher(request.getContextPath()+"/404.jsp").forward(request, response);
+				//response.sendRedirect(request.getContextPath()+"/404.jsp");
 				return false;
 			}
 		}else {

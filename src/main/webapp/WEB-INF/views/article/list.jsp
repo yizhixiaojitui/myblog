@@ -120,7 +120,6 @@
         if (checkData.length === 0) {
           return layer.msg('请选择数据');
         }
-
         layer.confirm('确定删除吗？',
         function(index) {
           //执行 Ajax 后重载
@@ -152,7 +151,6 @@
         });
       },
       add: function() {
-    	  alert('q1');
         layer.open({
           type: 2,
           title: '添加文章',

@@ -26,15 +26,15 @@ public class AdminController {
 	public String adminarticle() {
 		return "forward:/index.jsp?id=10001";
 	}
-	@RequestMapping(value = "content/list",method = RequestMethod.GET)  	
+	@RequestMapping(value = "admin/content/list",method = RequestMethod.GET)  	
 	public ModelAndView articleList() {
 		return new ModelAndView("article/list.jsp");
 	}
-	@RequestMapping(value = "content/tags/list",method = RequestMethod.GET)  	
+	@RequestMapping(value = "admin/content/tags/list",method = RequestMethod.GET)  	
 	public ModelAndView articleSortList() {
 		return new ModelAndView("article/tags.jsp");
 	}
-	@RequestMapping(value = "set/friendlylink/list",method = RequestMethod.GET)  	
+	@RequestMapping(value = "admin/set/friendlylink/list",method = RequestMethod.GET)  	
 	public ModelAndView adminFriendlyLink() {
 		return new ModelAndView("set/friendlylink.jsp");
 	}

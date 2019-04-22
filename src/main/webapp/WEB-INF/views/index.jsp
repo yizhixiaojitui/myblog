@@ -123,13 +123,13 @@
 								class="layui-nav-more"></span></a>
 							<dl class="layui-nav-child">
 								<dd data-name="list" data-jump="content/list" class="">
-									<a href="javascript:;" lay-href="content/list">文章列表</a>
+									<a href="javascript:;" lay-href="admin/content/list">文章列表</a>
 								</dd>
 								<dd data-name="tags" data-jump="tags/list" class="">
-									<a href="javascript:;" lay-href="content/tags/list">分类管理</a>
+									<a href="javascript:;" lay-href="admin/content/tags/list">分类管理</a>
 								</dd>
 								<dd data-name="comment" data-jump="content/comment" class="">
-									<a href="javascript:;" lay-href="content/comment">评论管理</a>
+									<a href="javascript:;" lay-href="admin/content/comment">评论管理</a>
 								</dd>
 							</dl>
 						</li>
@@ -506,7 +506,7 @@
 											<a lay-href="set/user/password.html">修改密码</a>
 										</dd>
 										<dd>
-											<a lay-href="set/friendlylink/list">友情链接</a>
+											<a lay-href="admin/set/friendlylink/list">友情链接</a>
 										</dd>
 									</dl>
 								</dd>

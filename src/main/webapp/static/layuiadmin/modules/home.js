@@ -5,7 +5,8 @@ layui.define(['layer','util', 'jquery','flow'],function(exports){ //提示：模
      util=layui.util;
 	 
 	
-              $.get(basePath+'/getbloginfo', function(res){
+	 		console.log("resPath"+resPath);
+              $.get(resPath+'/home/getbloginfo?u='+username, function(res){
             	  var obj=res.data;
             	  document.title =obj.blogTitle;
             	  $('.layui-logo-brand').html('<a href="'+basePath+'"><h2>'+obj.blogName+'</h2></a>');
@@ -30,9 +31,10 @@ layui.define(['layer','util', 'jquery','flow'],function(exports){ //提示：模
 	            ,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页
 	              var lis = [];
 	              //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
-	              $.get(basePath+'/article?page='+page, function(res){
+	              $.get(resPath+'/home/article?page='+page+'&u='+username, function(res){
 	                //假设你的列表返回在data集合中
 	                 console.log(page);
+	                 console.log(basePath);
 	                layui.each(res.data, function(index, item){
 	                  lis.push('<div class="body-box-15 mg-b-10 my-article-list"> <h3 class="mg-b-10"><a href="'+basePath+'/article/details/'+item.articleId+'" title="'+item.articleName+'">'+
 	                		  item.articleName+'</a>');
@@ -51,7 +53,16 @@ layui.define(['layer','util', 'jquery','flow'],function(exports){ //提示：模
 	              });
 	            }
 	          });
-
+		  $.get(resPath+'/home/friendlyLink', function(res){
+			  var obj=res.data;
+			  var lis = [];
+			  
+			  layui.each(res.data, function(index, item){
+				  lis.push('<a href="'+item.linkUrl+'" target="_blank">'+item.linkName+'</a>');
+			  });
+			  $('#links').html(lis);
+		  });
+		  
   
   //输出test接口
 		  exports('home', {});
