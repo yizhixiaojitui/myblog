@@ -8,13 +8,14 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<title></title>
+<title>${article.articleName }</title>
 <link rel="stylesheet" type="text/css"
 	href="http://at.alicdn.com/t/font_959643_ibxvenqnukf.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/static/layuiadmin/layui/css/layui.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/static/css/my.css">
+	<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/static/favicon.ico" />
 </head>
 
 <body class="layui-layout-body my-theme-default bgc-f4">
@@ -52,7 +53,7 @@
 		<div class="layui-container mg-b-20">
 			<div class="layui-row my-content mg-b-20">
 				<div class="layui-col-md9 ">
-					<div class="border-box bgc-fff mg-b-10 body-box-15">
+					<div class="border-box bgc-fff mg-b-10 body-box-15 detail">
 						<div class="my-article-detail">
 							<h1 class="mg-b-20 center">${article.articleName }</h1>
 							<div class="my-article-detail-blogger mg-b-10 center">
@@ -62,7 +63,7 @@
 								<fmt:formatDate value="${article.articleTime }"
 										pattern="yyyy-MM-dd HH:mm" /></span> <span class="top-text"><i
 									class="iconfont icon-browse"></i>${article.articleClick }</span> <span
-									class="top-text"><i class="iconfont icon-message"></i>68</span>
+									class="top-text"><i class="iconfont icon-message"></i>${article.articleClick }</span>
 							</div>
 							<hr>
 						</div>
@@ -79,14 +80,15 @@
 								autocomplete="off" class="layui-input"></span>
 						</div>
 						<div class="mg-b-10">
-							<textarea id="demo" style="display: none;"></textarea>
+							<textarea id="comment" style="display: none;"></textarea>
 						</div>
 						<button class="layui-btn ">提交</button>
 					</div>
 				</div>
 				<div class="layui-col-md3">
 					<div class=" mg-l-10">
-						<div class="bgc-fff pd-15-20 mg-b-10 border-box" id="u_box">
+						<div class="pd-15-20 mg-b-10 border-box " id="u_box">
+						
 
 						</div>
 						<div class="layui-card border-box bgc-fff mg-b-10">
@@ -124,10 +126,7 @@
 						<div class="layui-card border-box bgc-fff mg-b-10">
 							<div class="layui-card-header layui-bg-gray">友情链接</div>
 							<div class="layui-card-body links">
-								<ul>
-								<a href="https://www.yangqq.com/gerenwangzhan.html" target="_blank">个人网站</a>
-								<a href="https://www.yangqq.com/gerenwangzhan.html" target="_blank">个人网站</a>
-								<a href="https://www.yangqq.com/gerenwangzhan.html" target="_blank">个人网站</a>
+								<ul id="links">
 								</ul>
 							</div>
 						</div>
@@ -137,8 +136,8 @@
 		</div>
 		<hr>
 		<!--内容结束-->
-		<footer class="center">
-		<div>Copyright © 2018 xiaojitui. All Rights Reserved</div>
+		<footer class="center ">
+		<div class="pd-tb-10">Copyright © 2018 xiaojitui. All Rights Reserved</div>
 		</footer>
 	</div>
 	<!-- 你的HTML代码 -->
@@ -147,53 +146,16 @@
 		src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
 	<script>
 		//一般直接写在一个js文件中
-		
-				layui.use(
-						[ 'layer', 'form', 'jquery', 'element', 'layedit','code' ],
-						function() {
-							var layer = layui.layer, form = layui.form, element = layui.element, layedit = layui.layedit, $ = layui.$;
-							var username='${user}';
-							layedit.build('demo', {
-								height : 180, //设置编辑器高度
-								tool : [ 'face', 'image', '|', 'strong',
-										'italic', 'underline', '|', 'link',
-										'code', 'preview' ]
-							});
-							layui.code({
-								  elem: 'pre' //默认值为.layui-code
-								});
-									$.get(
-											resPath+'/home/getbloginfo?u='+username,
-											function(res) {
-												var obj = res.data;
-												document.title = "${article.articleName }";
-												$('.layui-logo-brand').html(
-														'<a href="'+basePath+'"><h2>'
-																+ obj.blogName
-																+ '</h2></a>');
-												var htmlStr = '<div class="my-blogger-img mg-b-20"> <a href="'+basePath+'"><img src="'+resPath+'/static/images/'+
-        			  obj.userImageUrl+'"></a></div><div class="my-blogger-detail center"><div class="mg-b-10"><span class="my-blogger-name">'
-														+ obj.userNikename
-														+ '</span><span class="my-blogger-sex">';
-												if (obj.userSex == 1) {
-													htmlStr += '<i class="layui-icon layui-icon-male"></i>';
-												}
-												;
-												if (obj.userSex == 0) {
-													htmlStr += '<i class="layui-icon layui-icon-female"></i>';
-												}
-												;
-												htmlStr += '</span></div><p class="mg-b-10">'
-														+ obj.userDescription
-														+ '</p><div class="my-article-class"><div class="my-article-class-title layui-row layui-col-space10"><div class="layui-col-md6">文章</div><div class="layui-col-md6">浏览人数</div></div><div class="my-article-class-num layui-row layui-col-space10"><div class="layui-col-md6"><a href="#">'
-														+ obj.articleNum
-														+ '</a></div><div class="layui-col-md6"><a href="#">'
-														+ obj.pageView
-														+ '</a></div></div></div></div>';
-
-												$('#u_box').html(htmlStr);
-											});
-						});
+		var username='${user}';
+		layui.config({
+			base : '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
+		}).extend({
+			index : 'lib/index' //主入口模块
+		}).use([ 'index', 'home' ],function() {
+			
+			
+		});
+				
 	</script>
 </body>
 

@@ -16,4 +16,6 @@ public interface UserService {
 	User findUserById(Integer userId);
 
 	Map<String, String> LoginSignup(HttpServletRequest request,HttpServletResponse response,LoginHelper login);
+
+	
 }

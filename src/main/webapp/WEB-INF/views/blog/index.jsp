@@ -14,7 +14,7 @@
 	href="${pageContext.request.contextPath }/static/layuiadmin/layui/css/layui.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/static/css/my.css">
-
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/static/favicon.ico" />
 </head>
 
 <body class="layui-layout-body my-theme-default bgc-f4">
@@ -57,7 +57,7 @@
 				</div>
 				<div class="layui-col-md3">
 					<div class=" mg-l-10">
-						<div class="bgc-fff pd-15-20 mg-b-10 border-box" id="u_box">
+						<div class=" pd-15-20 mg-b-10 border-box" id="u_box">
 
 						</div>
 						<div class="layui-card border-box bgc-fff mg-b-10">

@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/common/plm/common/utils/ByteUtil.java=UTF-8
+encoding//src/common/plm/common/utils/MD5Util.java=UTF-8
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/resources/jdbc.properties=UTF-8

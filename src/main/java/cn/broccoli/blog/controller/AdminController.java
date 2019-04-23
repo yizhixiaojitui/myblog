@@ -38,6 +38,14 @@ public class AdminController {
 	public ModelAndView adminFriendlyLink() {
 		return new ModelAndView("set/friendlylink.jsp");
 	}
+	@RequestMapping(value = "admin/set/user/password",method = RequestMethod.GET)  	
+	public ModelAndView adminUpdatePassword() {
+		return new ModelAndView("set/user/password.jsp");
+	}
+	@RequestMapping(value = "admin/set/user/info",method = RequestMethod.GET)  	
+	public ModelAndView adminUserInfo() {
+		return new ModelAndView("set/user/info.jsp");
+	}
 	
 	
 }

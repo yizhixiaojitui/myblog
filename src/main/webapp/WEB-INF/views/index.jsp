@@ -16,7 +16,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/static/layuiadmin/style/admin.css"
 	media="all">
-
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/static/favicon.ico" />
 
 </head>
 <body class="layui-layout-body">
@@ -30,9 +30,7 @@
 						href="javascript:;" layadmin-event="flexible" title="侧边伸缩"> <i
 							class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
 					</a></li>
-					<li class="layui-nav-item layui-hide-xs" lay-unselect><a
-						href="http://www.layui.com/admin/" target="_blank" title="前台">
-							<i class="layui-icon layui-icon-website"></i>
+					<li class="layui-nav-item layui-hide-xs" lay-unselect id="homeurl">
 					</a></li>
 					<li class="layui-nav-item" lay-unselect><a href="javascript:;"
 						layadmin-event="refresh" title="刷新"> <i
@@ -500,10 +498,10 @@
 									<a href="javascript:;">我的设置</a>
 									<dl class="layui-nav-child">
 										<dd>
-											<a lay-href="set/user/info.html">基本资料</a>
+											<a lay-href="admin/set/user/info">基本资料</a>
 										</dd>
 										<dd>
-											<a lay-href="set/user/password.html">修改密码</a>
+											<a lay-href="admin/set/user/password">修改密码</a>
 										</dd>
 										<dd>
 											<a lay-href="admin/set/friendlylink/list">友情链接</a>
@@ -567,7 +565,7 @@
 			<div class="layadmin-body-shade" layadmin-event="shade"></div>
 		</div>
 	</div>
-
+<script src="${pageContext.request.contextPath }/static/js/my.js"></script>
 	<script src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
 	<script>
 		layui.config({
@@ -577,6 +575,8 @@
 		}).use('index',function(){
 			var cate = layui.data('layuiAdmin');
 			console.log(cate.access_token)
+			console.log();
+			//$('#homeurl').html('<a href="http://www.layui.com/admin/" target="_blank" title="前台"><i class="layui-icon layui-icon-website"></i>');
 		});
 	</script>
 

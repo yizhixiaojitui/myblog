@@ -19,6 +19,7 @@ import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.LoginHelper;
 import plm.common.exceptions.CheckException;
 import plm.common.exceptions.UnloginException;
+import plm.common.utils.SaleUtil;
 @Service("UserService")
 public class UserServiceImpl implements UserService{
 	private static Logger logger = Logger.getLogger(UserServiceImpl.class);
@@ -33,10 +34,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String countByName(String name) {
-		if(userMapper.countByName(name)==0) {
-			return "template/tips/error.html";
-		}
-		return "blog/index.jsp";
+		return SaleUtil.PassWordToMD5(name);
 	}
 
 	/* (non-Javadoc)
@@ -46,12 +44,13 @@ public class UserServiceImpl implements UserService{
 	public Map<String, String> LoginSignup(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
 		Map<String, String> result=new HashMap<String, String>();
 		HttpSession session=request.getSession();
-		
 		String randomcode=session.getAttribute("randomcode_key").toString();
 		if(!randomcode.equalsIgnoreCase(login.getVercode())) {
 			System.out.println("验证码错误！！！");
 			throw new UnloginException("验证码错误");
 		}
+		//密码MD5加密比对
+		login.setPassword(SaleUtil.PassWordToMD5(login.getPassword()));
 		User user=userMapper.selectByUserName(login.getUsername());
 		if(user==null) {
 			throw new UnloginException("用户名不存在或密码错误！");
@@ -78,5 +77,7 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userMapper.selectByPrimaryKey(userId);
 	}
+	
+	
 
 }

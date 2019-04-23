@@ -33,4 +33,8 @@ public interface UserMapper {
     int selectIdByName(String name);
     
     User selectByUserName(String name);
+  
+    int updatePassword(@Param("userId")Integer userId,@Param("password")String password);
+    
+    
 }

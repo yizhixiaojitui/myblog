@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.broccoli.blog.service.UserService;
 import cn.broccoli.blog.utils.LoginHelper;
+import cn.broccoli.blog.utils.RandomValidateCode;
 import plm.common.beans.ResultBean;
 
 
@@ -35,5 +36,17 @@ public class UserController {
 	public ResultBean<Map<String, String>> Login(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
 		
 		return new ResultBean<Map<String,String>>(userService.LoginSignup(request, response,login));
+	}
+	@RequestMapping(value = "/account/get",method = RequestMethod.GET)  
+	@ResponseBody
+	public String validateCodeImage(String name) {
+		
+		return userService.countByName(name);
+	}
+	@RequestMapping(value = "/account/update/password",method = RequestMethod.POST)
+	@ResponseBody
+	public ResultBean<Boolean> updatePassword(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
+		
+		return new ResultBean<Boolean>();
 	}
 }
