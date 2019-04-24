@@ -33,8 +33,10 @@ layui.define(['layer', 'util', 'jquery', 'flow', 'element', 'layedit', 'code'], 
         i.get(resPath + '/home/getbloginfo?u=' + username, function(res) {
             var obj = res.data;
             var str = "";
+            console.log(basePath);
+            console.log(obj.blogName);
             //渲染logo
-            $('.layui-logo-brand').html('<a href="' + basePath + '"><h2>' + obj.blogName + '</h2></a>');
+            i('.layui-logo-brand').html('<a href="' + basePath + '"><h2>' + obj.blogName + '</h2></a>');
 
             str += '<div class="my-blogger-img mg-b-20"> <a href="' + basePath + '"><img src="' + resPath + '/static/images/' + obj.userImageUrl + '"></a></div>';
             str += '<div class="my-blogger-detail center"><div class="mg-b-10"><span class="my-blogger-name">' + obj.userNikename + '</span><span class="my-blogger-sex">';
@@ -48,7 +50,7 @@ layui.define(['layer', 'util', 'jquery', 'flow', 'element', 'layedit', 'code'], 
             str += '<div class="my-article-class"><div class="my-article-class-title layui-row layui-col-space10"><div class="layui-col-md6">文章</div><div class="layui-col-md6">浏览人数</div></div>';
             str += '<div class="my-article-class-num layui-row layui-col-space10"><div class="layui-col-md6"><a href="#">' + obj.articleNum + '</a></div>';
             str += '<div class="layui-col-md6"><a href="#">' + obj.pageView + '</a></div></div></div></div><div class="user-backgroup-image" style="background-image: url(' + resPath + '/static/images/bg3.jpg)"></div>';
-            $('#u_box').html(str);
+            i('#u_box').html(str);
         }),
         //流加载渲染主页内容
         flow.load({
@@ -56,8 +58,9 @@ layui.define(['layer', 'util', 'jquery', 'flow', 'element', 'layedit', 'code'], 
                 ,
             done: function(page, next) { //到达临界点（默认滚动触发），触发下一页
                 var lis = [];
+                console.log(resPath);
                 //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
-                $.get(resPath + '/home/article?page=' + page + '&u=' + username, function(res) {
+                i.get(resPath + '/home/article?page=' + page + '&u=' + username, function(res) {
                     //假设你的列表返回在data集合中
                     console.log(page);
                     console.log(basePath);
@@ -88,7 +91,7 @@ layui.define(['layer', 'util', 'jquery', 'flow', 'element', 'layedit', 'code'], 
             layui.each(res.data, function(index, item) {
                 lis.push('<a href="' + item.linkUrl + '" target="_blank">' + item.linkName + '</a>');
             });
-            $('#links').html(lis);
+            i('#links').html(lis);
         });
 
 

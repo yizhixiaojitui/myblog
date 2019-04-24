@@ -56,6 +56,7 @@
   </div>
 
   <script src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>  
+  <script src="${pageContext.request.contextPath }/static/js/my.js"></script> 
   <script>
   layui.config({
     base: '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径

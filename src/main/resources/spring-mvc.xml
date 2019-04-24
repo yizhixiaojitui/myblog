@@ -18,8 +18,19 @@
     <context:component-scan base-package="cn.broccoli.blog.controller" />
 
     <!-- 扩充了注解驱动，可以将请求参数绑定到控制器参数 -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService" /> 
 
+
+	<!-- 自定义参数绑定 -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<!-- 转换器 -->
+		<property name="converters">
+			<list>
+				<!-- 日期类型转换 -->
+				<bean class="cn.broccoli.blog.controller.converter.CustomDateConverter"/>
+			</list>
+		</property>
+	</bean>
     <!-- 静态资源处理css js imgs -->
     <!--<mvc:resources location="/resources/**" mapping="/resources"/>
     <mvc:resources location="/WEB-INF/res/" mapping="/res/**"></mvc:resources>-->

@@ -2,6 +2,8 @@ package cn.broccoli.blog.mapper;
 
 import cn.broccoli.blog.po.User;
 import cn.broccoli.blog.po.UserExample;
+import cn.broccoli.blog.utils.UserHelper;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,5 +38,7 @@ public interface UserMapper {
   
     int updatePassword(@Param("userId")Integer userId,@Param("password")String password);
     
+    UserHelper selectUserInfoById(Integer userId) ;
     
+    int updateUserInfo(UserHelper userHelper);
 }

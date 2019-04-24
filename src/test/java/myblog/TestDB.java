@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.broccoli.blog.mapper.UserMapper;
 import cn.broccoli.blog.po.User;
+import cn.broccoli.blog.utils.UserHelper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring-mybatis.xml" })
@@ -23,4 +24,12 @@ public class TestDB {
 	        logger.info("select product = " + user.toString());
 	    }
 	
+	 @Test
+	    public void testUpdate() {
+		 UserHelper userHelper=new UserHelper();
+		 userHelper.setUserNikename("一只小鸡腿");
+		 userHelper.setUserId(10001);
+		//
+	        logger.info("=====update = "+userMapper.updateUserInfo(userHelper) );
+	    }
 }

@@ -1,12 +1,17 @@
 /** layuiAdmin.std-v1.2.1 LPPL License By http://www.layui.com/admin/ */ ;
-layui.define(["form", "upload"],
+layui.define(["form", "upload","laydate","util"],
     function(t) {
         var i = layui.$,
             e = layui.layer,
             a = (layui.laytpl, layui.setter, layui.view, layui.admin),
             n = layui.form,
-            s = layui.upload;
+            s = layui.upload,
+            d = layui.laydate,
+            u = layui.util;
         i("body");
+        d.render({
+            elem: '#date'
+          });
         n.verify({
                 nickname: function(t, i) {
                     return new RegExp("^[a-zA-Z0-9_一-龥\\s·]+$").test(t) ? /(^\_)|(\__)|(\_+$)/.test(t) ? "用户名首尾不能出现下划线'_'" : /^\d+\d+\d$/.test(t) ? "用户名不能全为数字" : void 0 : "用户名不能有特殊字符"
@@ -28,8 +33,31 @@ layui.define(["form", "upload"],
                 }),
             n.on("submit(setmyinfo)",
                 function(t) {
-                    return e.msg(JSON.stringify(t.field)),
-                        !1
+            	i.ajax({
+                    url: resPath + "/admin/update/userinfo",
+                    type: "POST",
+                    data: t.field,
+                    success: function(res) {
+                        if (res.data == 1) {
+                        	layer.msg('修改成功！');
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus,
+                        errorThrown) {
+                        // 状态码
+                        console.log(XMLHttpRequest.status);
+                        // 状态
+                        console.log(XMLHttpRequest.readyState);
+                        // 错误信息   
+                        console.log(textStatus);
+                    }
+                });
+                }),
+            n.on("submit(resetmyinfo)",
+                function(t) {
+                    e.msg('hello world');
                 });
         var r = i("#LAY_avatarSrc");
         s.render({
@@ -57,7 +85,53 @@ layui.define(["form", "upload"],
             },
             n.on("submit(setmypass)",
                 function(t) {
-                    return e.msg(JSON.stringify(t.field))
+            	console.log(JSON.stringify(t.field));
+            	console.log(resPath);
+            	i.ajax({
+                    url: resPath + "/admin/update/password",
+                    type: "POST",
+                    data: t.field,
+                    success: function(res) {
+                    	
+                        if (res.data == 1) {
+                            
+                        	layer.msg('修改成功！');
+
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus,
+                        errorThrown) {
+                        // 状态码
+                        console.log(XMLHttpRequest.status);
+                        // 状态
+                        console.log(XMLHttpRequest.readyState);
+                        // 错误信息   
+                        console.log(textStatus);
+                    }
+                });
+            	
+                   
+                }),i.ajax({
+                    url: resPath + "/admin/get/userinfo",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(res) {
+                    	var obj=res.data;
+                    	obj.userBirthday=u.toDateString(obj.userBirthday, "yyyy-MM-dd");
+                    	n.val('userinfo',res.data );
+                      
+                    },
+                    error: function(XMLHttpRequest, textStatus,
+                        errorThrown) {
+                        // 状态码
+                        console.log(XMLHttpRequest.status);
+                        // 状态
+                        console.log(XMLHttpRequest.readyState);
+                        // 错误信息   
+                        console.log(textStatus);
+                    }
                 }),
             t("set", {})
     });

@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.broccoli.blog.service.UserService;
+import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.LoginHelper;
 import cn.broccoli.blog.utils.RandomValidateCode;
+import cn.broccoli.blog.utils.UserHelper;
 import plm.common.beans.ResultBean;
 
 
@@ -24,6 +26,9 @@ import plm.common.beans.ResultBean;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	JWTUtil jwtUtil;
+	
 	/**登录验证
 	 * @param request
 	 * @param response
@@ -43,10 +48,22 @@ public class UserController {
 		
 		return userService.countByName(name);
 	}
-	@RequestMapping(value = "/account/update/password",method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/update/password",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultBean<Boolean> updatePassword(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
+	public ResultBean<Integer> updatePassword(HttpServletRequest request,String oldPassword,String password) {
+	
+		return new ResultBean<Integer>(userService.modifyUserPassword(jwtUtil.getUserId(request), oldPassword, password));
+	}
+	@RequestMapping(value = "/admin/get/userinfo",method = RequestMethod.GET)  
+	@ResponseBody
+	public ResultBean<UserHelper> getUser(HttpServletRequest request) {
 		
-		return new ResultBean<Boolean>();
+		return new ResultBean<UserHelper>(userService.findUserInfoById(jwtUtil.getUserId(request)));
+	}
+	@RequestMapping(value = "/admin/update/userinfo",method = RequestMethod.POST)  
+	@ResponseBody
+	public ResultBean<Integer> updateUser(HttpServletRequest request,UserHelper userHelper) {
+		System.out.println(userHelper.toString());
+		return new ResultBean<Integer>(userService.modifyUserInfo( userHelper,jwtUtil.getUserId(request)));
 	}
 }

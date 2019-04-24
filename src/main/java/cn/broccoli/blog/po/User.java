@@ -11,7 +11,7 @@ public class User {
 
     private String userPwd;
 
-    private Integer userPhone;
+    private String userPhone;
 
     private String userSex;
 
@@ -75,11 +75,11 @@ public class User {
         this.userPwd = userPwd == null ? null : userPwd.trim();
     }
 
-    public Integer getUserPhone() {
+    public String getUserPhone() {
         return userPhone;
     }
 
-    public void setUserPhone(Integer userPhone) {
+    public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
     }
 
