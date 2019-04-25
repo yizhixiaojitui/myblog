@@ -26,10 +26,11 @@
 <body>
  <div class="layui-fluid">
     <div class="layui-card pd-20">
-	<div class="layui-form pd-tb-10" >
+	<div class="layui-form pd-tb-10 " lay-filter="articleinfo">
 		<div class="layui-form-item">
 			<label class="layui-form-label">文章标题</label>
 			<div class="layui-input-block">
+			<input id='hidetext' name="articleId" type="hidden" />
 				<input type="text" name="articleName" lay-verify="required"
 					autocomplete="off" placeholder="请输入标题" class="layui-input" autofocus="autofocus">
 			</div>
@@ -113,7 +114,7 @@
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button type="button" class="layui-btn" lay-submit="" lay-filter="save-article">立即提交</button>
+				<button type="button" class="layui-btn" lay-submit="" lay-filter="edit-article">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</div>
@@ -126,11 +127,17 @@
 		src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
 		
 	<script>
+	var articleid;
+	 function child(id){
+		 articleid=id;
+		};
 	layui.config({
         base: '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'edit']);
+    }).use(['index', 'edit'],function(){
+    	
+    });
 		
 	</script>
 </body>

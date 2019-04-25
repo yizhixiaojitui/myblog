@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
+import cn.broccoli.blog.utils.ArticleInfo;
 import cn.broccoli.blog.utils.TagsList;
 
 public interface ArticleService {
@@ -40,5 +41,5 @@ public interface ArticleService {
 	 
 	 boolean removeTags(List<TagsList> ids);
 	 
-	 
+	 ArticleInfo findArticleInfo(Integer userid,Integer articleid);
 }

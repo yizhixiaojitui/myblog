@@ -30,7 +30,7 @@ layui.define(["layer", "form"], function(t) {
         return l.ie && l.ie < 8 ? c.removeClass("layui-hide").addClass(o) : (d[0] && d.remove(), s.call(a, m, c[0], y), c.addClass("layui-hide").after(m), a.index)
     }, c.prototype.getContent = function(t) { var e = u(t); if (e[0]) return d(e[0].document.body.innerHTML) }, c.prototype.getText = function(t) { var i = u(t); if (i[0]) return e(i[0].document.body).text() }, c.prototype.setContent = function(t, i, a) {
         var l = u(t);
-        l[0] && (a ? e(l[0].document.body).append(i) : e(l[0].document.body).html(i), layedit.sync(t))
+        l[0] && (a ? e(l[0].document.body).append(i) : e(l[0].document.body).html(i), this.sync(t))
     }, c.prototype.sync = function(t) {
         var i = u(t);
         if (i[0]) {

@@ -35,6 +35,31 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
         //设置编辑器高度
 
     });
+    $.ajax({
+        url: resPath + "/api/article/getinfo?id="+articleid,
+        type: "get",
+        contentType: "application/json",
+        dataType: "json",
+        success: function(res) {
+            if (res.code == 0) {
+            	form.val('articleinfo',res.data);
+            	layedit.setContent(index,res.data.articleContent,false);
+            	layedit.sync(index);
+            } else {
+                layer.msg(res.msg);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus,
+            errorThrown) {
+            // 状态码
+            console.log(XMLHttpRequest.status);
+            // 状态
+            console.log(XMLHttpRequest.readyState);
+            // 错误信息   
+            console.log(textStatus);
+            
+        }
+    });
     console.log(resPath);
 
     $(":reset").on("click", function() {
@@ -49,8 +74,8 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
         done: function(value) { //回车后的回调
             console.log(value)
         }
-    })
-
+    });
+    
     getArticleSortList();
     //获取文章分类
     function getArticleSortList() {
@@ -119,9 +144,43 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
                 });
 
             });
-        })
+        }),
     //保存文章
-    form.on('submit(formDemo)', function(data) {
+    form.on('submit(save-article)', function(data) {
+        data.field.articleType = data.field.articleType ? 1 : 0;
+        data.field.articleUp = data.field.articleUp ? 1 : 0;
+        data.field.articleSupport = data.field.articleSupport ? 1 : 0;
+        console.log(data.field.articleType);
+        console.log(JSON.stringify(data.field));
+        $.ajax({
+            url: resPath + "/api/article/save?r=" + Math.random(),
+            type: "post",
+            data: JSON.stringify(data.field),
+            contentType: "application/json",
+            dataType: "json",
+            success: function(res) {
+                if (res.code == 0) {
+                    layer.msg(res.msg);
+                } else {
+                    layer.msg(res.msg);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus,
+                errorThrown) {
+                // 状态码
+                console.log(XMLHttpRequest.status);
+                // 状态
+                console.log(XMLHttpRequest.readyState);
+                // 错误信息   
+                console.log(textStatus);
+                
+            }
+        });
+
+
+        return false;
+    }),
+    form.on('submit(edit-article)', function(data) {
         data.field.articleType = data.field.articleType ? 1 : 0;
         data.field.articleUp = data.field.articleUp ? 1 : 0;
         data.field.articleSupport = data.field.articleSupport ? 1 : 0;
@@ -153,7 +212,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
 
 
         return false;
-    });
+    }),
     form.verify({
         content: function(value) {
             if (layedit.getContent(index).length < 5) {
@@ -170,6 +229,6 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
             //同步编辑器内容
             return layedit.sync(index);
         }
-    });
-    exports('edit', {});
+    }),
+    exports('edit', {})
 });

@@ -64,6 +64,19 @@ layui.define(["table", "form"], function(t) {
         } else if (layEvent === 'edit') { //编辑
             //do something
 
+        	layer.open({
+                type: 2,
+                title: '添加文章',
+                content: '../article/revise',
+                maxmin: true,
+                area: ['550px', '550px'],
+                success: function(layero, index){
+                	var iframe = window['layui-layer-iframe'+index];//获取子页面dom对象
+                	//向子页面传递id
+                	iframe.child(data.articleId);
+                }
+              });
+        	
             //同步更新缓存对应的值
 
         }

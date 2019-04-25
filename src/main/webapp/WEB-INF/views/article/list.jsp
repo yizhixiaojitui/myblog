@@ -154,15 +154,9 @@
         layer.open({
           type: 2,
           title: '添加文章',
-          content: 'edit',
+          content: '../article/edit',
           maxmin: true,
-          area: ['550px', '550px'],
-          btn: ['确定', '取消'],
-          yes: function(index, layero) {
-            //点击确认触发 iframe 内容中的按钮提交
-            var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
-            submit.click();
-          }
+          area: ['550px', '550px']
         });
       }
     };

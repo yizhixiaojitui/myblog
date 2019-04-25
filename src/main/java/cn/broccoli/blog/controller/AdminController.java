@@ -14,6 +14,10 @@ public class AdminController {
 	public ModelAndView articleEdit() {
 		return new ModelAndView("/article/edit.jsp");
 	}
+	@RequestMapping(value = "/admin/article/revise",method = RequestMethod.GET)  	
+	public ModelAndView articleRevise() {
+		return new ModelAndView("/article/revise.jsp");
+	}
 	@RequestMapping(value = "admin/article/trash",method = RequestMethod.GET)  	
 	public ModelAndView articleTrash() {
 		return new ModelAndView("article/trash.jsp");

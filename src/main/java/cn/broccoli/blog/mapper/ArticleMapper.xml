@@ -17,6 +17,21 @@
     <result column="module_type" property="moduleType" jdbcType="TINYINT" />
   </resultMap>
    
+ <resultMap id="articleInfo" type="cn.broccoli.blog.utils.ArticleInfo" >
+ <result column="article_id" property="articleId"/> 
+    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
+    <result column="sort_article_id" property="sortArticleId" jdbcType="INTEGER" />
+    <result column="article_support" property="articleSupport" jdbcType="TINYINT" />
+    <result column="article_label" property="articleLabel" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="TINYINT" />
+    <result column="article_type" property="articleType" jdbcType="INTEGER" />
+    <result column="article_up" property="articleUp" jdbcType="TINYINT" />
+    <result column="article_description" property="articleDescription" jdbcType="VARCHAR"/>
+    <result column="article_status" property="articleStatus" jdbcType="TINYINT" />
+    <result column="module_type" property="moduleType" jdbcType="TINYINT" />
+ </resultMap>
   <resultMap id="articleDetails" type="cn.broccoli.blog.po.ArticleDetails" >
    <result column="article_id" property="articleId"/> 
     <result column="article_name" property="articleName" jdbcType="VARCHAR" />
@@ -52,6 +67,27 @@ select count(*) from (SELECT a.article_id FROM article a  INNER JOIN article_sor
 </foreach>
 GROUP BY A.article_id ) t
  </select>
+ 
+  <select id="selectArticle" resultMap="articleInfo">
+ SELECT 
+ A.article_id,
+ A.article_name,
+ A.sort_article_id,
+ A.user_id,
+ A.article_content,
+ A.type_id,
+ A.article_type,
+ A.article_up,
+ A.article_support,
+ A.article_label,
+ A.article_status,
+ A.article_description,
+ A.module_type
+ FROM 
+ article A
+  where
+  A.user_id=#{userid} and A.article_id=#{articleid}; 
+  </select>
    <select id="selectArticleByUserid" resultMap="ArticleListResult">
  SELECT 
  A.article_id,

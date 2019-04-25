@@ -18,6 +18,7 @@ import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.po.ArticleSort;
 import cn.broccoli.blog.service.ArticleService;
+import cn.broccoli.blog.utils.ArticleInfo;
 import cn.broccoli.blog.utils.CusAccessObjectUtil;
 import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.TagsList;
@@ -163,6 +164,17 @@ public class ArticleServiceImpl implements ArticleService{
 		}else {
 		return articleSortMapper.deleteTagsById(ids);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.ArticleService#findArticleInfo(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	public ArticleInfo findArticleInfo(Integer userid, Integer articleid) {
+		// TODO Auto-generated method stub
+		ArticleInfo articleinfo=articleMapper.selectArticle(userid, articleid);
+		System.out.println(articleinfo);
+		return articleinfo;
 	}
 
 }

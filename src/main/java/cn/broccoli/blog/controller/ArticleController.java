@@ -20,6 +20,7 @@ import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.po.FriendlyLink;
 import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.service.UserService;
+import cn.broccoli.blog.utils.ArticleInfo;
 import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.TagsList;
 
@@ -123,6 +124,11 @@ public class ArticleController {
 	@ResponseBody
 	public ResultBean<Boolean> removeTags(@RequestBody List<TagsList> list){
 		return new ResultBean<Boolean>(articleService.removeTags(list));
+	}
+	@RequestMapping(value = "/api/article/getinfo",method = RequestMethod.GET)
+	@ResponseBody
+	public ResultBean<ArticleInfo> getArticleInfo(HttpServletRequest request,Integer id){
+		return new ResultBean<ArticleInfo>(articleService.findArticleInfo(jwtUtil.getUserId(request), id));
 	}
 	
 }
