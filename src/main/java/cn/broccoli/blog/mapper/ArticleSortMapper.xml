@@ -230,4 +230,9 @@
       sort_article_name = #{sortArticleName,jdbcType=VARCHAR}
     where sort_article_id = #{sortArticleId,jdbcType=INTEGER}
   </update>
+  <update id="updateById" parameterType="cn.broccoli.blog.utils.TagsList" >
+    update article_sort
+    set sort_article_name = #{sortArticleName,jdbcType=VARCHAR}
+    where sort_article_id = #{sortArticleId,jdbcType=INTEGER}
+  </update>
 </mapper>

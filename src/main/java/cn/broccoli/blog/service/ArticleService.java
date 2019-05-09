@@ -42,4 +42,8 @@ public interface ArticleService {
 	 boolean removeTags(List<TagsList> ids);
 	 
 	 ArticleInfo findArticleInfo(Integer userid,Integer articleid);
+	 
+	 int modifyArticle(ArticleInfo articleinfo,Integer userid);
+	 
+	 int modifyTags(TagsList tl);
 }

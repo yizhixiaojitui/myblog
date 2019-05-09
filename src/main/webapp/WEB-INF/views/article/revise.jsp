@@ -127,17 +127,20 @@
 		src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
 		
 	<script>
-	var articleid;
-	 function child(id){
-		 articleid=id;
+	var dataResult;
+	 function child(data){
+		 dataResult=data;
 		};
 	layui.config({
         base: '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'edit'],function(){
+    }).use(['index','revise'],function(){
+    	// var revise=layui.revise;
+    		//调用方法  
+    		 
     	
-    });
+   	});
 		
 	</script>
 </body>

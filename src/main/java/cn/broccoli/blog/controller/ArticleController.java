@@ -65,7 +65,12 @@ public class ArticleController {
 		Integer userid=jwtUtil.getUserId(request);
 		return new PageResultBean<List<TagsList>>(articleService.findTagsCount(userid, sortArticleId, sortArticleName), articleService.findTagsList(userid, page, limit, sortArticleId, sortArticleName));
 	}
-	
+	@RequestMapping(value = "/api/article/tags/update", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultBean<Integer> updateTag(@RequestBody TagsList tl) {
+
+		return new ResultBean<Integer>(articleService.modifyTags(tl));
+	}
 	//避免重复先要确认数据库是否已添加
 	/**增加文章分类
 	 * @param articleSort
@@ -129,6 +134,11 @@ public class ArticleController {
 	@ResponseBody
 	public ResultBean<ArticleInfo> getArticleInfo(HttpServletRequest request,Integer id){
 		return new ResultBean<ArticleInfo>(articleService.findArticleInfo(jwtUtil.getUserId(request), id));
+	}
+	@RequestMapping(value = "/api/article/update",method = RequestMethod.POST)
+	@ResponseBody
+	public ResultBean<Integer> updateArticle(HttpServletRequest request,@RequestBody ArticleInfo articleinfo){
+		return new ResultBean<Integer>(articleService.modifyArticle(articleinfo, jwtUtil.getUserId(request)));
 	}
 	
 }

@@ -33,8 +33,6 @@ public class ArticleInfo {
 
     private String articleLabel;
 
-   
-    
     private Byte articleStatus;
 
     private String articleDescription;

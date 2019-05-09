@@ -41,6 +41,7 @@ public interface ArticleSortMapper {
 
     boolean deleteTagsById(List<TagsList> ids);
 
+    int updateById(TagsList tl);
 
     ArticleSort selectByName(@Param("userid") Integer userid,@Param("name")String name);
 

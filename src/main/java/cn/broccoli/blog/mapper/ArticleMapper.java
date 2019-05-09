@@ -26,4 +26,6 @@ public interface ArticleMapper {
     int selectByTagsID(List<TagsList> ids);
     
     ArticleInfo selectArticle(@Param("userid")Integer userid,@Param("articleid")Integer articleid);
+    
+    int updateArticle(ArticleInfo articleinfo);
 }

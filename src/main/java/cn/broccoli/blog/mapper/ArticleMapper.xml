@@ -58,7 +58,7 @@
  A.article_status,
  A.article_description
  FROM 
- (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id WHERE A.article_type=1 and A.article_status=0 and A.user_id=(select user_id from user where user_name= #{username}) GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},10; 
+ (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id WHERE A.article_type=1 and A.article_status=0 and A.user_id=(select user_id from user where user_name= #{username}) GROUP BY A.article_id ORDER BY a.article_up DESC, A.article_time DESC limit #{page},10; 
   </select>
   <select id="selectByTagsID" resultType="java.lang.Integer">
 select count(*) from (SELECT a.article_id FROM article a  INNER JOIN article_sort AR ON A.user_id=AR.user_id where a.sort_article_id in  
@@ -257,5 +257,43 @@ delete from article where article_id in
       </if>
     </trim>
   </insert>
-    
+    <update id="updateArticle" parameterType="cn.broccoli.blog.utils.ArticleInfo">
+    update article 
+    <set >
+      <if test="articleName != null" >
+      article_name=#{articleName},
+      </if>
+      <if test="sortArticleId != null" >
+      sort_article_id=#{sortArticleId},
+      </if>
+      <if test="articleContent != null" >
+      article_content=#{articleContent},
+      </if>
+      <if test="typeId != null" >
+      type_id=#{typeId},
+      </if>
+      <if test="articleType != null" >
+      article_type=#{articleType},
+      </if>
+      <if test="articleUp != null" >
+      article_up=#{articleUp},
+      </if>
+      <if test="articleSupport != null" >
+      article_support=#{articleSupport},
+      </if>
+      <if test="articleLabel != null" >
+      article_label=#{articleLabel},
+      </if>
+      <if test="articleStatus != null" >
+      article_status=#{articleStatus},
+      </if>
+      <if test="articleDescription != null" >
+      article_description=#{articleDescription},
+      </if>
+      <if test="moduleType != null" >
+      module_type=#{moduleType},
+      </if>
+      </set>
+      where article_id=#{articleId} and user_id=#{userId}
+    </update>
 </mapper>

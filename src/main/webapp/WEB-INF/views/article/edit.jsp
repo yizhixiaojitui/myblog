@@ -130,7 +130,8 @@
         base: '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'edit']);
+    }).use(['index', 'edit'],function(){
+    });
 		
 	</script>
 </body>

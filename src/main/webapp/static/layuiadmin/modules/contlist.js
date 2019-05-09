@@ -63,19 +63,67 @@ layui.define(["table", "form"], function(t) {
             });
         } else if (layEvent === 'edit') { //编辑
             //do something
-
-        	layer.open({
+        	
+        	var layerindex=layer.open({
                 type: 2,
-                title: '添加文章',
+                title: '修改文章',
                 content: '../article/revise',
                 maxmin: true,
                 area: ['550px', '550px'],
+                btn: ['确定', '取消'],
+                maxmin: true,
                 success: function(layero, index){
                 	var iframe = window['layui-layer-iframe'+index];//获取子页面dom对象
-                	//向子页面传递id
                 	iframe.child(data.articleId);
-                }
+                	//向子页面传递id
+                },
+                yes: function(index, layero){
+                	console.log('yes');
+                	var iframeWindow = window['layui-layer-iframe'+ index]
+                    ,submitID = 'edit-article'
+                    ,submit = layero.find('iframe').contents().find('#'+ submitID);
+                    //监听提交
+                    iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                      var field = data.field; //获取提交的字段
+                      field.articleType = field.articleType ? 1 : 0;
+                      field.articleUp = field.articleUp ? 1 : 0;
+                      field.articleSupport = field.articleSupport ? 1 : 0;
+                      console.log(field.articleType);
+                      console.log(JSON.stringify(field));
+                      e.ajax({
+                          url: resPath + "/api/article/update",
+                          type: "post",
+                          data: JSON.stringify(field),
+                          contentType: "application/json",
+                          dataType: "json",
+                          success: function(res) {
+                              if (res.code == 0) {
+                              	 layer.msg(res.msg);
+                              	 layer.close(index); 
+                              } else {
+                                  layer.msg(res.msg);
+                              }
+                          },
+                          error: function(XMLHttpRequest, textStatus,
+                              errorThrown) {
+                              // 状态码
+                              console.log(XMLHttpRequest.status);
+                              // 状态
+                              console.log(XMLHttpRequest.readyState);
+                              // 错误信息   
+                              console.log(textStatus);
+                          }
+                      });
+                      //提交 Ajax 成功后，静态更新表格中的数据
+                      //$.ajax({});
+                     
+                     //关闭弹层
+                    }); 
+                    submit.trigger('click');
+                  }
               });
+        	layer.full(layerindex);
+        	
         	
             //同步更新缓存对应的值
 

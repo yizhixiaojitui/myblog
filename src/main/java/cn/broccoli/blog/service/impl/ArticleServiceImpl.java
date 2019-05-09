@@ -104,18 +104,12 @@ public class ArticleServiceImpl implements ArticleService{
 		return  articleMapper.selectArticleByUserid(userid, page, limit,articleId,articleName,articleStatus);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.broccoli.blog.service.ArticleService#removeArticle(java.util.List)
-	 */
 	@Override
 	public boolean removeArticleByIds(List<ArticleList> list) {
 		
 		return articleMapper.deleteArticleById(list);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.broccoli.blog.service.ArticleService#test()
-	 */
 	@Override
 	public boolean test() {
 		int i=1;
@@ -125,39 +119,28 @@ public class ArticleServiceImpl implements ArticleService{
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.broccoli.blog.service.ArticleService#findTagsList(java.lang.Integer, int, int, java.lang.String, java.lang.String)
-	 */
 	@Override
 	public List<TagsList> findTagsList(Integer userid, int page, int limit, String sortArticleId, String sortArticleName) {
 		page=(page-1)*limit;
 		return articleSortMapper.selectTagsBylimit(userid, page, limit, sortArticleId, sortArticleName);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.broccoli.blog.service.ArticleService#findArticleCount(java.lang.Integer)
-	 */
 	@Override
 	public int findArticleCount(Integer userid) {
 		// TODO Auto-generated method stub
 		return articleMapper.selectArticleCount(userid, null, null, null);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.broccoli.blog.service.ArticleService#findTagsCount(java.lang.Integer, java.lang.String, java.lang.String)
-	 */
+	
 	@Override
 	public int findTagsCount(Integer userid, String sortArticleId, String sortArticleName) {
 		return articleSortMapper.selectTagBylimitCount(userid, sortArticleId, sortArticleName);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.broccoli.blog.service.ArticleService#removeFriendlyLink(java.util.List)
-	 */
 	@Override
 	public boolean removeTags(List<TagsList> ids) {
 		// TODO Auto-generated method stub
-		//删除分类得检查是否有文章引用了这个分类
+		//删除分类检查是否有文章引用了这个分类
 		int code=articleMapper.selectByTagsID(ids);
 		if(code!=0) {
 			throw new CheckException("有文章使用了id请检查后在删除！");
@@ -175,6 +158,25 @@ public class ArticleServiceImpl implements ArticleService{
 		ArticleInfo articleinfo=articleMapper.selectArticle(userid, articleid);
 		System.out.println(articleinfo);
 		return articleinfo;
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.ArticleService#modifyArticle(cn.broccoli.blog.utils.ArticleInfo)
+	 */
+	@Override
+	public int modifyArticle(ArticleInfo articleinfo,Integer userid) {
+		articleinfo.setUserId(userid);
+		
+		return articleMapper.updateArticle(articleinfo);
+	}
+
+	/* (non-Javadoc)
+	 * @see cn.broccoli.blog.service.ArticleService#modifyTags(cn.broccoli.blog.utils.TagsList)
+	 */
+	@Override
+	public int modifyTags(TagsList tl) {
+		// TODO Auto-generated method stub
+		return articleSortMapper.updateById(tl);
 	}
 
 }

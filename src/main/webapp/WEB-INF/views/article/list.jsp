@@ -63,7 +63,7 @@
 			<div class="layui-card-body">
 				<div style="padding-bottom: 10px;">
 					<button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
-					<button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+					<a class="layui-btn layuiadmin-btn-list" href="javascript:;" lay-href="admin/article/edit">写文章</a>
 				</div>
 				<table id="content-list" lay-filter="content-list"></table>
 				<script type="text/html" id="buttonTpl">
@@ -148,15 +148,6 @@
             }
           });
 
-        });
-      },
-      add: function() {
-        layer.open({
-          type: 2,
-          title: '添加文章',
-          content: '../article/edit',
-          maxmin: true,
-          area: ['550px', '550px']
         });
       }
     };
