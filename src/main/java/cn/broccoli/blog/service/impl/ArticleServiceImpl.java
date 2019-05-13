@@ -68,8 +68,10 @@ public class ArticleServiceImpl implements ArticleService{
 
 	@Override
 	public Boolean addArticleSort(Integer userid, String articlesort) {
-		
-		if(articleSortMapper.selectByName(userid, articlesort)!=null) throw new CheckException("分类已存在！请检查");
+		//判断分类是否存在
+		if(articleSortMapper.selectByName(userid, articlesort)!=null) {
+			throw new CheckException("分类已存在！请检查");
+		}
 		ArticleSort articleSort=new ArticleSort();
 		articleSort.setSortArticleName(articlesort);
 		articleSort.setUserId(userid);

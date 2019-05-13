@@ -30,11 +30,13 @@ layui.define(['layer', 'util', 'jquery', 'flow', 'element', 'layedit', 'code'], 
             }
         }),
         //渲染加载导航栏用户信息栏
-        i.get(resPath + '/home/getbloginfo?u=' + username, function(res) {
+        i.get(resPath + '/home/getbloginfo?r='+Math.random()+'&u=' + username, function(res) {
             var obj = res.data;
             var str = "";
-            console.log(basePath);
-            console.log(obj.blogName);
+            var title=document.title;
+            if(title==""){
+            	document.title=obj.blogName;
+            }
             //渲染logo
             i('.layui-logo-brand').html('<a href="' + basePath + '"><h2>' + obj.blogName + '</h2></a>');
 
@@ -62,8 +64,6 @@ layui.define(['layer', 'util', 'jquery', 'flow', 'element', 'layedit', 'code'], 
                 //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
                 i.get(resPath + '/home/article?page=' + page + '&u=' + username, function(res) {
                     //假设你的列表返回在data集合中
-                    console.log(page);
-                    console.log(basePath);
                     layui.each(res.data, function(index, item) {
                         lis.push('<div class="body-box-15 mg-b-10 my-article-list"> <h3 class="mg-b-10"><a href="' + basePath + '/article/details/' + item.articleId + '" title="' + item.articleName + '">' +
                             item.articleName + '</a>');
