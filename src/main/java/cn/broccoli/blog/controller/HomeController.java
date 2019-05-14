@@ -50,6 +50,7 @@ public class HomeController {
 		view.setViewName("blog/index.jsp");
 		return view;
 	}
+	//获取主页信息
 	@RequestMapping(value = "/home/getbloginfo",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultBean<BlogMessage> findBlogMessage(String u) {
@@ -60,6 +61,7 @@ public class HomeController {
 	public ModelAndView articleDetail(@PathVariable String name,@PathVariable Integer id) {
 		ModelAndView view = new ModelAndView();
 		ArticleDetails ad=articleService.findArticleDetails(id);
+		//查询文章信息 如果为空 跳转404 否则渲染返回view
 		if(ad==null) {
 			view.setViewName("/404.jsp");
 			return view;

@@ -15,6 +15,13 @@ public class AboutBlogServiceImpl implements AboutBlogService{
 	@Autowired
 	private UserMapper userMapper;
 	
+	/**
+	* <p>Title: selectByPrimaryKey</p>  
+	* <p>Description: 根据用户名查询主页信息</p>  
+	* @param name
+	* @return  
+	* @see cn.broccoli.blog.service.AboutBlogService#selectByPrimaryKey(java.lang.String)  
+	*/ 
 	@Override
 	public BlogMessage selectByPrimaryKey(String name) {
 		

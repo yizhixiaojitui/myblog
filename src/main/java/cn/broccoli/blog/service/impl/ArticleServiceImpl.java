@@ -37,12 +37,28 @@ public class ArticleServiceImpl implements ArticleService{
 	@Autowired
 	JWTUtil jwtUtil;
 
+	/**
+	* <p>Title: getAll</p>  
+	* <p>Description: 主页获取文章分页列表</p>  
+	* @param username
+	* @param pageIndex
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#getAll(java.lang.String, int)  
+	*/ 
 	@Override
 	public List<ArticleList> getAll(String username, int pageIndex) {
 		
 		return articleMapper.selectByBlogger(username, pageIndex);
 	}
 
+	/**
+	* <p>Title: findArticleList</p>  
+	* <p>Description: 查询后台文章列表</p>  
+	* @param username
+	* @param page
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#findArticleList(java.lang.String, int)  
+	*/ 
 	@Override
 	public List<ArticleList> findArticleList(String username, int page) {
 		
@@ -51,6 +67,13 @@ public class ArticleServiceImpl implements ArticleService{
 		return result;
 	}
 
+	/**
+	* <p>Title: findArticleDetails</p>  
+	* <p>Description: </p>  
+	* @param id
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#findArticleDetails(java.lang.Integer)  
+	*/ 
 	@Override
 	public ArticleDetails findArticleDetails(Integer id) {
 		ArticleDetails ad=articleMapper.selectByPrimaryKey(id);
@@ -61,11 +84,26 @@ public class ArticleServiceImpl implements ArticleService{
 		return ad;
 	}
 
+	/**
+	* <p>Title: findArticleSortList</p>  
+	* <p>Description: 查询文章分类列表回填下拉框</p>  
+	* @param userid
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#findArticleSortList(java.lang.Integer)  
+	*/ 
 	@Override
 	public List<Map<Integer, String>> findArticleSortList(Integer userid) {
 		return  articleSortMapper.selectByUserId(userid);
 	}
 
+	/**
+	* <p>Title: addArticleSort</p>  
+	* <p>Description: 新增文章分类</p>  
+	* @param userid
+	* @param articlesort
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#addArticleSort(java.lang.Integer, java.lang.String)  
+	*/ 
 	@Override
 	public Boolean addArticleSort(Integer userid, String articlesort) {
 		//判断分类是否存在
@@ -79,12 +117,30 @@ public class ArticleServiceImpl implements ArticleService{
 		return result;
 	}
 
+	/**
+	* <p>Title: findArticleLimitCount</p>  
+	* <p>Description: 后台管理获取文章分页</p>  
+	* @param userid
+	* @param articleId
+	* @param articleName
+	* @param articleStatus
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#findArticleLimitCount(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String)  
+	*/ 
 	@Override
 	public int findArticleLimitCount(Integer userid,String articleId,String articleName,String articleStatus) {
 		return articleMapper.selectArticleCount(userid, articleId, articleName, articleStatus);
 	}
 
 
+	/**
+	* <p>Title: saveArticle</p>  
+	* <p>Description: 新增保存文章</p>  
+	* @param article
+	* @param request
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#saveArticle(cn.broccoli.blog.po.Article, javax.servlet.http.HttpServletRequest)  
+	*/ 
 	@Override
 	public int saveArticle(Article article,HttpServletRequest request) {
 		//获取真实ip地址
@@ -100,12 +156,31 @@ public class ArticleServiceImpl implements ArticleService{
 		
 	}
 
+	/**
+	* <p>Title: findAllArticleList</p>  
+	* <p>Description: 获取文章列表</p>  
+	* @param userid
+	* @param page
+	* @param limit
+	* @param articleId
+	* @param articleName
+	* @param articleStatus
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#findAllArticleList(java.lang.Integer, int, int, java.lang.String, java.lang.String, java.lang.String)  
+	*/ 
 	@Override
 	public List<ArticleList> findAllArticleList(Integer userid,int page, int limit,String articleId,String articleName,String articleStatus) {
 		page=(page-1)*limit;
 		return  articleMapper.selectArticleByUserid(userid, page, limit,articleId,articleName,articleStatus);
 	}
 
+	/**
+	* <p>Title: removeArticleByIds</p>  
+	* <p>Description: 根据文章ID删除文章</p>  
+	* @param list
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#removeArticleByIds(java.util.List)  
+	*/ 
 	@Override
 	public boolean removeArticleByIds(List<ArticleList> list) {
 		
@@ -121,12 +196,30 @@ public class ArticleServiceImpl implements ArticleService{
 		return false;
 	}
 
+	/**
+	* <p>Title: findTagsList</p>  
+	* <p>Description: 获取文章分类列表</p>  
+	* @param userid
+	* @param page
+	* @param limit
+	* @param sortArticleId
+	* @param sortArticleName
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#findTagsList(java.lang.Integer, int, int, java.lang.String, java.lang.String)  
+	*/ 
 	@Override
 	public List<TagsList> findTagsList(Integer userid, int page, int limit, String sortArticleId, String sortArticleName) {
 		page=(page-1)*limit;
 		return articleSortMapper.selectTagsBylimit(userid, page, limit, sortArticleId, sortArticleName);
 	}
 
+	/**
+	* <p>Title: findArticleCount</p>  
+	* <p>Description: 获取文章总行数</p>  
+	* @param userid
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#findArticleCount(java.lang.Integer)  
+	*/ 
 	@Override
 	public int findArticleCount(Integer userid) {
 		// TODO Auto-generated method stub
@@ -134,11 +227,27 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	
+	/**
+	* <p>Title: findTagsCount</p>  
+	* <p>Description: </p>  
+	* @param userid
+	* @param sortArticleId
+	* @param sortArticleName
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#findTagsCount(java.lang.Integer, java.lang.String, java.lang.String)  
+	*/ 
 	@Override
 	public int findTagsCount(Integer userid, String sortArticleId, String sortArticleName) {
 		return articleSortMapper.selectTagBylimitCount(userid, sortArticleId, sortArticleName);
 	}
 
+	/**
+	* <p>Title: removeTags</p>  
+	* <p>Description: 删除文章分类</p>  
+	* @param ids
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#removeTags(java.util.List)  
+	*/ 
 	@Override
 	public boolean removeTags(List<TagsList> ids) {
 		// TODO Auto-generated method stub
@@ -151,9 +260,14 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.broccoli.blog.service.ArticleService#findArticleInfo(java.lang.Integer, java.lang.Integer)
-	 */
+	/**
+	* <p>Title: findArticleInfo</p>  
+	* <p>Description: 查询文章信息回填表单</p>  
+	* @param userid
+	* @param articleid
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#findArticleInfo(java.lang.Integer, java.lang.Integer)  
+	*/ 
 	@Override
 	public ArticleInfo findArticleInfo(Integer userid, Integer articleid) {
 		// TODO Auto-generated method stub
@@ -162,9 +276,14 @@ public class ArticleServiceImpl implements ArticleService{
 		return articleinfo;
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.broccoli.blog.service.ArticleService#modifyArticle(cn.broccoli.blog.utils.ArticleInfo)
-	 */
+	/**
+	* <p>Title: modifyArticle</p>  
+	* <p>Description: 修改文章</p>  
+	* @param articleinfo
+	* @param userid
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#modifyArticle(cn.broccoli.blog.utils.ArticleInfo, java.lang.Integer)  
+	*/ 
 	@Override
 	public int modifyArticle(ArticleInfo articleinfo,Integer userid) {
 		articleinfo.setUserId(userid);
@@ -172,9 +291,13 @@ public class ArticleServiceImpl implements ArticleService{
 		return articleMapper.updateArticle(articleinfo);
 	}
 
-	/* (non-Javadoc)
-	 * @see cn.broccoli.blog.service.ArticleService#modifyTags(cn.broccoli.blog.utils.TagsList)
-	 */
+	/**
+	* <p>Title: modifyTags</p>  
+	* <p>Description:修改文章分类 </p>  
+	* @param tl
+	* @return  
+	* @see cn.broccoli.blog.service.ArticleService#modifyTags(cn.broccoli.blog.utils.TagsList)  
+	*/ 
 	@Override
 	public int modifyTags(TagsList tl) {
 		// TODO Auto-generated method stub
