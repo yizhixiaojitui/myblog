@@ -117,6 +117,13 @@ public class UserServiceImpl implements UserService{
 		return userMapper.updatePassword(userid, SaleUtil.PassWordToMD5(password));
 	}
 
+	/**
+	* <p>Title: findUserInfoById</p>  
+	* <p>Description: 根据ID查询用户详细信息</p>  
+	* @param userId
+	* @return  
+	* @see cn.broccoli.blog.service.UserService#findUserInfoById(java.lang.Integer)  
+	*/ 
 	@Override
 	public UserHelper findUserInfoById(Integer userId) {
 
@@ -124,6 +131,14 @@ public class UserServiceImpl implements UserService{
 		return userMapper.selectUserInfoById(userId);
 	}
 
+	/**
+	* <p>Title: modifyUserInfo</p>  
+	* <p>Description: 修改用户资料</p>  
+	* @param userHelper
+	* @param userid
+	* @return  
+	* @see cn.broccoli.blog.service.UserService#modifyUserInfo(cn.broccoli.blog.utils.UserHelper, java.lang.Integer)  
+	*/ 
 	@Override
 	public int modifyUserInfo( UserHelper userHelper,Integer userid) {
 		// TODO Auto-generated method stub
