@@ -14,8 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.BlogMessage;
+import cn.broccoli.blog.po.User;
 import cn.broccoli.blog.service.AboutBlogService;
 import cn.broccoli.blog.service.ArticleService;
+import cn.broccoli.blog.service.UserService;
+import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.RandomValidateCode;
 import plm.common.beans.ResultBean;
 import plm.common.exceptions.UnloginException;
@@ -27,7 +30,10 @@ public class HomeController {
 	private ArticleService articleService;
 	@Autowired
 	private AboutBlogService aboutBlogService;
-	
+	@Autowired
+	private UserService userService;
+	@Autowired
+	JWTUtil jwtUtil;
 	/**登录页面
 	 * @return
 	 */
@@ -39,8 +45,13 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/admin",method = RequestMethod.GET)  	
-	public ModelAndView adminView() {
-		return new ModelAndView("index.jsp");
+	public ModelAndView adminView(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		Integer userid=jwtUtil.getUserId(request);
+		User user=userService.findUserById(userid);
+		view.addObject("userinfo", user);
+		view.setViewName("index.jsp");
+		return view;
 	}
 	//进入主页
 	@RequestMapping(value = "/{name}",method = RequestMethod.GET)  	
@@ -72,6 +83,14 @@ public class HomeController {
 		return view;
 	}
 	
+	@RequestMapping(value = "/{name}/about",method = RequestMethod.GET)  	
+	public ModelAndView about(@PathVariable String name) {
+		return new ModelAndView("blog/about.jsp");
+	}
+	@RequestMapping(value = "/{name}/timeline",method = RequestMethod.GET)  	
+	public ModelAndView timeline(@PathVariable String name) {
+		return new ModelAndView("blog/timeline.jsp");
+	}
 	/**验证码生成接口
 	 * @param request
 	 * @param response

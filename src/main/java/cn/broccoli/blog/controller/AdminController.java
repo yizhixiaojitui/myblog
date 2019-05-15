@@ -50,6 +50,10 @@ public class AdminController {
 	public ModelAndView adminUserInfo() {
 		return new ModelAndView("set/user/info.jsp");
 	}
+	@RequestMapping(value = "admin/set/system/website",method = RequestMethod.GET)  	
+	public ModelAndView adminWebSite() {
+		return new ModelAndView("set/system/website.jsp");
+	}
 	
 	
 }

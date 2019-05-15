@@ -40,7 +40,7 @@ layui.define(['layer', 'util', 'jquery', 'flow', 'element', 'layedit', 'code'], 
             //渲染logo
             i('.layui-logo-brand').html('<a href="' + basePath + '"><h2>' + obj.blogName + '</h2></a>');
 
-            str += '<div class="my-blogger-img mg-b-20"> <a href="' + basePath + '"><img src="' + resPath + '/static/images/' + obj.userImageUrl + '"></a></div>';
+            str += '<div class="my-blogger-img mg-b-20"> <a href="' + basePath + '"><img src="' + resPath + obj.userImageUrl + '"></a></div>';
             str += '<div class="my-blogger-detail center"><div class="mg-b-10"><span class="my-blogger-name">' + obj.userNikename + '</span><span class="my-blogger-sex">';
             if (obj.userSex == 1) {
                 str += '<i class="layui-icon layui-icon-male"></i>';
@@ -49,9 +49,9 @@ layui.define(['layer', 'util', 'jquery', 'flow', 'element', 'layedit', 'code'], 
                 str += '<i class="layui-icon layui-icon-female"></i>';
             };
             str += '</span></div><p class="mg-b-10">' + obj.userDescription + '</p>';
-            str += '<div class="my-article-class"><div class="my-article-class-title layui-row layui-col-space10"><div class="layui-col-md6">文章</div><div class="layui-col-md6">浏览人数</div></div>';
+            str += '<div class="my-article-class"><div class="my-article-class-title layui-row layui-col-space10"><div class="layui-col-md6">文章</div><div class="layui-col-md6">标签</div></div>';
             str += '<div class="my-article-class-num layui-row layui-col-space10"><div class="layui-col-md6"><a href="#">' + obj.articleNum + '</a></div>';
-            str += '<div class="layui-col-md6"><a href="#">' + obj.pageView + '</a></div></div></div></div><div class="user-backgroup-image" style="background-image: url(' + resPath + '/static/images/bg3.jpg)"></div>';
+            str += '<div class="layui-col-md6"><a href="#">' + obj.pageView + '</a></div></div></div></div><div class="user-backgroup-image" style="background-image: url(' + resPath + '/static/images/backgroup.jpg)"></div>';
             i('#u_box').html(str);
         }),
         //流加载渲染主页内容

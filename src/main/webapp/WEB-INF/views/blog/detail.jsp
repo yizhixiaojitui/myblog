@@ -6,8 +6,10 @@
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  
 <title>${article.articleName }</title>
 <link rel="stylesheet" type="text/css"
 	href="http://at.alicdn.com/t/font_959643_ibxvenqnukf.css">
@@ -42,7 +44,9 @@
 						<li class="layui-nav-item"><a href=""><i
 								class="iconfont icon-eit"></i>部落格<span class="layui-badge-dot"></span></a>
 						</li>
-
+						<li class="layui-nav-item"><a href=""><i
+								class="layui-icon layui-icon-about"></i>关于<span class="layui-badge-dot"></span></a>
+						</li>
 					</ul>
 				</div>
 			</div>

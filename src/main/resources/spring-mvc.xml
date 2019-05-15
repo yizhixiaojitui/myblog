@@ -122,6 +122,7 @@
                    <mvc:exclude-mapping path="/home/**"/>
                    <mvc:exclude-mapping path="/captcha/**"/>
                    <mvc:exclude-mapping path="/upload/**"/>
+                   <mvc:exclude-mapping path="/about/**"/>
                    <bean  class="cn.broccoli.blog.interceptor.HomeInterceptor"></bean> <!--这个类就是我们自定义的Interceptor -->
           </mvc:interceptor>
            <mvc:interceptor>
