@@ -76,7 +76,7 @@
 			<div class="layui-input-block">
 				<div class="tags" id="tags">
     <input type="text" name="" id="inputTags" placeholder="回车生成标签" autocomplete="off">
-    <input id='hidetext' name="articleLabel" type="hidden" />
+    <input id='hidetext' name="articleLabel" lay-verify="required" type="hidden" />
                 </div>
 			</div>
 		</div>

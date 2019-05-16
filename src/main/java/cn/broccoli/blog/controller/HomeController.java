@@ -85,11 +85,17 @@ public class HomeController {
 	
 	@RequestMapping(value = "/{name}/about",method = RequestMethod.GET)  	
 	public ModelAndView about(@PathVariable String name) {
-		return new ModelAndView("blog/about.jsp");
+		ModelAndView view = new ModelAndView();
+		view.addObject("user", name);
+		view.setViewName("blog/about.jsp");
+		return view;
 	}
-	@RequestMapping(value = "/{name}/timeline",method = RequestMethod.GET)  	
+	@RequestMapping(value = "/{name}/line",method = RequestMethod.GET)  	
 	public ModelAndView timeline(@PathVariable String name) {
-		return new ModelAndView("blog/timeline.jsp");
+		ModelAndView view = new ModelAndView();
+		view.addObject("user", name);
+		view.setViewName("blog/timeline.jsp");
+		return view;
 	}
 	/**验证码生成接口
 	 * @param request

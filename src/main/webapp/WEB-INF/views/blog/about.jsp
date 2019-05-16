@@ -30,23 +30,24 @@
 				</div>
 				<div class="layui-layout-right">
 					<ul class="layui-nav">
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}"><i
 								class="layui-icon layui-icon-home"></i>首页</a></li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/module/1"><i
 								class="layui-icon layui-icon-fonts-code"></i>问题库<span
 								class="layui-badge-dot"></span></a></li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/module/2"><i
 								class="layui-icon layui-icon-snowflake"></i>随笔<span
 								class="layui-badge-dot"></span></a></li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/module/3"><i
 								class="layui-icon layui-icon-component"></i>音乐<span
 								class="layui-badge-dot"></span></a></li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/line"><i
 								class="iconfont icon-eit"></i>部落格<span class="layui-badge-dot"></span></a>
 						</li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/about"><i
 								class="layui-icon layui-icon-about"></i>关于<span class="layui-badge-dot"></span></a>
 						</li>
+						
 					</ul>
 				</div>
 			</div>
@@ -56,17 +57,80 @@
 		<!--内容开始-->
 		<div class="layui-container mg-b-20">
 			<div class="layui-row my-content mg-b-20">
-				
+				<div class="layui-col-md9 ">
+					<div class="border-box bgc-fff">
+					<div class="about center" >
+					<div class="about-my ">
+					<h1>关于我</h1>
 					
-					<h1>关于</h1>
-					<h1>关于</h1>
-					<h1>关于</h1>
-					<h1>关于</h1>
-					<h1>关于</h1>
-					<h1>关于</h1>
-					<h1>关于</h1>
-				
-				
+					<p>我叫一只小鸡腿</p>
+					<p>热爱生活 一只不断学习的小菜鸟<i class="layui-icon layui-icon-face-smile" style="color: #1E9FFF;"></i></p>
+					
+					</div>
+					<div class="about-image ">
+					<img alt="关于" src="${pageContext.request.contextPath }/static/images/about1.gif">
+					</div>
+					<div class="about-bottom ">
+					<span>本站访问人数</span>
+					<p>本站备案号:<span>SASS</span></p>
+					
+					</div>
+					</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class=" mg-l-10">
+						<div class=" pd-15-20 mg-b-10 border-box" id="u_box"></div>
+						<div class="layui-card border-box bgc-fff mg-b-10">
+							<div class="layui-card-header layui-bg-blue">阅读榜单</div>
+							<div class="layui-card-body">
+								<a href="#">文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br> <a
+									href="#">文章名称文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br>
+								<a href="#">文章名称文章名称文章名称文章名称</a></br>
+							</div>
+						</div>
+						<div class="layui-card border-box bgc-fff mg-b-10">
+							<div class="layui-card-header layui-bg-green">标签</div>
+							<div class="layui-card-body tags">
+								<ul>
+									<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8"
+										target="_blank">教程</a>
+									<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8"
+										target="_blank">教程</a>
+									<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8"
+										target="_blank">教程</a>
+									<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8"
+										target="_blank">教程</a>
+									<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8"
+										target="_blank">教程</a>
+									<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8"
+										target="_blank">教程</a>
+									<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8"
+										target="_blank">教程</a>
+									<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8"
+										target="_blank">教程</a>
+									<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8"
+										target="_blank">教程</a>
+								</ul>
+							</div>
+						</div>
+						<div class="layui-card border-box bgc-fff mg-b-10">
+							<div class="layui-card-header layui-bg-cyan">推荐榜单</div>
+							<div class="layui-card-body">
+								<a href="#">文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br> <a
+									href="#">文章名称文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br>
+								<a href="#">文章名称文章名称文章名称文章名称</a></br>
+							</div>
+						</div>
+						<div class="layui-card border-box bgc-fff mg-b-10">
+							<div class="layui-card-header layui-bg-gray">友情链接</div>
+							<div class="layui-card-body links">
+								<ul id="links">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<hr>
@@ -86,7 +150,7 @@
 			base : '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
 		}).extend({
 			index : 'lib/index' //主入口模块
-		}).use([ 'index'],function() {
+		}).use([ 'index','home'],function() {
 			
 			
 		});

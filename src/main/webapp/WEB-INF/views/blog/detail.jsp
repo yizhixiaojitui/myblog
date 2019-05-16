@@ -30,23 +30,24 @@
 				</div>
 				<div class="layui-layout-right">
 					<ul class="layui-nav">
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}"><i
 								class="layui-icon layui-icon-home"></i>首页</a></li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/module/1"><i
 								class="layui-icon layui-icon-fonts-code"></i>问题库<span
 								class="layui-badge-dot"></span></a></li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/module/2"><i
 								class="layui-icon layui-icon-snowflake"></i>随笔<span
 								class="layui-badge-dot"></span></a></li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/module/3"><i
 								class="layui-icon layui-icon-component"></i>音乐<span
 								class="layui-badge-dot"></span></a></li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/line"><i
 								class="iconfont icon-eit"></i>部落格<span class="layui-badge-dot"></span></a>
 						</li>
-						<li class="layui-nav-item"><a href=""><i
+						<li class="layui-nav-item"><a href="${pageContext.request.contextPath }/${user}/about"><i
 								class="layui-icon layui-icon-about"></i>关于<span class="layui-badge-dot"></span></a>
 						</li>
+						
 					</ul>
 				</div>
 			</div>
@@ -61,6 +62,8 @@
 						<div class="my-article-detail">
 							<h1 class="mg-b-20 center">${article.articleName }</h1>
 							<div class="my-article-detail-blogger mg-b-10 center">
+							<span class="top-text"><i
+									class="layui-icon layui-icon-friends"></i>分类JAVA</span>
 								<span class="top-text"><i
 									class="layui-icon layui-icon-friends"></i>${article.userNikename }</span>
 								<span class="top-text"><i class="iconfont icon-time"></i>
@@ -68,6 +71,7 @@
 										pattern="yyyy-MM-dd HH:mm" /></span> <span class="top-text"><i
 									class="iconfont icon-browse"></i>${article.articleClick }</span> <span
 									class="top-text"><i class="iconfont icon-message"></i>${article.articleClick }</span>
+									
 							</div>
 							<hr>
 						</div>

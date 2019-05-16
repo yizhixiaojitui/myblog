@@ -30,7 +30,8 @@
 						href="javascript:;" layadmin-event="flexible" title="侧边伸缩"> <i
 							class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
 					</a></li>
-					<li class="layui-nav-item layui-hide-xs" lay-unselect id="homeurl">
+					<li class="layui-nav-item layui-hide-xs" lay-unselect >
+					<a href="${pageContext.request.contextPath }/${userinfo.userName }" target="_blank" title="前台"><i class="layui-icon layui-icon-website"></i>
 					</a></li>
 					<li class="layui-nav-item" lay-unselect><a href="javascript:;"
 						layadmin-event="refresh" title="刷新"> <i
@@ -265,7 +266,7 @@
 			var cate = layui.data('layuiAdmin');
 			console.log(cate.access_token)
 			console.log();
-			//$('#homeurl').html('<a href="http://www.layui.com/admin/" target="_blank" title="前台"><i class="layui-icon layui-icon-website"></i>');
+			//$('#homeurl').html('');
 		});
 	</script>
 

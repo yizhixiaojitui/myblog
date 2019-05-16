@@ -1,11 +1,12 @@
-layui.define(['layer', 'util', 'jquery', 'flow', 'element', 'layedit', 'code'], function(exports) { //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
+layui.define(['layer', 'util', 'jquery', 'flow','laytpl', 'element', 'layedit', 'code'], function(exports) { //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     var i = layui.$,
         layer = layui.layer,
         flow = layui.flow,
         util = layui.util,
         element = layui.element,
         layedit = layui.layedit,
-        code = layui.code;
+        code = layui.code,
+        laytpl=layui.laytpl;
 
     //渲染创建评论编辑器
     layedit.build('comment', {
