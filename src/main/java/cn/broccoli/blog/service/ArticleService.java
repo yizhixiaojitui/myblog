@@ -10,7 +10,7 @@ import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.utils.ArticleInfo;
-import cn.broccoli.blog.utils.TagsList;
+import cn.broccoli.blog.utils.SortList;
 
 public interface ArticleService {
 	 ArticleDetails findArticleDetails(Integer id);
@@ -35,15 +35,15 @@ public interface ArticleService {
 	 
 	 boolean test();
 	 
-	 List<TagsList> findTagsList(Integer userid,int page,int limit,String sortArticleId,String sortArticleName);
+	 List<SortList> findTagsList(Integer userid,int page,int limit,String sortArticleId,String sortArticleName);
 	 
 	 int findTagsCount(Integer userid,String sortArticleId,String sortArticleName);
 	 
-	 boolean removeTags(List<TagsList> ids);
+	 boolean removeTags(List<SortList> ids);
 	 
 	 ArticleInfo findArticleInfo(Integer userid,Integer articleid);
 	 
 	 int modifyArticle(ArticleInfo articleinfo,Integer userid);
 	 
-	 int modifyTags(TagsList tl);
+	 int modifyTags(SortList tl);
 }

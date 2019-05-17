@@ -12,7 +12,7 @@ public interface TagMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Tag record);
+    int insert(Tag tag);
 
     int insertSelective(Tag record);
 

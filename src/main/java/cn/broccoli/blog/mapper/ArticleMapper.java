@@ -4,7 +4,7 @@ import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.utils.ArticleInfo;
-import cn.broccoli.blog.utils.TagsList;
+import cn.broccoli.blog.utils.SortList;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -23,7 +23,7 @@ public interface ArticleMapper {
     
     boolean deleteArticleById(List<ArticleList> ids);
     
-    int selectByTagsID(List<TagsList> ids);
+    int selectByTagsID(List<SortList> ids);
     
     ArticleInfo selectArticle(@Param("userid")Integer userid,@Param("articleid")Integer articleid);
     

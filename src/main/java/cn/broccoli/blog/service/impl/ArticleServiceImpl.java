@@ -1,7 +1,9 @@
 package cn.broccoli.blog.service.impl;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,16 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.broccoli.blog.mapper.ArticleMapper;
 import cn.broccoli.blog.mapper.ArticleSortMapper;
+import cn.broccoli.blog.mapper.ArticleToTagMapper;
+import cn.broccoli.blog.mapper.TagMapper;
 import cn.broccoli.blog.mapper.UserMapper;
 import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.po.ArticleSort;
+import cn.broccoli.blog.po.ArticleToTag;
+import cn.broccoli.blog.po.Tag;
 import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.utils.ArticleInfo;
 import cn.broccoli.blog.utils.CusAccessObjectUtil;
 import cn.broccoli.blog.utils.JWTUtil;
-import cn.broccoli.blog.utils.TagsList;
+import cn.broccoli.blog.utils.SortList;
 import plm.common.exceptions.CheckException;
 import plm.common.exceptions.UnloginException;
 
@@ -34,6 +40,10 @@ public class ArticleServiceImpl implements ArticleService{
 	private ArticleSortMapper articleSortMapper;
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private TagMapper tagMapper;
+	@Autowired
+	private ArticleToTagMapper articleToTagMapper;
 	@Autowired
 	JWTUtil jwtUtil;
 
@@ -143,6 +153,13 @@ public class ArticleServiceImpl implements ArticleService{
 	*/ 
 	@Override
 	public int saveArticle(Article article,HttpServletRequest request) {
+
+		//存储过程比较好 这样效率很低
+		String [] taglist=article.getArticleLabel().split(",");
+		List<Integer> tagId=new ArrayList<Integer>();
+		
+		Tag tag=new Tag();
+		ArticleToTag articleToTag=new ArticleToTag();
 		//获取真实ip地址
 		String ip=CusAccessObjectUtil.getIpAddress(request);
 		article.setArticleTime(new Date());
@@ -150,9 +167,23 @@ public class ArticleServiceImpl implements ArticleService{
 		article.setArticleIp(ip);
 		article.setArticleClick(0);
 		logger.info("==========="+article.toString());
-		int code=articleMapper.insertArticle(article);
-		logger.info("code:"+article.getArticleStatus());
-		return code;
+		int count=articleMapper.insertArticle(article);
+		//分割标签字符 添加标签
+		for (int i = 0; i < taglist.length; i++) {
+			if(taglist[i]!="") {
+				System.out.println("tagName:"+taglist[i]);
+				tag.setTagName(taglist[i]);
+				Integer tid=tagMapper.insert(tag);
+				System.out.println("tagId"+tid);
+				tagId.add(tid);
+			}
+		}
+		articleToTag.setArticleId(count);
+		for (Iterator iterator = tagId.iterator(); iterator.hasNext();) {
+			articleToTag.setTagId((Integer)iterator.next());
+			articleToTagMapper.insert(articleToTag);
+		}
+		return article.getArticleId();
 		
 	}
 
@@ -208,7 +239,7 @@ public class ArticleServiceImpl implements ArticleService{
 	* @see cn.broccoli.blog.service.ArticleService#findTagsList(java.lang.Integer, int, int, java.lang.String, java.lang.String)  
 	*/ 
 	@Override
-	public List<TagsList> findTagsList(Integer userid, int page, int limit, String sortArticleId, String sortArticleName) {
+	public List<SortList> findTagsList(Integer userid, int page, int limit, String sortArticleId, String sortArticleName) {
 		page=(page-1)*limit;
 		return articleSortMapper.selectTagsBylimit(userid, page, limit, sortArticleId, sortArticleName);
 	}
@@ -249,7 +280,7 @@ public class ArticleServiceImpl implements ArticleService{
 	* @see cn.broccoli.blog.service.ArticleService#removeTags(java.util.List)  
 	*/ 
 	@Override
-	public boolean removeTags(List<TagsList> ids) {
+	public boolean removeTags(List<SortList> ids) {
 		// TODO Auto-generated method stub
 		//删除分类检查是否有文章引用了这个分类
 		int code=articleMapper.selectByTagsID(ids);
@@ -296,10 +327,10 @@ public class ArticleServiceImpl implements ArticleService{
 	* <p>Description:修改文章分类 </p>  
 	* @param tl
 	* @return  
-	* @see cn.broccoli.blog.service.ArticleService#modifyTags(cn.broccoli.blog.utils.TagsList)  
+	* @see cn.broccoli.blog.service.ArticleService#modifyTags(cn.broccoli.blog.utils.SortList)  
 	*/ 
 	@Override
-	public int modifyTags(TagsList tl) {
+	public int modifyTags(SortList tl) {
 		// TODO Auto-generated method stub
 		return articleSortMapper.updateById(tl);
 	}

@@ -1,6 +1,6 @@
 package cn.broccoli.blog.utils;
 
-public class TagsList {
+public class SortList {
 	private Integer sortArticleId;
 
 	private String userNikename;

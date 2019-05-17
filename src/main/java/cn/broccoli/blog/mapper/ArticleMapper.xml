@@ -159,7 +159,7 @@ delete from article where article_id in
 </foreach>
 </delete>
 
-  <insert id="insertArticle" parameterType="cn.broccoli.blog.po.Article" >
+  <insert id="insertArticle" useGeneratedKeys="true" keyProperty="articleId" parameterType="cn.broccoli.blog.po.Article" >
     insert into article
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="articleName != null" >

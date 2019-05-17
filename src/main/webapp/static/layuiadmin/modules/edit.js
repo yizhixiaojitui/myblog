@@ -155,7 +155,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
                             icon: 16,
                             shade: 0.01
                         }, function() {
-                            layer.msg(res.msg);
+                            layer.msg(res.msg+",文章id"+res.data);
                             var index = parent.layer.getFrameIndex(window.name);
                         	parent.layer.close(index);
                         });

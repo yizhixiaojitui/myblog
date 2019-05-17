@@ -22,7 +22,7 @@ import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.service.UserService;
 import cn.broccoli.blog.utils.ArticleInfo;
 import cn.broccoli.blog.utils.JWTUtil;
-import cn.broccoli.blog.utils.TagsList;
+import cn.broccoli.blog.utils.SortList;
 
 /**
  * @package cn.broccoli.blog.controller
@@ -61,13 +61,13 @@ public class ArticleController {
 	}
 	@RequestMapping(value = "/api/article/tags/getlist", method = RequestMethod.GET)
 	@ResponseBody
-	public PageResultBean<List<TagsList>> findTagsByLimitList(HttpServletRequest request,int page,int limit,String sortArticleId,String sortArticleName) {
+	public PageResultBean<List<SortList>> findTagsByLimitList(HttpServletRequest request,int page,int limit,String sortArticleId,String sortArticleName) {
 		Integer userid=jwtUtil.getUserId(request);
-		return new PageResultBean<List<TagsList>>(articleService.findTagsCount(userid, sortArticleId, sortArticleName), articleService.findTagsList(userid, page, limit, sortArticleId, sortArticleName));
+		return new PageResultBean<List<SortList>>(articleService.findTagsCount(userid, sortArticleId, sortArticleName), articleService.findTagsList(userid, page, limit, sortArticleId, sortArticleName));
 	}
 	@RequestMapping(value = "/api/article/tags/update", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultBean<Integer> updateTag(@RequestBody TagsList tl) {
+	public ResultBean<Integer> updateTag(@RequestBody SortList tl) {
 
 		return new ResultBean<Integer>(articleService.modifyTags(tl));
 	}
@@ -127,7 +127,7 @@ public class ArticleController {
 	}
 	@RequestMapping(value = "/api/article/tags/delete",method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResultBean<Boolean> removeTags(@RequestBody List<TagsList> list){
+	public ResultBean<Boolean> removeTags(@RequestBody List<SortList> list){
 		return new ResultBean<Boolean>(articleService.removeTags(list));
 	}
 	@RequestMapping(value = "/api/article/getinfo",method = RequestMethod.GET)

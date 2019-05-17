@@ -6,7 +6,7 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="sort_article_name" property="sortArticleName" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="LimitResultMap" type="cn.broccoli.blog.utils.TagsList" >
+  <resultMap id="LimitResultMap" type="cn.broccoli.blog.utils.SortList" >
     <id column="sort_article_id" property="sortArticleId" jdbcType="INTEGER" />
    <result column="user_nikename" property="userNikename" jdbcType="VARCHAR" />
     <result column="sort_article_name" property="sortArticleName" jdbcType="VARCHAR" />
@@ -230,7 +230,7 @@
       sort_article_name = #{sortArticleName,jdbcType=VARCHAR}
     where sort_article_id = #{sortArticleId,jdbcType=INTEGER}
   </update>
-  <update id="updateById" parameterType="cn.broccoli.blog.utils.TagsList" >
+  <update id="updateById" parameterType="cn.broccoli.blog.utils.SortList" >
     update article_sort
     set sort_article_name = #{sortArticleName,jdbcType=VARCHAR}
     where sort_article_id = #{sortArticleId,jdbcType=INTEGER}
