@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.broccoli.blog.po.ArticleDetails;
-import cn.broccoli.blog.po.BlogMessage;
+import cn.broccoli.blog.utils.BlogMessage;
 import cn.broccoli.blog.po.User;
 import cn.broccoli.blog.service.AboutBlogService;
 import cn.broccoli.blog.service.ArticleService;

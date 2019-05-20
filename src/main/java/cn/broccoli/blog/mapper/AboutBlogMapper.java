@@ -2,7 +2,7 @@ package cn.broccoli.blog.mapper;
 
 import cn.broccoli.blog.po.AboutBlog;
 import cn.broccoli.blog.po.AboutBlogExample;
-import cn.broccoli.blog.po.BlogMessage;
+import cn.broccoli.blog.utils.BlogMessage;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

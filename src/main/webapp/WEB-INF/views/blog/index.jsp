@@ -58,7 +58,11 @@
 		<div class="layui-container mg-b-20">
 			<div class="layui-row my-content mg-b-20">
 				<div class="layui-col-md9 ">
-					<div class="border-box bgc-fff" id="demo"></div>
+					<div class="border-box main-list bgc-fff" id="demo">
+					<div class="center" id="my-icon-loading">
+					<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop">&#xe63d;</i>数据加载中...
+					</div>
+					</div>
 				</div>
 				<div class="layui-col-md3">
 					<div class=" mg-l-10">

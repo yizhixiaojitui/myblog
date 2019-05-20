@@ -25,6 +25,7 @@ import cn.broccoli.blog.po.ArticleToTag;
 import cn.broccoli.blog.po.Tag;
 import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.utils.ArticleInfo;
+import cn.broccoli.blog.utils.ArticleTop;
 import cn.broccoli.blog.utils.CusAccessObjectUtil;
 import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.SortList;
@@ -168,6 +169,7 @@ public class ArticleServiceImpl implements ArticleService{
 		article.setArticleClick(0);
 		logger.info("==========="+article.toString());
 		int count=articleMapper.insertArticle(article);
+		logger.info("======文章ID====="+count);
 		//分割标签字符 添加标签
 		for (int i = 0; i < taglist.length; i++) {
 			if(taglist[i]!="") {
@@ -180,6 +182,7 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		articleToTag.setArticleId(count);
 		for (Iterator iterator = tagId.iterator(); iterator.hasNext();) {
+			logger.info("======tagID====="+(Integer)iterator.next());
 			articleToTag.setTagId((Integer)iterator.next());
 			articleToTagMapper.insert(articleToTag);
 		}
@@ -219,12 +222,8 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public boolean test() {
-		int i=1;
-		if(i==1) {
-		throw new UnloginException();
-		}
-		return false;
+	public List<ArticleTop> test() {
+		return articleMapper.selectArticleTop(10001);
 	}
 
 	/**

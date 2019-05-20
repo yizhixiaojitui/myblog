@@ -1,7 +1,7 @@
 package cn.broccoli.blog.service;
 
 
-import cn.broccoli.blog.po.BlogMessage;
+import cn.broccoli.blog.utils.BlogMessage;
 
 
 public interface AboutBlogService {

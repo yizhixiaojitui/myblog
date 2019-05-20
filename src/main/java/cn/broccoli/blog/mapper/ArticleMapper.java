@@ -4,9 +4,13 @@ import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.utils.ArticleInfo;
+import cn.broccoli.blog.utils.ArticleTop;
+import cn.broccoli.blog.utils.ArticleHot;
 import cn.broccoli.blog.utils.SortList;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ArticleMapper {
@@ -28,4 +32,8 @@ public interface ArticleMapper {
     ArticleInfo selectArticle(@Param("userid")Integer userid,@Param("articleid")Integer articleid);
     
     int updateArticle(ArticleInfo articleinfo);
+    
+    List<ArticleHot> selectArticleHot(Integer userid);
+    
+    List<ArticleTop> selectArticleTop(Integer userid);
 }

@@ -73,7 +73,9 @@
     bottom: 44px;
     left: 0px;
 }
-
+.my-content .main-list{
+	min-height: 600px;
+}
 .my-content .tags {
     border-radius: 3px;
     margin-bottom: 20px;

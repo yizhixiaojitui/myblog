@@ -1,5 +1,13 @@
 package cn.broccoli.blog.utils;
 
+import java.util.List;
+import java.util.Map;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+
+import cn.broccoli.blog.po.FriendlyLink;
+import cn.broccoli.blog.po.Tag;
+
 public class BlogMessage {
 	 private Integer blogId;
 
@@ -11,7 +19,7 @@ public class BlogMessage {
 
 	    private String blogTitle;
 
-	    private String userName;
+	    //private String userName;
 
 		private String userSex;
 	    
@@ -24,6 +32,17 @@ public class BlogMessage {
 	    private int pageView;
 	    
 	    private int articleNum;
+	    @TableField(exist = false)
+	    private List<Tag> tags;
+	    @TableField(exist = false)
+	    private List<FriendlyLink> friendlyLinks;
+	    @TableField(exist = false)
+	    private List<ArticleHot> articleHots;
+	    /**  
+	    * @Fields field:field:{todo}(推荐)  
+	    */
+	    @TableField(exist = false)
+	    private List<ArticleTop> articleTop;
 	    
 	    public String getUserSex() {
 			return userSex;
@@ -72,13 +91,7 @@ public class BlogMessage {
 		public void setArticleNum(int articleNum) {
 			this.articleNum = articleNum;
 		}
-	    public String getUserName() {
-	        return userName;
-	    }
-
-	    public void setUserName(String userName) {
-	        this.userName = userName == null ? null : userName.trim();
-	    }
+	    
 	    
 	    public Integer getBlogId() {
 	        return blogId;
@@ -118,5 +131,49 @@ public class BlogMessage {
 
 	    public void setBlogTitle(String blogTitle) {
 	        this.blogTitle = blogTitle == null ? null : blogTitle.trim();
+	    }
+
+		public List<Tag> getTags() {
+			return tags;
+		}
+
+		public void setTags(List<Tag> tags) {
+			this.tags = tags;
+		}
+
+		public List<FriendlyLink> getFriendlyLinks() {
+			return friendlyLinks;
+		}
+
+		public void setFriendlyLinks(List<FriendlyLink> friendlyLinks) {
+			this.friendlyLinks = friendlyLinks;
+		}
+
+		public List<ArticleHot> getArticleHots() {
+			return articleHots;
+		}
+
+		public void setArticleHots(List<ArticleHot> articleHots) {
+			this.articleHots = articleHots;
+		}
+
+		public List<ArticleTop> getArticleTop() {
+			return articleTop;
+		}
+
+		public void setArticleTop(List<ArticleTop> articleTop) {
+			this.articleTop = articleTop;
+		}
+		
+		public BlogMessage() {
+			super();
+		}
+	    public BlogMessage(List<Tag> tags,List<FriendlyLink> friendlyLinks,List<ArticleHot> articleHots,List<ArticleTop> articleTop) {
+	    	super();
+	    	this.tags=tags;
+	    	this.friendlyLinks=friendlyLinks;
+	    	this.articleHots=articleHots;
+	    	this.articleTop=articleTop;
+	    	
 	    }
 }

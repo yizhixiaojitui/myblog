@@ -10,6 +10,7 @@ import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleDetails;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.utils.ArticleInfo;
+import cn.broccoli.blog.utils.ArticleTop;
 import cn.broccoli.blog.utils.SortList;
 
 public interface ArticleService {
@@ -33,7 +34,7 @@ public interface ArticleService {
 	 
 	 boolean removeArticleByIds(List<ArticleList> list);
 	 
-	 boolean test();
+	 List<ArticleTop> test();
 	 
 	 List<SortList> findTagsList(Integer userid,int page,int limit,String sortArticleId,String sortArticleName);
 	 

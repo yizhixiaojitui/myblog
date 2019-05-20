@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.broccoli.blog.mapper.AboutBlogMapper" >
-  <resultMap id="BlogMessageResult" type="cn.broccoli.blog.po.BlogMessage" >
+  <resultMap id="BlogMessageResult" type="cn.broccoli.blog.utils.BlogMessage" >
     <result column="blog_keyword" property="blogKeyword" jdbcType="VARCHAR" />
     <result column="blog_description" property="blogDescription" jdbcType="VARCHAR" />
     <result column="blog_name" property="blogName" jdbcType="VARCHAR" />

@@ -31,7 +31,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
         ]
     });    
     var editEvents = {  
-		    //检查用户名  
+		    //加载渲染文章分类
     		LoadType : function(){  
     			$.ajax({
     	            url: resPath + "/api/article/tags/list",
@@ -42,7 +42,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
     	            },
     	            success: function(res) {
     	            	 var resultData=res.data;
-    	                 var htmls = '<option value="">直接选择或搜索选择</option>'; //全局变量
+    	                 var htmls = '<option value="">直接选择或搜索选择</option>'; 
     	                for (var x in resultData) {
     	                    htmls += '<option value = "' + resultData[x].sort_article_id + '">' +
     	                        resultData[x].sort_article_name + '</option>'
@@ -53,7 +53,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
     	            }
     	        })
 		    },  
-		    //检查pw  
+		    //检查  
 		    loadRevise : function(){  
 		    	$.ajax({
 	                url: resPath + "/api/article/getinfo?id="+dataResult,

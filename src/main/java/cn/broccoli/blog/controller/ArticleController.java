@@ -21,6 +21,7 @@ import cn.broccoli.blog.po.FriendlyLink;
 import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.service.UserService;
 import cn.broccoli.blog.utils.ArticleInfo;
+import cn.broccoli.blog.utils.ArticleTop;
 import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.SortList;
 
@@ -119,11 +120,11 @@ public class ArticleController {
 		return new ResultBean<Boolean>(articleService.removeArticleByIds(list));
 
 	}
-	@RequestMapping(value = "/test",method = RequestMethod.GET)  
+	@RequestMapping(value = "/home/test",method = RequestMethod.GET)  
 	@ResponseBody
-	public ResultBean<Boolean> vtest(HttpServletRequest request, HttpServletResponse response) {
+	public ResultBean<List<ArticleTop>> vtest(HttpServletRequest request, HttpServletResponse response) {
 		
-		return new ResultBean<Boolean>(articleService.test());
+		return new ResultBean<List<ArticleTop>>(articleService.test());
 	}
 	@RequestMapping(value = "/api/article/tags/delete",method = RequestMethod.DELETE)
 	@ResponseBody

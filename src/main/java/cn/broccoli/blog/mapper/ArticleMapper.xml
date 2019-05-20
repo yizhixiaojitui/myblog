@@ -43,6 +43,23 @@
     <result column="article_content" property="articleContent" jdbcType="VARCHAR"/>
   <result column="type_id" property="typeId" jdbcType="TINYINT" />
   </resultMap>
+    <resultMap id="articleHots" type="cn.broccoli.blog.utils.ArticleHot" >
+  	<result column="article_id" property="articleId"/> 
+    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
+    <result column="article_click" property="articleClick" jdbcType="INTEGER" />
+  </resultMap>
+   <resultMap id="articleTops" type="cn.broccoli.blog.utils.ArticleTop" >
+  	<result column="article_id" property="articleId"/> 
+    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ <select id="selectArticleHot" resultMap="articleHots">
+ select article_id,article_name,article_click from article where user_id=#{userid} ORDER BY article_click DESC;
+ </select>
+ <select id="selectArticleTop" resultMap="articleTops">
+ select article_id ,article_name from article where user_id=#{userid} ORDER BY article_support,article_time DESC;
+ </select>
+
  <select id="selectByBlogger" resultMap="ArticleListResult">
  SELECT 
  A.article_id,

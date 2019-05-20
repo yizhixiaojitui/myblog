@@ -4,8 +4,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.broccoli.blog.mapper.AboutBlogMapper;
+import cn.broccoli.blog.mapper.ArticleMapper;
+import cn.broccoli.blog.mapper.FriendlyLinkMapper;
 import cn.broccoli.blog.mapper.UserMapper;
-import cn.broccoli.blog.po.BlogMessage;
+import cn.broccoli.blog.utils.BlogMessage;
 import cn.broccoli.blog.service.AboutBlogService;
 @Service("AboutBlogService")
 public class AboutBlogServiceImpl implements AboutBlogService{
@@ -14,7 +16,10 @@ public class AboutBlogServiceImpl implements AboutBlogService{
 	private AboutBlogMapper aboutBlogMapper;
 	@Autowired
 	private UserMapper userMapper;
-	
+	@Autowired
+	private FriendlyLinkMapper friendlyLinkMapper;
+	@Autowired
+	private ArticleMapper articleMapper;
 	/**
 	* <p>Title: selectByPrimaryKey</p>  
 	* <p>Description: 根据用户名查询主页信息</p>  
@@ -24,8 +29,13 @@ public class AboutBlogServiceImpl implements AboutBlogService{
 	*/ 
 	@Override
 	public BlogMessage selectByPrimaryKey(String name) {
-		
-		return  aboutBlogMapper.selectBlogMessage(userMapper.selectIdByName(name));
+		Integer id=userMapper.selectIdByName(name);
+		BlogMessage blogMessage=aboutBlogMapper.selectBlogMessage(id);
+		blogMessage.setFriendlyLinks(friendlyLinkMapper.selectAll());
+		blogMessage.setArticleHots(articleMapper.selectArticleHot(id));
+		blogMessage.setArticleTop(articleMapper.selectArticleTop(id));
+		blogMessage.setTags(null);
+		return  blogMessage;
 	}
 	
 
