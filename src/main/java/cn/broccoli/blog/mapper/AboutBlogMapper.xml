@@ -4,6 +4,7 @@
   <resultMap id="BlogMessageResult" type="cn.broccoli.blog.utils.BlogMessage" >
     <result column="blog_keyword" property="blogKeyword" jdbcType="VARCHAR" />
     <result column="blog_description" property="blogDescription" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="blog_name" property="blogName" jdbcType="VARCHAR" />
     <result column="blog_title" property="blogTitle" jdbcType="VARCHAR" />
     <result column="user_nikename" property="userNikename" jdbcType="VARCHAR" />
@@ -15,7 +16,7 @@
   </resultMap>
 
   <select id="selectBlogMessage" resultMap="BlogMessageResult" parameterType="java.lang.Integer" >
-    SELECT ab.blog_keyword,ab.blog_description,ab.blog_name,ab.blog_title,u.user_nikename,  u.user_sex,u.user_description,u.user_image_url,(select count(*) from article where user_id=#{id} and article_status=1 ) as articlenum,(select count(*) from visitor where user_id=#{id} ) as pageview
+    SELECT ab.blog_keyword,ab.blog_description,ab.blog_name,ab.blog_title,u.user_nikename,u.user_name,  u.user_sex,u.user_description,u.user_image_url,(select count(*) from article where user_id=#{id} and article_status=1 ) as articlenum,(select count(*) from visitor where user_id=#{id} ) as pageview
 FROM about_blog AS ab inner join user U  on ab.user_id=U.user_id where ab.user_id=#{id};
 
   </select>

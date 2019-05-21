@@ -10,7 +10,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   
-<title>${article.articleName }</title>
+<title>${article.articleName } - </title>
 <link rel="stylesheet" type="text/css"
 	href="http://at.alicdn.com/t/font_959643_ibxvenqnukf.css">
 <link rel="stylesheet"
@@ -26,7 +26,9 @@
 		<div class="layui-header">
 			<div class="layui-main">
 				<div class="layui-logo">
-					<div class="layui-logo-brand"></div>
+					<div class="layui-logo-brand">
+					<a href="${pageContext.request.contextPath }/${user}"><h1 id="logourl"></h1></a>
+					</div>
 				</div>
 				<div class="layui-layout-right">
 					<ul class="layui-nav">
@@ -94,51 +96,7 @@
 					</div>
 				</div>
 				<div class="layui-col-md3">
-					<div class=" mg-l-10">
-						<div class="pd-15-20 mg-b-10 border-box " id="u_box">
-						
-
-						</div>
-						<div class="layui-card border-box bgc-fff mg-b-10">
-							<div class="layui-card-header layui-bg-blue">阅读榜单</div>
-							<div class="layui-card-body">
-								<a href="#">文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br> <a
-									href="#">文章名称文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br>
-								<a href="#">文章名称文章名称文章名称文章名称</a></br>
-							</div>
-						</div>
-						<div class="layui-card border-box bgc-fff mg-b-10">
-							<div class="layui-card-header layui-bg-green">标签</div>
-							<div class="layui-card-body tags">
-							<ul>
-								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
-								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
-								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
-								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
-								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
-								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
-								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
-								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
-								<a href="/e/tags/?tagname=%E6%95%99%E7%A8%8B&amp;tempid=8" target="_blank">教程</a>
-							</ul>
-							</div>
-						</div>
-						<div class="layui-card border-box bgc-fff mg-b-10">
-							<div class="layui-card-header layui-bg-cyan">推荐榜单</div>
-							<div class="layui-card-body">
-								<a href="#">文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br> <a
-									href="#">文章名称文章名称文章名称文章名称</a></br> <a href="#">文章名称文章名称文章名称文章名称</a></br>
-								<a href="#">文章名称文章名称文章名称文章名称</a></br>
-							</div>
-						</div>
-						<div class="layui-card border-box bgc-fff mg-b-10">
-							<div class="layui-card-header layui-bg-gray">友情链接</div>
-							<div class="layui-card-body links">
-								<ul id="links">
-								</ul>
-							</div>
-						</div>
-					</div>
+					<div class=" mg-l-10" id="right-view"></div>
 				</div>
 			</div>
 		</div>
@@ -165,6 +123,74 @@
 		});
 				
 	</script>
+	<script id="right-view-tpl" type="text/html">
+						<div class=" pd-15-20 mg-b-10 border-box" id="u_box">
+							<div class="my-blogger-img mg-b-20">
+								<a href="#">
+<img src="${pageContext.request.contextPath }{{ d.userImageUrl }}"></a>
+							</div>
+							<div class="my-blogger-detail center">
+								<div class="mg-b-10">
+									<span class="my-blogger-name">{{d.userNikename}}</span><span
+										class="my-blogger-sex"><i
+										class="layui-icon layui-icon-female"></i></span>
+								</div>
+								<p class="mg-b-10">{{ d.userDescription}}</p>
+								<div class="my-article-class">
+									<div class="my-article-class-title layui-row layui-col-space10">
+										<div class="layui-col-md6">文章</div>
+										<div class="layui-col-md6">标签</div>
+									</div>
+									<div class="my-article-class-num layui-row layui-col-space10">
+										<div class="layui-col-md6">
+											<a href="#">{{ d.articleNum }}</a>
+										</div>
+										<div class="layui-col-md6">
+											<a href="#">{{ d.pageView }}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="user-backgroup-image"
+								style="background-image: url(http://127.0.0.1:8080/myblog/static/images/bg.jpg)"></div>
+						</div>
+						<div class="layui-card border-box bgc-fff mg-b-10">
+							<div class="layui-card-header layui-bg-blue">阅读榜单</div>
+							<div class="layui-card-body">
+								{{#  layui.each(d.articleHots, function(index, item){ }}
+								<a href="${pageContext.request.contextPath }/${{ d.userName }}/article/{{item.articleId}}">{{ item.articleName }}({{item.articleClick}})</a></br> 
+								{{#  }); }}
+							</div>
+						</div>
+						<div class="layui-card border-box bgc-fff mg-b-10">
+							<div class="layui-card-header layui-bg-green">标签</div>
+							<div class="layui-card-body tags">
+								<ul>
+									{{#  layui.each(d.tags, function(index, item){ }}
+										<a href="${pageContext.request.contextPath }/tag/{{ item.id }}" target="_blank">{{ item.tagName }}({{ item.articleNumber }})</a>
+									{{#  }); }}
+								</ul>
+							</div>
+						</div>
+						<div class="layui-card border-box bgc-fff mg-b-10">
+							<div class="layui-card-header layui-bg-cyan">推荐榜单</div>
+							<div class="layui-card-body">
+								{{#  layui.each(d.articleTop, function(index, item){ }}
+								<a href="${pageContext.request.contextPath }/{{item.articleId}}">{{ item.articleName }}</a></br> 
+								{{#  }); }}
+							</div>
+						</div>
+						<div class="layui-card border-box bgc-fff mg-b-10">
+							<div class="layui-card-header layui-bg-gray">友情链接</div>
+							<div class="layui-card-body links">
+								<ul id="links">
+									{{#  layui.each(d.friendlyLinks, function(index, item){ }}
+									<a href="{{item.linkUrl}}" target="_blank">{{ item.linkName}}</a>
+									{{#  }); }}
+								</ul>
+							</div>
+						</div>
+						</script>
 </body>
 
 </html>

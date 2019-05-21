@@ -19,8 +19,15 @@ public class BlogMessage {
 
 	    private String blogTitle;
 
-	    //private String userName;
+	    private String userName;
 
+		public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
 		private String userSex;
 	    
 	    private String userNikename;

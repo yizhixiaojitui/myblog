@@ -75,6 +75,7 @@
 }
 .my-content .main-list{
 	min-height: 600px;
+	    padding-bottom: 2px;
 }
 .my-content .tags {
     border-radius: 3px;
@@ -308,7 +309,7 @@
 .my-theme-default .my-blogger-detail {
     vertical-align: middle;
     opacity: 1;
-    color: #fff !important;
+    /*color: #fff !important;*/
 }
 
 .my-theme-default .my-blogger-detail span {
@@ -325,7 +326,7 @@
 }
 
 .my-theme-default .my-blogger-detail p {
-    color: #777;
+    /*color: #777;*/
     line-height: 26px;
     border-bottom: #f5f5f5 1px solid;
     padding-bottom: 20px;
@@ -491,4 +492,7 @@
 }
 .center {
     text-align: center;
+}
+footer{
+	padding:30px;
 }
