@@ -69,7 +69,7 @@
 		<div class="layui-container mg-b-20">
 			<div class="layui-row my-content mg-b-20">
 				<div class="layui-col-md9 ">
-					<div class="border-box main-list bgc-fff" id="demo">
+					<div class="border-box main-list" id="demo">
 						<div class="center" id="my-icon-loading">
 							<i
 								class="layui-icon layui-anim layui-anim-rotate layui-anim-loop">&#xe63d;</i>数据加载中...

@@ -17,7 +17,7 @@
 
   <select id="selectBlogMessage" resultMap="BlogMessageResult" parameterType="java.lang.Integer" >
     SELECT ab.blog_keyword,ab.blog_description,ab.blog_name,ab.blog_title,u.user_nikename,u.user_name,  u.user_sex,u.user_description,u.user_image_url,(select count(*) from article where user_id=#{id} and article_status=1 ) as articlenum,(select count(*) from visitor where user_id=#{id} ) as pageview
-FROM about_blog AS ab inner join user U  on ab.user_id=U.user_id where ab.user_id=#{id};
+FROM about_blog AS ab inner join user u  on ab.user_id=u.user_id where ab.user_id=#{id};
 
   </select>
   

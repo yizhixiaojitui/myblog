@@ -61,7 +61,7 @@ layui.define(['layer', 'util', 'jquery', 'flow','laytpl', 'element', 'layedit', 
                 	
                     //假设你的列表返回在data集合中
                     layui.each(res.data, function(index, item) {
-                        lis.push('<div class="body-box-15 mg-b-10 my-article-list"> <h3 class="mg-b-10"><a href="' + basePath + '/article/details/' + item.articleId + '" title="' + item.articleName + '">' +
+                        lis.push('<div class="body-box-15 my-article-list"> <h3 class="mg-b-10"><a href="' + basePath + '/article/details/' + item.articleId + '" title="' + item.articleName + '">' +
                             item.articleName + '</a>');
                         if (item.articleUp == 1) {
                             lis.push(' <span class="layui-badge layui-bg-red">置顶</span>')
