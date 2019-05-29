@@ -10,6 +10,7 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
             type: 'post'
         }
     });
+    
     var index = layedit.build('editor', {
         height: 500,//设置编辑器高度
         tool: [
@@ -62,9 +63,12 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
 	                dataType: "json",
 	                success: function(res) {
 	                    if (res.code == 0) {
-	                    	form.val('articleinfo',res.data)
+	                    	form.val('articleinfo',res.data);
 	                    	layedit.setContent(index,res.data.articleContent,false);
 	                    	layedit.sync(index);
+	                    	 inputTags.render({
+	                    	        elem: '#inputTags' //定义输入框input对象
+	                    	    });
 	                } else {
 	                    layer.msg(res.msg);
 	                }
@@ -88,16 +92,10 @@ layui.define(['form', 'layedit', 'jquery', 'inputTags'], function(exports) {
         layedit.setContent(index, "");
         layedit.sync(index);
     });
-    inputTags.render({
-        elem: '#inputTags', //定义输入框input对象
-        content: [], //默认标签
-        aldaBtn: true, //是否开启获取所有数据的按钮
-        done: function(value) { //回车后的回调
-            console.log(value)
-        }
-    });
+    
     editEvents.LoadType();
     editEvents.loadRevise(); 
+   
     $("#addType").on("click",function() {
             layer.prompt({
                 title: '添加分类'

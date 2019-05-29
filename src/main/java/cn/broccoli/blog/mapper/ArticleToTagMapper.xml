@@ -97,10 +97,10 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.broccoli.blog.po.ArticleToTag" >
-    insert into article_to_tag (id, tag_id, article_id
+  <insert id="insert"  >
+    insert into article_to_tag ( tag_id, article_id
       )
-    values (#{id,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}
+    values ( #{tagId,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.broccoli.blog.po.ArticleToTag" >

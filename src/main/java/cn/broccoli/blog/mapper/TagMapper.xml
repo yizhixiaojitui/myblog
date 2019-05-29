@@ -102,10 +102,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.broccoli.blog.po.Tag" >
-  <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
-          SELECT LAST_INSERT_ID()
-      </selectKey>
+  <insert id="insert" parameterType="cn.broccoli.blog.po.Tag" useGeneratedKeys="true" keyProperty="id" >
   INSERT INTO tag(tag_name) VALUE(#{tagName,jdbcType=VARCHAR}) on DUPLICATE key UPDATE article_number=article_number+1;
    
   </insert>

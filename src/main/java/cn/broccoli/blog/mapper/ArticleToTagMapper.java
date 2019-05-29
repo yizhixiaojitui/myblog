@@ -12,7 +12,7 @@ public interface ArticleToTagMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(ArticleToTag record);
+    int insert(@Param("articleId")Short articleId,@Param("tagId")Integer tagId);
 
     int insertSelective(ArticleToTag record);
 

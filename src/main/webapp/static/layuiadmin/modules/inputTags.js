@@ -62,9 +62,13 @@ layui.define(['jquery','layer'],function(exports){
     ,spans = ''
     ,options = that.config
     ,span = document.createElement("span");
-    
-    
-    $.each(options.content,function(index,item){
+    var content=$("input[name='articleLabel'] ").val();
+    if(content!=''||content!=null){
+    	var arr=content.split(',');
+    	arr.pop();
+    	options.content=arr;
+    }
+     $.each(options.content,function(index,item){
       spans +='<span><em>'+item+'</em><button type="button" class="close">×</button></span>';
       // $('<div class="layui-flow-more"><a href="javascript:;">'+ ELEM_TEXT +'</a></div>');
     })

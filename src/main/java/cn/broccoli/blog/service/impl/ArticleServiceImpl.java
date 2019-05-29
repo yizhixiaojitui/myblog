@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import cn.broccoli.blog.mapper.ArticleMapper;
 import cn.broccoli.blog.mapper.ArticleSortMapper;
 import cn.broccoli.blog.mapper.ArticleToTagMapper;
@@ -154,37 +156,34 @@ public class ArticleServiceImpl implements ArticleService{
 	*/ 
 	@Override
 	public int saveArticle(Article article,HttpServletRequest request) {
-
 		//存储过程比较好 这样效率很低
-		String [] taglist=article.getArticleLabel().split(",");
-		List<Integer> tagId=new ArrayList<Integer>();
 		
+		String [] taglist=article.getArticleLabel().split(",");
+		//字符串分割标签名称
+		List<Integer> tagId=new ArrayList<Integer>();
+		//初始化标签id list
 		Tag tag=new Tag();
-		ArticleToTag articleToTag=new ArticleToTag();
+		//初始化tag
 		//获取真实ip地址
 		String ip=CusAccessObjectUtil.getIpAddress(request);
 		article.setArticleTime(new Date());
 		article.setUserId(jwtUtil.getUserId(request));
 		article.setArticleIp(ip);
 		article.setArticleClick(0);
-		logger.info("==========="+article.toString());
 		int count=articleMapper.insertArticle(article);
-		logger.info("======文章ID====="+count);
+		logger.info("插入文章返回ID："+count);
 		//分割标签字符 添加标签
 		for (int i = 0; i < taglist.length; i++) {
 			if(taglist[i]!="") {
-				System.out.println("tagName:"+taglist[i]);
 				tag.setTagName(taglist[i]);
-				Integer tid=tagMapper.insert(tag);
-				System.out.println("tagId"+tid);
-				tagId.add(tid);
+				Integer code=tagMapper.insert(tag);
+				tagId.add(tag.getId());
+				logger.info("插入标签返回code："+code+" 插入标签id："+tag.getId()+"插入的标签名称："+taglist[i]);
 			}
 		}
-		articleToTag.setArticleId(count);
-		for (Iterator iterator = tagId.iterator(); iterator.hasNext();) {
-			logger.info("======tagID====="+(Integer)iterator.next());
-			articleToTag.setTagId((Integer)iterator.next());
-			articleToTagMapper.insert(articleToTag);
+		for (int i=0;i<tagId.size();i++) {
+			articleToTagMapper.insert(article.getArticleId(),tagId.get(i));
+			logger.info("插入文章标签关联表 文章id："+article.getArticleId()+" 标签id"+tagId.get(i));
 		}
 		return article.getArticleId();
 		
@@ -317,7 +316,7 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public int modifyArticle(ArticleInfo articleinfo,Integer userid) {
 		articleinfo.setUserId(userid);
-		
+		//先去查询tag article表 查询tagid   根据tagid查询 tag name id  list 与表单传过来的遍历对比 存在的删除list 不存在的添加
 		return articleMapper.updateArticle(articleinfo);
 	}
 
