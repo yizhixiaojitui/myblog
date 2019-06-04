@@ -31,6 +31,7 @@ import cn.broccoli.blog.utils.ArticleTop;
 import cn.broccoli.blog.utils.CusAccessObjectUtil;
 import cn.broccoli.blog.utils.JWTUtil;
 import cn.broccoli.blog.utils.SortList;
+import cn.broccoli.blog.utils.TagResultMap;
 import plm.common.exceptions.CheckException;
 import plm.common.exceptions.UnloginException;
 
@@ -175,7 +176,8 @@ public class ArticleServiceImpl implements ArticleService{
 		//分割标签字符 添加标签
 		for (int i = 0; i < taglist.length; i++) {
 			if(taglist[i]!="") {
-				tag.setTagName(taglist[i]);
+				//去掉字符前后空格
+				tag.setTagName(taglist[i].trim());
 				Integer code=tagMapper.insert(tag);
 				tagId.add(tag.getId());
 				logger.info("插入标签返回code："+code+" 插入标签id："+tag.getId()+"插入的标签名称："+taglist[i]);
@@ -316,7 +318,65 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public int modifyArticle(ArticleInfo articleinfo,Integer userid) {
 		articleinfo.setUserId(userid);
-		//先去查询tag article表 查询tagid   根据tagid查询 tag name id  list 与表单传过来的遍历对比 存在的删除list 不存在的添加
+		//先去查询tag article表 查询tagid   根据tagid查询 tag name id  list 与表单传过来的遍历对比 存在的删除list 得到文章修改已删除的tag 和未添加的tag
+		//存在的减1 不存在的添加
+		//如果一样 删除掉 里面就剩
+		//查询文章已添加的tag
+		List<TagResultMap> taglist=tagMapper.selectByArticleId(articleinfo.getArticleId().intValue());
+		//获取拆分前台传递过来的tag 获得数组
+		String [] arrayTags=articleinfo.getArticleLabel().split(",");
+		//初始化去重list
+		List<String> changeTags = new ArrayList<String>();
+		//数组去重
+		for (int i=0; i<arrayTags.length; i++) {
+			 if(!changeTags.contains(arrayTags[i].trim())) {
+				    //赋值给去重list
+				 changeTags.add(arrayTags[i].trim());
+	            }
+        }
+		//初始化未添加的tags list
+		List<String> tags = new ArrayList<String>();
+		//
+		List<TagResultMap> removeTags=new ArrayList<TagResultMap>(); 
+		//倒序循环对比已添加的tag与前台传来的tag list
+		
+			for (int k = changeTags.size()-1; k >=0; k--) {
+				for (int j = taglist.size()-1; j >=0 ; j--) {
+				if(!taglist.get(j).getTagName().equals(changeTags.get(k))) {
+					removeTags.add(taglist.get(j));
+					tags.add(changeTags.get(k));
+					logger.info("k:"+k+" j:"+j+"list中存在："+changeTags.get(k)+" tagResultMap:"+taglist.get(j).getTagName());
+				}
+				//删除文章已添加的tag 剩下的就是文章修改 去掉的tag 
+				//taglist.remove(j);
+				//得到要未添加的标签
+				//list.remove(k);
+				//这样删除容易导致数组越界
+				//}else {
+				//logger.info("不存在list中："+list.get(k)+" tagResultMap:"+taglist.get(j).getTagName());
+				//}
+			}
+		}
+
+			for (TagResultMap tagResultMap : removeTags) {
+				logger.info("toString:"+tagResultMap.toString());
+			}
+		Tag tag=new Tag();
+		//循环添加tag   tag文章关联表
+		for (String str:tags) {
+				tag.setTagName(str);
+				Integer code=tagMapper.insert(tag);
+				articleToTagMapper.insert(articleinfo.getArticleId(),tag.getId());
+				
+				
+				logger.info("article update:插入标签返回code："+code+" 插入标签id："+tag.getId()+"插入的标签名称："+str);
+			
+		}
+		//文章已去掉的tag  修改tag表文章数量
+		tagMapper.updateArticleNumById(removeTags);
+		//删除文章tag关联表已去掉的tag
+		articleToTagMapper.deleteByIds(removeTags);
+		
 		return articleMapper.updateArticle(articleinfo);
 	}
 

@@ -87,6 +87,14 @@
     from article_to_tag
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+    <delete id="deleteByIds" parameterType="java.util.List" >
+delete from article_to_tag where id in
+<foreach collection="list" item="taglist" open="(" close=")" separator=",">
+  #{taglist.id}
+</foreach>
+</delete>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from article_to_tag
     where id = #{id,jdbcType=INTEGER}

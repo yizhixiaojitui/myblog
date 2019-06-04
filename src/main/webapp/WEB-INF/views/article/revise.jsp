@@ -30,7 +30,7 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">文章标题</label>
 			<div class="layui-input-block">
-			<input id='hidetext' name="articleId" type="hidden" />
+			<input name="articleId" type="hidden" />
 				<input type="text" name="articleName" lay-verify="required"
 					autocomplete="off" placeholder="请输入标题" class="layui-input" autofocus="autofocus">
 			</div>

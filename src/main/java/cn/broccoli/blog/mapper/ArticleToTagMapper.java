@@ -2,6 +2,8 @@ package cn.broccoli.blog.mapper;
 
 import cn.broccoli.blog.po.ArticleToTag;
 import cn.broccoli.blog.po.ArticleToTagExample;
+import cn.broccoli.blog.utils.TagResultMap;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,6 @@ public interface ArticleToTagMapper {
     int updateByPrimaryKeySelective(ArticleToTag record);
 
     int updateByPrimaryKey(ArticleToTag record);
+    
+    int deleteByIds(List<TagResultMap> taglist);
 }
