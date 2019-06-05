@@ -119,6 +119,7 @@ layui.define(['jquery','layer'],function(exports){
       var Thisremov = $(this).parent('span').remove(),
       ThisText = $(Thisremov).find('em').text();
       options.content.splice($.inArray(ThisText,options.content),1)
+      $("#hidetext").val(options.content);
     })
   };
 

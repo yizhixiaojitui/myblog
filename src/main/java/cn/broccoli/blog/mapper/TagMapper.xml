@@ -74,7 +74,7 @@
     id, tag_name, article_number
   </sql>
   <select id="selectByArticleId" resultMap="TagResultMap" parameterType="java.lang.Integer">
-  select a.id as aid ,t.id as tid,t.tag_name as tagName,a.article_id as articleId from article_to_tag a INNER JOIN tag t ON a.tag_id=t.id 
+  select a.id as aid ,t.id as tagId,t.tag_name as tagName,a.article_id as articleId from article_to_tag a INNER JOIN tag t ON a.tag_id=t.id 
   where a.article_id=#{articleid};
   </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.broccoli.blog.po.TagExample" >
@@ -195,7 +195,7 @@
   <update id="updateArticleNumById" parameterType="java.util.List" >
     UPDATE tag set article_number = article_number-1 
 where id in <foreach collection="list" item="taglist" open="(" close=")" separator=",">
-  #{taglist.id}
+  #{taglist.tagId}
 </foreach>
   </update>
 </mapper>

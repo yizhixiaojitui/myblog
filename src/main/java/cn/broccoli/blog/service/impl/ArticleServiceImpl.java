@@ -218,7 +218,14 @@ public class ArticleServiceImpl implements ArticleService{
 	*/ 
 	@Override
 	public boolean removeArticleByIds(List<ArticleList> list) {
-		
+		//删除标签文章关联表  修改tagnum数量
+		for (ArticleList articleList : list) {
+			List<TagResultMap> taglist=tagMapper.selectByArticleId(articleList.getArticleId().intValue());
+			//文章已去掉的tag  修改tag表文章数量-1
+			tagMapper.updateArticleNumById(taglist);
+			//删除文章tag关联表已去掉的tag
+			articleToTagMapper.deleteByIds(taglist);
+		}
 		return articleMapper.deleteArticleById(list);
 	}
 
@@ -335,47 +342,38 @@ public class ArticleServiceImpl implements ArticleService{
 	            }
         }
 		//初始化未添加的tags list
-		List<String> tags = new ArrayList<String>();
+		List<String> tags = new ArrayList<String>(changeTags);
 		//
-		List<TagResultMap> removeTags=new ArrayList<TagResultMap>(); 
+		List<TagResultMap> removeTags=new ArrayList<TagResultMap>(taglist); 
 		//倒序循环对比已添加的tag与前台传来的tag list
-		
-			for (int k = changeTags.size()-1; k >=0; k--) {
-				for (int j = taglist.size()-1; j >=0 ; j--) {
-				if(!taglist.get(j).getTagName().equals(changeTags.get(k))) {
-					removeTags.add(taglist.get(j));
-					tags.add(changeTags.get(k));
-					logger.info("k:"+k+" j:"+j+"list中存在："+changeTags.get(k)+" tagResultMap:"+taglist.get(j).getTagName());
+		for (String string : changeTags){ 
+			for (TagResultMap tagResultMap : taglist) {
+				if(tagResultMap.getTagName().equals(string)) {
+					//删除文章已添加的tag 剩下的就是文章修改 去掉的tag 
+					removeTags.remove(tagResultMap);
+					//得到要未添加的标签
+					tags.remove(string);
 				}
-				//删除文章已添加的tag 剩下的就是文章修改 去掉的tag 
-				//taglist.remove(j);
-				//得到要未添加的标签
-				//list.remove(k);
-				//这样删除容易导致数组越界
-				//}else {
-				//logger.info("不存在list中："+list.get(k)+" tagResultMap:"+taglist.get(j).getTagName());
-				//}
 			}
 		}
-
-			for (TagResultMap tagResultMap : removeTags) {
-				logger.info("toString:"+tagResultMap.toString());
-			}
 		Tag tag=new Tag();
 		//循环添加tag   tag文章关联表
 		for (String str:tags) {
+			if(str!=""||str!=null) {
 				tag.setTagName(str);
 				Integer code=tagMapper.insert(tag);
 				articleToTagMapper.insert(articleinfo.getArticleId(),tag.getId());
-				
-				
-				logger.info("article update:插入标签返回code："+code+" 插入标签id："+tag.getId()+"插入的标签名称："+str);
-			
+				logger.info("article update=>插入标签返回code："+code+" 插入标签id："+tag.getId()+"插入的标签名称："+str);
+			}
 		}
-		//文章已去掉的tag  修改tag表文章数量
-		tagMapper.updateArticleNumById(removeTags);
-		//删除文章tag关联表已去掉的tag
-		articleToTagMapper.deleteByIds(removeTags);
+		//判断list是否为空 
+		if(removeTags!=null&&removeTags.size()>0) {
+			//文章已去掉的tag  修改tag表文章数量
+			tagMapper.updateArticleNumById(removeTags);
+			//删除文章tag关联表已去掉的tag
+			articleToTagMapper.deleteByIds(removeTags);
+		}
+		
 		
 		return articleMapper.updateArticle(articleinfo);
 	}
