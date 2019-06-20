@@ -499,3 +499,17 @@
 footer{
 	padding:30px;
 }
+
+
+
+/*首页*/
+.group_photo img{
+	width:100%;
+	height:auto;
+}
+.title h1{
+	font-size: 60px;
+    font-weight: 600;
+    text-align: center;
+    color: #01AAED;
+}

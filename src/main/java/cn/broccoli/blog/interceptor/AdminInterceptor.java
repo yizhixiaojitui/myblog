@@ -35,6 +35,7 @@ public class AdminInterceptor implements HandlerInterceptor{
 			String token=jwtUtil.getCookieToken(request);
 			
 			logger.info("*************"+token);
+			
 			if(jwtUtil.checkToken(token)) {
 				Integer id=Integer.valueOf(JWTUtil.verifyToken(token).getId());
 				System.out.println("AdminInterceptor.preHandle().id:"+id);

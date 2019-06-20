@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<#assign base=request.contextPath />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -11,13 +10,13 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath }/static/layuiadmin/layui/css/layui.css"
+	href="${base}/static/layuiadmin/layui/css/layui.css"
 	media="all">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath }/static/layuiadmin/style/admin.css"
+	href="${base}/static/layuiadmin/style/admin.css"
 	media="all">
 	<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/static/css/my.css"
+	href="${base}/static/css/my.css"
 	media="all">
 </head>
 <body>
@@ -64,12 +63,12 @@
 			</div>
 		</div>
 	</div>
-	<script src="${pageContext.request.contextPath }/static/js/my.js"></script>
+	<script src="${base}/static/js/my.js"></script>
 	<script
-		src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
+		src="${base}/static/layuiadmin/layui/layui.js"></script>
 	<script>
 	layui.config({
-		base: '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
+		base: '${base}/static/layuiadmin/' //静态资源所在路径
 	}).extend({
 		index: 'lib/index' //主入口模块
 	}).use(['index', 'taglist', 'table'],function() {
@@ -101,7 +100,7 @@
         	//执行 Ajax 后重载
 			//修改接口参数为ID 不传obj checkData.articleId
 			$.ajax({
-			url : resPath+"/api/article/tags/delete?r=" + Math.random(),
+			url :"${base}/api/article/tags/delete?r=" + Math.random(),
 			type : "Delete",
 			data :JSON.stringify(checkData),
 			contentType:"application/json",
@@ -133,7 +132,7 @@
               title: '添加分类'
           }, function(value, index, elem) {
               $.ajax({
-                  url: resPath + "/api/article/tags/addtags?r=" + Math.random(),
+                  url:"${base}/api/article/tags/addtags?r=" + Math.random(),
                   type: "post",
                   data: {
                       "articleSort": value

@@ -74,7 +74,8 @@ public class UserServiceImpl implements UserService{
 			String token=JWTUtil.generToken(user.getUserId().toString(),null, null);
 			System.out.println("========"+token);
 			Cookie cookie = new Cookie("access_token",token);
-			cookie.setPath(request.getContextPath());
+			logger.info("request.getContextPath():"+request.getContextPath());
+			cookie.setPath("/");
 			response.addCookie(cookie);
 			result.put("access_token", token);
 		}else {

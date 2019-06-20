@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<#assign base=request.contextPath />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -11,26 +10,25 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath }/static/layuiadmin/layui/css/layui.css"
+	href="${base}/static/layuiadmin/layui/css/layui.css"
 	media="all">
 	<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/static/css/inputTags.css"
+	href="${base}/static/css/inputTags.css"
 	media="all">
 	<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/static/layuiadmin/style/admin.css"
+	href="${base}/static/layuiadmin/style/admin.css"
 	media="all">
 	<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/static/css/my.css"
+	href="${base}/static/css/my.css"
 	media="all">
 </head>
 <body>
  <div class="layui-fluid">
     <div class="layui-card pd-20">
-	<div class="layui-form pd-tb-10 " lay-filter="articleinfo">
+	<div class="layui-form pd-tb-10" >
 		<div class="layui-form-item">
 			<label class="layui-form-label">文章标题</label>
 			<div class="layui-input-block">
-			<input name="articleId" type="hidden" />
 				<input type="text" name="articleName" lay-verify="required"
 					autocomplete="off" placeholder="请输入标题" class="layui-input" autofocus="autofocus">
 			</div>
@@ -77,7 +75,7 @@
 			<div class="layui-input-block">
 				<div class="tags" id="tags">
     <input type="text" name="" id="inputTags" placeholder="回车生成标签" autocomplete="off">
-    <input id='hidetext' name="articleLabel" type="hidden" />
+    <input id='hidetext' name="articleLabel" lay-verify="required" type="hidden" />
                 </div>
 			</div>
 		</div>
@@ -114,7 +112,7 @@
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button type="button" class="layui-btn" lay-submit="" lay-filter="edit-article">立即提交</button>
+				<button type="button" class="layui-btn" lay-submit="" lay-filter="save-article">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</div>
@@ -122,25 +120,17 @@
 	</div>
 	</div>
 	<script
-		src="${pageContext.request.contextPath }/static/js/my.js"></script>
+		src="${base}/static/js/my.js"></script>
 	<script
-		src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
+		src="${base}/static/layuiadmin/layui/layui.js"></script>
 		
 	<script>
-	var dataResult;
-	 function child(data){
-		 dataResult=data;
-		};
 	layui.config({
-        base: '${pageContext.request.contextPath }/static/layuiadmin/' //静态资源所在路径
+        base: '${base}/static/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index','revise'],function(){
-    	// var revise=layui.revise;
-    		//调用方法  
-    		 
-    	
-   	});
+    }).use(['index', 'edit'],function(){
+    });
 		
 	</script>
 </body>

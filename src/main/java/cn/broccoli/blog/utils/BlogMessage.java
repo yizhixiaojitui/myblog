@@ -21,13 +21,7 @@ public class BlogMessage {
 
 	    private String userName;
 
-		public String getUserName() {
-			return userName;
-		}
-
-		public void setUserName(String userName) {
-			this.userName = userName;
-		}
+		
 		private String userSex;
 	    
 	    private String userNikename;
@@ -99,7 +93,13 @@ public class BlogMessage {
 			this.articleNum = articleNum;
 		}
 	    
-	    
+		public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
 	    public Integer getBlogId() {
 	        return blogId;
 	    }
