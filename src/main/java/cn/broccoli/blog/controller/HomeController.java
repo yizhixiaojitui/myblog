@@ -92,6 +92,11 @@ public class HomeController {
 		model.put("blogMes",aboutBlogService.selectByPrimaryKey(name));
 		return "blog/timeline";
 	}
+	@RequestMapping(value = "/{name}/tags",method = RequestMethod.GET)  	
+	public String tags(@PathVariable String name,ModelMap model) {
+		model.put("blogMes",aboutBlogService.selectByPrimaryKey(name));
+		return "blog/tags";
+	}
 	/**验证码生成接口
 	 * @param request
 	 * @param response

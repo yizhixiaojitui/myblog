@@ -258,7 +258,6 @@
 }
 .my-theme-default .my-article-list {
     background-color: #fff;
-    border-bottom: 1px solid #ccd8da;
 }
 .my-theme-default .my-article-list h3 {
     font-size: 20px;
@@ -500,8 +499,47 @@ footer{
 	padding:30px;
 }
 
-
-
+/*tags*/
+.tags_box{
+padding:20px;
+}
+.tags_box .tags_title{
+	font-size: 16px;
+    line-height: 40px;
+    border-bottom: 1px solid #eee;
+    color: #484848;
+    font-weight: normal;
+    position: relative;
+    margin-bottom: 10px;
+}
+.tags_box .tags_title:after { content: ""; position: absolute; width: 60px; height: 2px; content: ""; background: #000; left: 0; bottom: 0; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; transition: all .5s ease; }
+.tags_box .tags_title:hover:after { width: 80px; }
+.tags_box .tags_title .con_nav{
+	right:0px;
+    font-size: 14px;
+    color: #666;
+    position: absolute;
+}
+.tags_box .my-article-list{
+	border-bottom: #eee 1px dashed;
+	margin-bottom: 20px;
+	    padding-bottom: 20px;
+}
+.tags_box .my-article-list p{
+	margin-bottom: 10px;
+}
+.tags_box .avatar{
+	
+}
+.tags_box .avatar img{   
+	width:30px;
+	height:30px;
+    border-radius: 50%;
+}
+.tags_box .viewmore{
+	position: absolute;
+	right: 20px;
+}    
 /*首页*/
 .group_photo img{
 	width:100%;
