@@ -56,12 +56,12 @@
  <select id="selectArticleHot" resultMap="articleHots">
  select article_id,article_name,article_click 
  from 
- article where user_id=#{userid} ORDER BY article_click DESC limit 0,10;
+ article where user_id=#{userid} and article_type=1 and article_status=0 ORDER BY article_click DESC limit 0,10;
  </select>
  <select id="selectArticleTop" resultMap="articleTops">
  select article_id ,article_name 
  from 
- article where user_id=#{userid} ORDER BY article_support,article_time DESC limit 0,10;
+ article where user_id=#{userid} and article_type=1 and article_status=0 ORDER BY article_support,article_time DESC limit 0,10;
  </select>
 
  <select id="selectByBlogger" resultMap="ArticleListResult">

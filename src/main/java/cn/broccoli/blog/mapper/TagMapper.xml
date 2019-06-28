@@ -94,7 +94,7 @@
   <select id="selectTagAll" resultMap="BaseResultMap"> 
   select 
   id,tag_name,article_number
-  from tag
+  from tag where article_number <![CDATA[ > ]]> 0
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

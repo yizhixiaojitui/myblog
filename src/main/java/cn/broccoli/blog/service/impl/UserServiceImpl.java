@@ -74,7 +74,6 @@ public class UserServiceImpl implements UserService{
 			String token=JWTUtil.generToken(user.getUserId().toString(),null, null);
 			System.out.println("========"+token);
 			Cookie cookie = new Cookie("access_token",token);
-			logger.info("request.getContextPath():"+request.getContextPath());
 			cookie.setPath("/");
 			response.addCookie(cookie);
 			result.put("access_token", token);
@@ -145,6 +144,23 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		userHelper.setUserId(userid);
 		return userMapper.updateUserInfo(userHelper);
+	}
+
+	/**
+	* <p>Title: userLogout</p>  
+	* <p>Description:用户注销登录 </p>  
+	* @return  
+	* @see cn.broccoli.blog.service.UserService#userLogout()  
+	*/ 
+	@Override
+	public boolean userLogout(HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		Cookie cookie = new Cookie("access_token",null);
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+		logger.info("");
+		return true;
 	}
 	
 	

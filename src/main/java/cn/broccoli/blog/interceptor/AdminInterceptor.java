@@ -42,7 +42,7 @@ public class AdminInterceptor implements HandlerInterceptor{
 				User user=userService.findUserById(id);
 				if(user!=null&&id.equals(user.getUserId())) {
 					Cookie cookie = new Cookie("access_token",JWTUtil.updateToken(token));
-					cookie.setPath(request.getContextPath());
+					cookie.setPath("/");
 					response.addCookie(cookie);
 					return true;
 				}

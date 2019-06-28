@@ -16,6 +16,8 @@ public interface UserService {
 	
 	User findUserById(Integer userId);
 
+	boolean userLogout(HttpServletResponse response);
+	
 	Map<String, String> LoginSignup(HttpServletRequest request,HttpServletResponse response,LoginHelper login);
 
 	int modifyUserPassword(Integer userid,String oldPassword,String password);

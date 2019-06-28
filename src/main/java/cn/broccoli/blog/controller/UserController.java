@@ -48,9 +48,15 @@ public class UserController {
 	*/
 	@RequestMapping(value = "/account/login/signup",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultBean<Map<String, String>> Login(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
+	public ResultBean<Map<String, String>> UserLogin(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
 		
 		return new ResultBean<Map<String,String>>(userService.LoginSignup(request, response,login));
+	}
+	@RequestMapping(value = "/account/logout",method = RequestMethod.GET)  
+	@ResponseBody
+	public ResultBean<Boolean> UserLogout(HttpServletResponse response) {
+		
+		return new ResultBean<Boolean>(userService.userLogout(response));
 	}
 	/**  
 	* @Title: validateCodeImage  

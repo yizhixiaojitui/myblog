@@ -201,7 +201,7 @@
 							<div class="layui-card-header layui-bg-blue">阅读榜单</div>
 							<div class="layui-card-body">
 								<#list blogMes.articleHots as item>
-									<a href="${base }/${blogMes.userName}/article/details/${item.articleId}">${item.articleName }(${item.articleClick })</a></br> 							
+									<a class="layui-text layui-elip" href="${base }/${blogMes.userName}/article/details/${item.articleId}">${item.articleName }(${item.articleClick })</a></br> 							
 								</#list>
 							</div>
 						</div>
@@ -210,7 +210,7 @@
 							<div class="layui-card-body tags">
 								<ul>
 									<#list blogMes.tags as item>
-										<a href="${base }/tag/${item.id }" target="_blank">${item.tagName }(${item.articleNumber })</a>
+										<a href="${base }/${blogMes.userName}/tags/${item.id }" target="_blank">${item.tagName }(${item.articleNumber })</a>
 									</#list>
 								</ul>
 							</div>
@@ -219,7 +219,7 @@
 							<div class="layui-card-header layui-bg-cyan">推荐榜单</div>
 							<div class="layui-card-body">
 								<#list blogMes.articleTop as item>
-									<a href="${base }/${blogMes.userName}/article/details/${item.articleId}">${item.articleName }</a></br> 
+									<a class="layui-text layui-elip" href="${base }/${blogMes.userName}/article/details/${item.articleId}">${item.articleName }</a></br> 
 								</#list>
 							</div>
 						</div>
