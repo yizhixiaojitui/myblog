@@ -83,6 +83,9 @@
     overflow: hidden;
 }
 
+.my-content .layui-card-body a div{
+	display: flex;
+}
 .my-theme-default .layui-layout-admin .my-content .my-content-left {}
 
 .my-theme-default .layui-layout-admin .my-content .my-content-right {}

@@ -7,7 +7,12 @@
 <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  
+  <meta name="keywords" content="可达鸭,杰尼龟,杰尼龟和可达鸭,可达鸭和杰尼龟,拐拐怪兽,西兰花,一朵西兰花,yiduoxilanhua,一只小鸡腿,小鸡腿">
+<meta name="description" content="个人博客,可达鸭和杰尼龟的小窝">
+<meta name="robots" content="all">
+<meta name="author" content="xiaojitui,865636176@qq.com">
+<meta name="copyright" content="xiaojitui">
+<meta name="revisit-after" content="7 days" >
 <title>关于</title>
 <link rel="stylesheet" type="text/css"
 	href="http://at.alicdn.com/t/font_959643_ibxvenqnukf.css">
@@ -120,7 +125,7 @@
 							<div class="layui-card-header layui-bg-blue">阅读榜单</div>
 							<div class="layui-card-body">
 								<#list blogMes.articleHots as item>
-									<a class="layui-text layui-elip" href="${base }/${blogMes.userName}/article/details/${item.articleId}">${item.articleName }(${item.articleClick })</a></br> 							
+									<a href="${base }/${blogMes.userName}/article/details/${item.articleId}"><div><p class="layui-text layui-elip">${item.articleName }</p><span>(${item.articleClick })</span></div></a>							
 								</#list>
 							</div>
 						</div>
@@ -129,7 +134,7 @@
 							<div class="layui-card-body tags">
 								<ul>
 									<#list blogMes.tags as item>
-										<a href="${base }/${blogMes.userName}/tags/${item.id }" target="_blank">${item.tagName }(${item.articleNumber })</a>
+										<a href="${base }/${blogMes.userName}/tags/${item.tagName }" target="_blank">${item.tagName }</a>
 									</#list>
 								</ul>
 							</div>
@@ -138,7 +143,7 @@
 							<div class="layui-card-header layui-bg-cyan">推荐榜单</div>
 							<div class="layui-card-body">
 								<#list blogMes.articleTop as item>
-									<a class="layui-text layui-elip" href="${base }/${blogMes.userName}/article/details/${item.articleId}">${item.articleName }</a></br> 
+									<a   href="${base }/${blogMes.userName}/article/details/${item.articleId}"><p class="layui-text layui-elip">${item.articleName }</p></a>
 								</#list>
 							</div>
 						</div>

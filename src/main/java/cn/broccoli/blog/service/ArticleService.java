@@ -20,6 +20,8 @@ public interface ArticleService {
 	 
 	 List<ArticleList> findArticleList(String username,int page);
 	 
+	 List<ArticleList> findTagArticleList(String username,String tagName);
+	 
 	 List<Map<Integer, String>> findArticleSortList(Integer userid);
 	 
 	 Boolean addArticleSort(Integer userid,String articlesort);

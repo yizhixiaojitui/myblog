@@ -14,6 +14,8 @@ public class ArticleList {
 	private Byte articleSupport;
 	private Byte articleStatus;
 	private Byte moduleType;
+	private String articleLabel;
+	private String articleDescription;
 
 	public Byte getArticleStatus() {
 		return articleStatus;
@@ -31,8 +33,6 @@ public class ArticleList {
 		this.userNikename = userNikename;
 	}
 
-	private String articleLabel;
-	private String articleDescription;
 
 	public String getArticleDescription() {
 		return articleDescription;

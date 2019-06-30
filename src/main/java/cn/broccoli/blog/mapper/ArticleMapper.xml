@@ -79,10 +79,10 @@
  A.article_status,
  A.article_description
  FROM 
- (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id WHERE A.article_type=1 and A.article_status=0 and A.user_id=(select user_id from user where user_name= #{username}) GROUP BY A.article_id ORDER BY A.article_up DESC, A.article_time DESC limit #{page},10; 
+ (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.sort_article_id=AR.sort_article_id WHERE A.article_type=1 and A.article_status=0 and A.user_id=(select user_id from user where user_name= #{username}) GROUP BY A.article_id ORDER BY A.article_up DESC, A.article_time DESC limit #{page},10; 
   </select>
   <select id="selectByTagsID" resultType="java.lang.Integer">
-select count(*) from (SELECT a.article_id FROM article a  INNER JOIN article_sort AR ON a.user_id=AR.user_id where a.sort_article_id in  
+select count(*) from (SELECT a.article_id FROM article a  INNER JOIN article_sort AR ON a.sort_article_id=AR.sort_article_id where a.sort_article_id in  
  <foreach collection="list" item="ids" open="(" close=")" separator=",">
   #{ids.sortArticleId}
 </foreach>
@@ -125,7 +125,7 @@ GROUP BY a.article_id ) t
  A.article_description,
  A.module_type
  FROM 
- (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.user_id=AR.user_id
+ (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.sort_article_id=AR.sort_article_id
   <where>
   A.user_id=#{userid} 
   and A.article_status <![CDATA[ <> ]]> 2
@@ -142,6 +142,29 @@ GROUP BY a.article_id ) t
   </where>   
   GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},#{limit}; 
   </select>
+    <select id="selectArticleByTagName" resultMap="ArticleListResult">
+    SELECT 
+ a.article_id,
+ a.article_name,
+ a.article_time,
+ a.article_click,
+ ar.sort_article_name,
+ u.user_nikename,
+ a.article_type,
+ a.article_up,
+ a.article_support,
+ a.article_label,
+ a.article_status,
+ a.article_description,
+ a.module_type
+ FROM 
+  (((article_to_tag at INNER JOIN tag t on t.id=at.tag_id) INNER JOIN article a on a.article_id=at.article_id) INNER JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id) INNER JOIN user u on a.user_id=u.user_id
+WHERE t.tag_name=#{tagName} 
+and u.user_name=#{userName} 
+and a.article_status <![CDATA[ <> ]]> 2
+GROUP BY A.article_id 
+ORDER BY A.article_time DESC
+    </select>
   <select id="selectArticleCount" resultType="java.lang.Integer" >
   select count(*) from article A 
  <where>
