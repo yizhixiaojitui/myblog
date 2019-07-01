@@ -69,6 +69,12 @@ public class ArticleServiceImpl implements ArticleService{
 		// TODO Auto-generated method stub
 		return articleMapper.selectArticleByTagName(username, tagName);
 	}
+	@Override
+	public List<ArticleList> findArticleModule(String username, int mid) {
+		
+		// TODO Auto-generated method stub
+		return articleMapper.selectArticleByModule(username, mid);
+	}
 	/**
 	* <p>Title: findArticleList</p>  
 	* <p>Description: 查询后台文章列表</p>  
@@ -394,6 +400,7 @@ public class ArticleServiceImpl implements ArticleService{
 		// TODO Auto-generated method stub
 		return articleSortMapper.updateById(tl);
 	}
+	
 
 	
 

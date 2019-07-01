@@ -47,7 +47,7 @@
           <a href="forget.html" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
         </div>
         <div class="layui-form-item">
-          <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
+          <button id='enterSubmit' class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
         </div>
         
       </div>
@@ -107,10 +107,17 @@
           }
          
         }
+     
       );
+      return false;
       
     });
-    
+    			//回车键触发提交
+                $(document).keydown(function (e) {
+        if (e.keyCode === 13) {
+            $("#enterSubmit").trigger("click");
+        }
+});
     
     //实际使用时记得删除该代码
     //layer.msg('为了方便演示，用户名密码可随意输入', {

@@ -39,15 +39,15 @@
 							href="${base }/${blogMes.userName}"><i
 								class="layui-icon layui-icon-home"></i>首页</a></li>
 						<li class="layui-nav-item"><a
-							href="${base }/${blogMes.userName}/module/1"><i
+							href="${base }/${blogMes.userName}/module?mid=1"><i
 								class="layui-icon layui-icon-fonts-code"></i>问题库<span
 								class="layui-badge-dot"></span></a></li>
 						<li class="layui-nav-item"><a
-							href="${base }/${blogMes.userName}/module/2"><i
+							href="${base }/${blogMes.userName}/module?mid=2"><i
 								class="layui-icon layui-icon-snowflake"></i>随笔<span
 								class="layui-badge-dot"></span></a></li>
 						<li class="layui-nav-item"><a
-							href="${base }/${blogMes.userName}/module/3"><i
+							href="${base }/${blogMes.userName}/module?mid=3"><i
 								class="layui-icon layui-icon-component"></i>音乐<span
 								class="layui-badge-dot"></span></a></li>
 						<li class="layui-nav-item"><a
@@ -72,7 +72,7 @@
 					<div class="border-box bgc-fff">
 					<div class="tags_box">
       <h2 class="tags_title"><span class="con_nav"><a href="${base }/${blogMes.userName}">首页</a>&nbsp;&gt;&nbsp;TAG列表&nbsp;&gt;&nbsp;${tagName}</span>${tagName}</h2>
-      
+      <#if list?? && (list?size > 0)>
       <#list list as item>
       <div class=" my-article-list"> 
       <h3 class="mg-b-10"><a href="${base }/${blogMes.userName}/article/details/${item.articleId}" title="测试测试测试">${item.articleName }</a> 
@@ -86,19 +86,21 @@
       <img src="${base }${blogMes.userImageUrl }" border="0" width="30" height="30" alt="">
       </a>
       <span class="pd-lr-10"><i class="iconfont icon-time"></i>${(item.articleTime?string("yyyy-MM-dd"))}</span>
-      <span class="layui-badge layui-bg-orange">Java</span>
+      <span class="layui-badge layui-bg-orange">${item.sortArticleName }</span>
       <span class="pd-lr-10">
       <#list item.articleLabel?split(",") as tag>
 		<#if tag!="">
          <a href="${base }/${blogMes.userName}/tags/${tag}">#${tag}</a>,
-         </#if>
-         
+        </#if>
      </#list>
      </span>
       <a href="${base }/${blogMes.userName}/article/details/${item.articleId}" target="_blank" class="viewmore layui-btn layui-btn-sm">阅读全文</a>
       </div>
       </div>
       </#list>
+      <#else>
+     <h3 class="nullMsg" ><span>空空如也...</span></h3>
+     </#if>
       </div>
       <!--pagelist-->
       <div class="pagelist"></div>
