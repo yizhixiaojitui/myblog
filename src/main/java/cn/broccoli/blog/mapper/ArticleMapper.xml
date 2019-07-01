@@ -162,8 +162,8 @@ GROUP BY a.article_id ) t
 WHERE t.tag_name=#{tagName} 
 and u.user_name=#{userName} 
 and a.article_status <![CDATA[ <> ]]> 2
-GROUP BY A.article_id 
-ORDER BY A.article_time DESC
+GROUP BY a.article_id 
+ORDER BY a.article_time DESC
     </select>
     <select id="selectArticleByModule" resultMap="ArticleListResult">
  SELECT 
@@ -183,8 +183,8 @@ ORDER BY A.article_time DESC
  FROM 
  (article a INNER JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id) INNER JOIN user u on a.user_id=u.user_id
 WHERE a.module_type=#{module} and u.user_name=#{userName} and a.article_status <![CDATA[ <> ]]> 2
-GROUP BY A.article_id 
-ORDER BY A.article_time DESC
+GROUP BY a.article_id 
+ORDER BY a.article_time DESC
     </select>
   <select id="selectArticleCount" resultType="java.lang.Integer" >
   select count(*) from article A 
