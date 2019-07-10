@@ -3,6 +3,14 @@ package plm.common.beans;
 import java.io.Serializable;
 
 
+/**  
+* @ClassName: PageResultBean  
+* @Description: TODO(这里用一句话描述这个类的作用)  
+* @author Administrator  
+* @date 2019年7月10日  
+*  
+* @param <T>  
+*/
 public class PageResultBean<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -157,7 +157,7 @@ public class ArticleServiceImpl implements ArticleService{
 	*/ 
 	@Override
 	public int saveArticle(Article article,HttpServletRequest request) {
-		//存储过程比较好 这样效率很低
+		
 		
 		String [] taglist=article.getArticleLabel().split(",");
 		//字符串分割标签名称
@@ -329,6 +329,11 @@ public class ArticleServiceImpl implements ArticleService{
 		//存在的减1 不存在的添加
 		//如果一样 删除掉 里面就剩
 		//查询文章已添加的tag
+		
+		/*ider 2
+		 * 查询文章关联的标签  文章标签关联表全部删除  标签表数量-1
+		 * 根据前台传递过来的全部添加
+		 * */
 		List<TagResultMap> taglist=tagMapper.selectByArticleId(articleinfo.getArticleId().intValue());
 		//获取拆分前台传递过来的tag 获得数组
 		String [] arrayTags=articleinfo.getArticleLabel().split(",");

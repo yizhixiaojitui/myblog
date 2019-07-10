@@ -26,14 +26,14 @@ public class JWTUtil {
 	public static String sercetKey = "Yiduoxilanhua";
 	//token加密时使用的密钥
 	//一旦得到该密钥也就可以伪造token了
-	public final static long keeptime = 18000000;
+	public final static long KEEPTIME = 18000000;
 	//代表token的有效时间,
 
 	//JWT由3个部分组成,分别是 头部Header,载荷Payload一般是用户信息和声明,签证Signature一般是密钥和签名
 	//当头部用base64进行编码后一般都会呈现eyJ...形式,而载荷为非强制使用,签证则包含了哈希算法加密后的数据,包括转码后的header,payload和sercetKey
 	//而payload又包含几个部分,issuer签发者,subject面向用户,iat签发时间,exp过期时间,aud接收方。
 	public static String generToken(String id, String issuer, String subject) {
-		long ttlMillis = keeptime;
+		long ttlMillis = KEEPTIME;
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 		//使用Hash256算法进行加密
 		long nowMillis = System.currentTimeMillis();

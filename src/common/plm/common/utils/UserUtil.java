@@ -16,7 +16,8 @@ public class UserUtil {
   private final static ThreadLocal<String> tlUser = new ThreadLocal<String>();
 
   private final static ThreadLocal<Locale> tlLocale = new ThreadLocal<Locale>() {
-    protected Locale initialValue() {
+	  @Override
+	  protected Locale initialValue() {
       // 语言的默认值
       return Locale.CHINESE;
     };

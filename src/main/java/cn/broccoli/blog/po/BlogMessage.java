@@ -18,10 +18,10 @@ public class BlogMessage {
 	    private String userImageUrl;
 	    
 	    private String userDescription;
-	    
-	    private int pageView;//浏览人数
-	    
-	    private int articleNum;//文章数
+	    //浏览人数
+	    private int pageView;
+	    //文章数
+	    private int articleNum;
 	    
 	    public String getUserSex() {
 			return userSex;

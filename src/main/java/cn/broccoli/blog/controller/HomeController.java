@@ -104,7 +104,8 @@ public class HomeController {
 	@RequestMapping(value = "/captcha",method = RequestMethod.GET)  	
 	public void validateCodeImage(HttpServletRequest request, HttpServletResponse response) {
 		RandomValidateCode randomValidateCode = new RandomValidateCode();
-		randomValidateCode.getRandcode(request, response);//输出图片方法
+		//输出图片方法
+		randomValidateCode.getRandcode(request, response);
 	}
 	
 	

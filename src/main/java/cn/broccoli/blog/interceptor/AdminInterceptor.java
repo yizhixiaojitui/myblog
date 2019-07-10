@@ -94,8 +94,10 @@ public class AdminInterceptor implements HandlerInterceptor{
 	public static void out(HttpServletResponse response){
 		PrintWriter out = null;
 		try {
-			response.setCharacterEncoding("UTF-8");//设置编码
-			response.setContentType("application/json");//设置返回类型
+			//设置编码
+			response.setCharacterEncoding("UTF-8");
+			//设置返回类型
+			response.setContentType("application/json");
 			out = response.getWriter();
 			logger.error("用户在线数量限制【wyait-manage-->UserActionInterceptor.out】响应json信息成功");
 		} catch (Exception e) {

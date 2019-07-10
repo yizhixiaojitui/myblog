@@ -21,14 +21,19 @@ import javax.servlet.http.HttpSession;
  * @Date 2019年3月21日
  */
 public class RandomValidateCode {
-	 public static final String RANDOMCODEKEY = "randomcode_key";//放到session中的key
+		//放到session中的key
+	 	public static final String RANDOMCODEKEY = "randomcode_key";
 	    private Random random = new Random();
-	    private String randString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//随机产生的字符串
-	    
-	    private int width = 80;//图片宽
-	    private int height = 26;//图片高
-	    private int lineSize = 40;//干扰线数量
-	    private int stringNum = 4;//随机产生字符数量
+	    //随机产生的字符串
+	    private String randString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    //图片宽
+	    private int width = 80;
+	    //图片高
+	    private int height = 26;
+	    //干扰线数量
+	    private int lineSize = 40;
+	    //随机产生字符数量
+	    private int stringNum = 4;
 	    
 	    /**
 	     * 生成随机图片
@@ -75,10 +80,12 @@ public class RandomValidateCode {
 	     * 获得颜色
 	     */
 	    private Color getRandColor(int fc,int bc){
-	        if(fc > 255)
+	        if(fc > 255) {
 	            fc = 255;
-	        if(bc > 255)
+	        }
+	        if(bc > 255) {
 	            bc = 255;
+	        }
 	        int r = fc + random.nextInt(bc-fc-16);
 	        int g = fc + random.nextInt(bc-fc-14);
 	        int b = fc + random.nextInt(bc-fc-18);
