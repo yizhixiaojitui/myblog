@@ -36,64 +36,7 @@
     <result column="user_image_url" property="userImageUrl" jdbcType="VARCHAR" />
     <result column="user_power" property="userPower" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
+  
   <sql id="Base_Column_List" >
     user_id,  user_name, user_nikename, user_pwd, user_phone, user_sex, user_qq, 
     user_email, user_address,   user_last_login_ip, user_birthday, 
@@ -101,20 +44,7 @@
     user_last_update_time, user_weibo,  user_lock, user_freeze, 
     user_power
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.broccoli.blog.po.UserExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from user
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -137,12 +67,7 @@
     delete from user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.broccoli.blog.po.UserExample" >
-    delete from user
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
+  
   <insert id="insert" parameterType="cn.broccoli.blog.po.User" >
     insert into user (user_id, group_id, user_name, 
       user_nikename, user_pwd, user_phone, 
@@ -326,12 +251,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.broccoli.blog.po.UserExample" resultType="java.lang.Integer" >
-    select count(*) from user
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
+  
     <select id="selectUserInfoById"  resultMap="UserInfoMap" >
 	SELECT 
 	user_id,
@@ -355,124 +275,6 @@
   </update>
   
   
-  <update id="updateByExampleSelective" parameterType="map" >
-    update user
-    <set >
-      <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=INTEGER},
-      </if>
-      <if test="record.groupId != null" >
-        group_id = #{record.groupId,jdbcType=INTEGER},
-      </if>
-      <if test="record.userName != null" >
-        user_name = #{record.userName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userNikename != null" >
-        user_nikename = #{record.userNikename,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userPwd != null" >
-        user_pwd = #{record.userPwd,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userPhone != null" >
-        user_phone = #{record.userPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userSex != null" >
-        user_sex = #{record.userSex,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userQq != null" >
-        user_qq = #{record.userQq,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userEmail != null" >
-        user_email = #{record.userEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userAddress != null" >
-        user_address = #{record.userAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userMark != null" >
-        user_mark = #{record.userMark,jdbcType=INTEGER},
-      </if>
-      <if test="record.userRankId != null" >
-        user_rank_id = #{record.userRankId,jdbcType=TINYINT},
-      </if>
-      <if test="record.userLastLoginIp != null" >
-        user_last_login_ip = #{record.userLastLoginIp,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userBirthday != null" >
-        user_birthday = #{record.userBirthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.userDescription != null" >
-        user_description = #{record.userDescription,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userImageUrl != null" >
-        user_image_url = #{record.userImageUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userSchool != null" >
-        user_school = #{record.userSchool,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userRegisterTime != null" >
-        user_register_time = #{record.userRegisterTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.userRegisterIp != null" >
-        user_register_ip = #{record.userRegisterIp,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userLastUpdateTime != null" >
-        user_last_update_time = #{record.userLastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.userWeibo != null" >
-        user_weibo = #{record.userWeibo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userBloodType != null" >
-        user_blood_type = #{record.userBloodType,jdbcType=CHAR},
-      </if>
-      <if test="record.userSays != null" >
-        user_says = #{record.userSays,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userLock != null" >
-        user_lock = #{record.userLock,jdbcType=TINYINT},
-      </if>
-      <if test="record.userFreeze != null" >
-        user_freeze = #{record.userFreeze,jdbcType=TINYINT},
-      </if>
-      <if test="record.userPower != null" >
-        user_power = #{record.userPower,jdbcType=INTEGER},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update user
-    set user_id = #{record.userId,jdbcType=INTEGER},
-      group_id = #{record.groupId,jdbcType=INTEGER},
-      user_name = #{record.userName,jdbcType=VARCHAR},
-      user_nikename = #{record.userNikename,jdbcType=VARCHAR},
-      user_pwd = #{record.userPwd,jdbcType=VARCHAR},
-      user_phone = #{record.userPhone,jdbcType=VARCHAR},
-      user_sex = #{record.userSex,jdbcType=VARCHAR},
-      user_qq = #{record.userQq,jdbcType=VARCHAR},
-      user_email = #{record.userEmail,jdbcType=VARCHAR},
-      user_address = #{record.userAddress,jdbcType=VARCHAR},
-      user_mark = #{record.userMark,jdbcType=INTEGER},
-      user_rank_id = #{record.userRankId,jdbcType=TINYINT},
-      user_last_login_ip = #{record.userLastLoginIp,jdbcType=VARCHAR},
-      user_birthday = #{record.userBirthday,jdbcType=TIMESTAMP},
-      user_description = #{record.userDescription,jdbcType=VARCHAR},
-      user_image_url = #{record.userImageUrl,jdbcType=VARCHAR},
-      user_school = #{record.userSchool,jdbcType=VARCHAR},
-      user_register_time = #{record.userRegisterTime,jdbcType=TIMESTAMP},
-      user_register_ip = #{record.userRegisterIp,jdbcType=VARCHAR},
-      user_last_update_time = #{record.userLastUpdateTime,jdbcType=TIMESTAMP},
-      user_weibo = #{record.userWeibo,jdbcType=VARCHAR},
-      user_blood_type = #{record.userBloodType,jdbcType=CHAR},
-      user_says = #{record.userSays,jdbcType=VARCHAR},
-      user_lock = #{record.userLock,jdbcType=TINYINT},
-      user_freeze = #{record.userFreeze,jdbcType=TINYINT},
-      user_power = #{record.userPower,jdbcType=INTEGER}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByPrimaryKeySelective" parameterType="cn.broccoli.blog.po.User" >
     update user
     <set >

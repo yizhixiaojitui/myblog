@@ -8,81 +8,10 @@
     <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
   <sql id="Base_Column_List" >
     phone_id, phone_num, contents, send_time, user_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.broccoli.blog.po.PhoneMessageExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from phone_message
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -93,12 +22,7 @@
     delete from phone_message
     where phone_id = #{phoneId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.broccoli.blog.po.PhoneMessageExample" >
-    delete from phone_message
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
+  
   <insert id="insert" parameterType="cn.broccoli.blog.po.PhoneMessage" >
     insert into phone_message (phone_id, phone_num, contents, 
       send_time, user_id)
@@ -142,46 +66,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.broccoli.blog.po.PhoneMessageExample" resultType="java.lang.Integer" >
-    select count(*) from phone_message
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update phone_message
-    <set >
-      <if test="record.phoneId != null" >
-        phone_id = #{record.phoneId,jdbcType=INTEGER},
-      </if>
-      <if test="record.phoneNum != null" >
-        phone_num = #{record.phoneNum,jdbcType=VARCHAR},
-      </if>
-      <if test="record.contents != null" >
-        contents = #{record.contents,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sendTime != null" >
-        send_time = #{record.sendTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=INTEGER},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update phone_message
-    set phone_id = #{record.phoneId,jdbcType=INTEGER},
-      phone_num = #{record.phoneNum,jdbcType=VARCHAR},
-      contents = #{record.contents,jdbcType=VARCHAR},
-      send_time = #{record.sendTime,jdbcType=TIMESTAMP},
-      user_id = #{record.userId,jdbcType=INTEGER}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
+  
   <update id="updateByPrimaryKeySelective" parameterType="cn.broccoli.blog.po.PhoneMessage" >
     update phone_message
     <set >
