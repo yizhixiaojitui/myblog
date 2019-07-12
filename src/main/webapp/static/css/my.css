@@ -83,6 +83,10 @@
     overflow: hidden;
 }
 
+.my-content .layui-card-body a div{
+	display: flex;
+}
+
 .my-theme-default .layui-layout-admin .my-content .my-content-left {}
 
 .my-theme-default .layui-layout-admin .my-content .my-content-right {}
@@ -502,6 +506,11 @@ footer{
 /*tags*/
 .tags_box{
 padding:20px;
+min-height: 800px;
+}
+.nullMsg{ 
+    margin-top: 50px;
+    text-align: center;
 }
 .tags_box .tags_title{
 	font-size: 16px;

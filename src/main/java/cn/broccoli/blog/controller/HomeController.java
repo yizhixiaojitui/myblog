@@ -92,10 +92,34 @@ public class HomeController {
 		model.put("blogMes",aboutBlogService.selectByPrimaryKey(name));
 		return "blog/timeline";
 	}
-	@RequestMapping(value = "/{name}/tags",method = RequestMethod.GET)  	
-	public String tags(@PathVariable String name,ModelMap model) {
+	@RequestMapping(value = "/{name}/tags/{tagName}",method = RequestMethod.GET)  	
+	public String tags(@PathVariable String name,@PathVariable String tagName,ModelMap model) {
 		model.put("blogMes",aboutBlogService.selectByPrimaryKey(name));
+		model.put("list",articleService.findTagArticleList(name, tagName));
+		model.put("tagName",tagName);
 		return "blog/tags";
+	}
+	
+	@RequestMapping(value = "/{name}/module",method = RequestMethod.GET)  	
+	public String module(@PathVariable String name,int mid,ModelMap model) {
+		String moduleName="";
+		switch (mid) {
+		case 1:
+			moduleName="问题库";
+			break;
+		case 2:
+			moduleName="随笔";
+			break;
+		case 3:
+			moduleName="分享";
+			break;
+		default:
+			return "template/tips/error";
+		}
+		model.put("moduleName",moduleName);
+		model.put("blogMes",aboutBlogService.selectByPrimaryKey(name));
+		model.put("list",articleService.findArticleModule(name, mid));
+		return "blog/module";
 	}
 	/**验证码生成接口
 	 * @param request

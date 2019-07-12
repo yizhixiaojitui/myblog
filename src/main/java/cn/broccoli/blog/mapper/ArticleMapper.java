@@ -35,4 +35,8 @@ public interface ArticleMapper {
     List<ArticleHot> selectArticleHot(Integer userid);
     
     List<ArticleTop> selectArticleTop(Integer userid);
+    
+    List<ArticleList> selectArticleByTagName(@Param("userName")String userName,@Param("tagName")String tagName );
+    
+    List<ArticleList> selectArticleByModule(@Param("userName")String userName,@Param("module")int module );
 }
