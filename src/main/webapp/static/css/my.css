@@ -560,3 +560,14 @@ min-height: 800px;
     text-align: center;
     color: #01AAED;
 }
+
+
+
+
+
+
+
+.editor-image{
+	  max-width: 100%;
+    max-height: 100%;
+}

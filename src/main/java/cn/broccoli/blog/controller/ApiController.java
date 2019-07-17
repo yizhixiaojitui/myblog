@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import plm.common.beans.ResultBean;
 import cn.broccoli.blog.utils.FileUtils;
+import cn.broccoli.blog.utils.ImageResult;
+import cn.broccoli.blog.utils.QiniuUtil;
 
 @Controller
 public class ApiController {
@@ -29,9 +31,9 @@ public class ApiController {
 	 */
 	@RequestMapping(value = "/api/file/article/image/upload", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultBean<Map<String, String>> imageUpload(MultipartFile file, HttpSession session,
+	public ResultBean<ImageResult> imageUpload(MultipartFile file, HttpSession session,
 			HttpServletRequest request) throws IllegalStateException, IOException {
-		return new ResultBean<Map<String, String>>(fileUtils.uploadFile(file, session, request));
+		return new ResultBean<ImageResult>(QiniuUtil.uploadFile(file));
 	}
 
 }

@@ -122,7 +122,7 @@ layui.define(["layer", "form"], function(t) {
                         var n = this;
                         layui.use("upload", function(o) {
                             var r = l.uploadImage || {};
-                            o.render({ url: r.url, method: r.type, elem: e(n).find("input")[0], done: function(e) { 0 == e.code ? (e.data = e.data || {}, v.call(t, "img", { src: e.data.src, class: 'abcd', alt: e.data.title }, a)) : i.msg(e.msg || "上传失败") } })
+                            o.render({ url: r.url, method: r.type, elem: e(n).find("input")[0], done: function(e) { 0 == e.code ? (e.data = e.data || {}, v.call(t, "img", { src: e.data.src, class: 'editor-image', alt: e.data.title }, a)) : i.msg(e.msg || "上传失败") } })
                         })
                     },
                     iframe: function(e) {
