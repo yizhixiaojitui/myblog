@@ -9,6 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,34 +60,36 @@ public class UserServiceImpl implements UserService{
 	* @param response
 	* @param login
 	* @return  
-	* @see cn.broccoli.blog.service.UserService#LoginSignup(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, cn.broccoli.blog.utils.LoginHelper)  
+	 * @see cn.broccoli.blog.service.UserService#LoginSignup(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, cn.broccoli.blog.utils.LoginHelper)  
 	*/ 
 	@Override
 	public Map<String, String> LoginSignup(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
 		Map<String, String> result=new HashMap<String, String>();
-		HttpSession session=request.getSession();
-		String randomcode=session.getAttribute("randomcode_key").toString();
+		HttpSession httpSession=request.getSession();
+		String randomcode=httpSession.getAttribute("randomcode_key").toString();
 		if(!randomcode.equalsIgnoreCase(login.getVercode())) {
 			System.out.println("验证码错误！！！");
 			throw new UnloginException("验证码错误");
 		}
-		//密码MD5加密比对
-		login.setPassword(SaleUtil.PassWordToMD5(login.getPassword()));
-		User user=userMapper.selectByUserName(login.getUsername());
-		if(user==null) {
-			throw new UnloginException("用户名不存在或密码错误！");
+		String password=SaleUtil.PassWordToMD5(login.getPassword());
+		System.out.println("UserLogin =>password:"+password);
+		UsernamePasswordToken userNamePassWordToken= new UsernamePasswordToken(login.getUsername(),password);
+		try {
+		SecurityUtils.getSubject().login(userNamePassWordToken);
+	    } catch (UnknownAccountException uae) {
+	    	throw new UnloginException("用户名不存在:" + userNamePassWordToken.getPrincipal());
+		} catch (IncorrectCredentialsException ice) {
+			throw new UnloginException("用户名/密码不正确!");
+		} catch (LockedAccountException lae) {
+			throw new UnloginException("用户名 " + userNamePassWordToken.getPrincipal() + " 被锁定 !");
 		}
-		if(user.getUserPwd().equals(login.getPassword())) {
-			String token=JWTUtil.generToken(user.getUserId().toString(),null, null);
-			System.out.println("========"+token);
-			Cookie cookie = new Cookie("access_token",token);
-			cookie.setPath("/");
-			response.addCookie(cookie);
-			result.put("access_token", token);
-		}else {
-		throw new UnloginException("用户名或密码错误！");
-			
-		}
+		Session session=SecurityUtils.getSubject().getSession();
+		String accessToken=(String) session.getAttribute("access_token");
+		System.out.println("========"+accessToken);
+		Cookie cookie = new Cookie("access_token",accessToken);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+		result.put("access_token", accessToken);
 		return result;
 	}
 
@@ -161,6 +170,20 @@ public class UserServiceImpl implements UserService{
 		response.addCookie(cookie);
 		logger.info("");
 		return true;
+	}
+
+	/**
+	* <p>Title: findUserByUsername</p>  
+	* <p>Description: </p>  
+	* @param name
+	* @return  
+	* @see cn.broccoli.blog.service.UserService#findUserByUsername(java.lang.String)  
+	*/ 
+	@Override
+	public User findUserByUsername(String name) {
+
+		
+		return userMapper.selectByUserName(name);
 	}
 	
 	

@@ -106,40 +106,40 @@
 	
 	
     
-    <mvc:interceptors> 
+   <!--  <mvc:interceptors> 
     <mvc:interceptor>
-                   <!--  
+                    
                        /**的意思是所有文件夹及里面的子文件夹 
                        /*是所有文件夹，不含子文件夹 
                        /是web项目的根目录
-                     --> 
+                     
                    <mvc:mapping path="/*/**" /> 
-                   <!-- 需排除拦截的地址 -->  
-                   <mvc:exclude-mapping path="/admin/**"/> <!--不拦截的url -->  
-                   <mvc:exclude-mapping path="/api/**"/> <!--不拦截的url -->
-                   <mvc:exclude-mapping path="/static/**"/> <!--不拦截的url -->
+                   需排除拦截的地址  
+                   <mvc:exclude-mapping path="/admin/**"/> 不拦截的url  
+                   <mvc:exclude-mapping path="/api/**"/> 不拦截的url
+                   <mvc:exclude-mapping path="/static/**"/> 不拦截的url
                    <mvc:exclude-mapping path="/account/**"/> 
                    <mvc:exclude-mapping path="/home/**"/>
                    <mvc:exclude-mapping path="/captcha/**"/>
                    <mvc:exclude-mapping path="/upload/**"/>
                    <mvc:exclude-mapping path="/about/**"/> 	
                    <mvc:exclude-mapping path="/index/**"/>
-                   <bean  class="cn.broccoli.blog.interceptor.HomeInterceptor"></bean> <!--这个类就是我们自定义的Interceptor -->
+                   <bean  class="cn.broccoli.blog.interceptor.HomeInterceptor"></bean> 这个类就是我们自定义的Interceptor
           </mvc:interceptor>
            <mvc:interceptor>
-                   <!--  
+                    
                        /**的意思是所有文件夹及里面的子文件夹 
                        /*是所有文件夹，不含子文件夹 
                        /是web项目的根目录
-                     --> 
+                     
                    <mvc:mapping path="/admin/**" /> 
                    <mvc:mapping path="/api/**" />
-                   <!-- 需排除拦截的地址 -->  
+                   需排除拦截的地址  
                   
-                   <bean  class="cn.broccoli.blog.interceptor.AdminInterceptor"></bean> <!--这个类就是我们自定义的Interceptor -->
+                   <bean  class="cn.broccoli.blog.interceptor.AdminInterceptor"></bean> 这个类就是我们自定义的Interceptor
           </mvc:interceptor> 
-          <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法  -->
-    </mvc:interceptors>
+          当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 
+    </mvc:interceptors> -->
    <!-- freemarker的配置 -->  
     <bean id="freemarkerConfigurer"   class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
         <property name="templateLoaderPath" value="/WEB-INF/views/" />  
@@ -173,4 +173,13 @@
         <!--  <property name="prefix" value="/WEB-INF/views/" />-->
      <!-- </bean> -->
     
+    
+     <!-- 开启shiro注解-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true" />
+    </bean>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
 </beans>

@@ -14,6 +14,8 @@ public interface UserService {
 
 	String countByName(String name);
 	
+	User findUserByUsername(String name);
+	
 	User findUserById(Integer userId);
 
 	boolean userLogout(HttpServletResponse response);

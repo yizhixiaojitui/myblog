@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +23,7 @@ import cn.broccoli.blog.utils.LoginHelper;
 import cn.broccoli.blog.utils.RandomValidateCode;
 import cn.broccoli.blog.utils.UserHelper;
 import plm.common.beans.ResultBean;
+import plm.common.utils.SaleUtil;
 
 
 @Controller
@@ -50,7 +54,8 @@ public class UserController {
 	@ResponseBody
 	public ResultBean<Map<String, String>> UserLogin(HttpServletRequest request,HttpServletResponse response,LoginHelper login) {
 		
-		return new ResultBean<Map<String,String>>(userService.LoginSignup(request, response,login));
+		return new ResultBean<Map<String,String>>(userService.LoginSignup(request, response, login));
+		//return new ResultBean<Map<String,String>>(userService.LoginSignup(request, response,login));
 	}
 	@RequestMapping(value = "/account/logout",method = RequestMethod.GET)  
 	@ResponseBody

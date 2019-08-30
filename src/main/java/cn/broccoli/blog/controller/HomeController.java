@@ -52,7 +52,9 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/admin",method = RequestMethod.GET)  	
 	public String adminView(HttpServletRequest request,ModelMap model) {
-		Integer userid=jwtUtil.getUserId(request);
+		Integer userid=10001;
+				//jwtUtil.getUserId(request);
+				
 		User user=userService.findUserById(userid);
 		model.put("userinfo", user);
 		return "/home/index";
