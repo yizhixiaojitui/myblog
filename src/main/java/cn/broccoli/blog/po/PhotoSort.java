@@ -1,9 +1,15 @@
 package cn.broccoli.blog.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PhotoSort {
-    private Integer sortImgId;
+public class PhotoSort implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer sortImgId;
 
     private String sortImgName;
 

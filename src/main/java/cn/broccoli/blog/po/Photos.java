@@ -1,9 +1,15 @@
 package cn.broccoli.blog.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Photos {
-    private Integer photoId;
+public class Photos implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer photoId;
 
     private String photoName;
 

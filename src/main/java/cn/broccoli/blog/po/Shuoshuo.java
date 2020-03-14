@@ -1,9 +1,15 @@
 package cn.broccoli.blog.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Shuoshuo {
-    private Integer shuoId;
+public class Shuoshuo implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer shuoId;
 
     private Integer userId;
 

@@ -173,7 +173,6 @@ public class ArticleServiceImpl implements ArticleService{
 		//字符串分割标签名称
 		List<Integer> tagId=new ArrayList<Integer>();
 		//初始化标签id list
-		Tag tag=new Tag();
 		//初始化tag
 		//获取真实ip地址
 		String ip=CusAccessObjectUtil.getIpAddress(request);
@@ -184,18 +183,15 @@ public class ArticleServiceImpl implements ArticleService{
 		int count=articleMapper.insertArticle(article);
 		logger.info("插入文章返回ID："+count);
 		//分割标签字符 添加标签
-		for (int i = 0; i < taglist.length; i++) {
-			if(taglist[i]!="") {
+		for (String tagName : taglist) {
+			if(tagName!="") {
 				//去掉字符前后空格
-				tag.setTagName(taglist[i].trim());
+				Tag tag=new Tag();
+				tag.setTagName(tagName);
 				Integer code=tagMapper.insert(tag);
-				tagId.add(tag.getId());
-				logger.info("插入标签返回code："+code+" 插入标签id："+tag.getId()+"插入的标签名称："+taglist[i]);
+				articleToTagMapper.insert(article.getArticleId(),tag.getId());
+				logger.info("插入标签返回code："+code+" 插入标签id："+tag.getId()+"插入的标签名称："+tagName);
 			}
-		}
-		for (int i=0;i<tagId.size();i++) {
-			articleToTagMapper.insert(article.getArticleId(),tagId.get(i));
-			logger.info("插入文章标签关联表 文章id："+article.getArticleId()+" 标签id"+tagId.get(i));
 		}
 		return article.getArticleId();
 		

@@ -33,11 +33,16 @@ public class AboutBlogServiceImpl implements AboutBlogService{
 	@Override
 	public BlogMessage selectByPrimaryKey(String name) {
 		Integer id=userMapper.selectIdByName(name);
-		BlogMessage blogMessage=aboutBlogMapper.selectBlogMessage(id);
-		blogMessage.setFriendlyLinks(friendlyLinkMapper.selectAll());
-		blogMessage.setArticleHots(articleMapper.selectArticleHot(id));
-		blogMessage.setArticleTop(articleMapper.selectArticleTop(id));
-		blogMessage.setTags(tagMapper.selectTagAll());
+		BlogMessage blogMessage = null;
+		if(id!=null) {
+			System.out.println("不等空");
+			blogMessage=aboutBlogMapper.selectBlogMessage(id);
+			blogMessage.setFriendlyLinks(friendlyLinkMapper.selectAll());
+			blogMessage.setArticleHots(articleMapper.selectArticleHot(id));
+			blogMessage.setArticleTop(articleMapper.selectArticleTop(id));
+			blogMessage.setTags(tagMapper.selectTagAll());
+		}
+		
 		return  blogMessage;
 	}
 	

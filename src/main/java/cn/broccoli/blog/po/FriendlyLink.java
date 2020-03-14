@@ -1,7 +1,14 @@
 package cn.broccoli.blog.po;
 
-public class FriendlyLink {
-    private Short linkId;
+import java.io.Serializable;
+
+public class FriendlyLink implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Short linkId;
 
     private String linkName;
 

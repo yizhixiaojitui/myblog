@@ -19,11 +19,27 @@
     <i class="layui-icon" face>&#xe664;</i>
     
     <div class="layui-text" style="font-size: 20px;">
-      好像出错了呢
+      好像没有权限呢！刷新重进一下试试呢！
+     <div><span id="time">3</span>
+
+秒钟之后自动跳转，如果不跳转，请点击下面链接
+</div>
+<div><a href="../account/login">点击这里</a></div>
     </div>
   </div>
 </div>
 
+
+
+<script language="JavaScript1.2" type="text/javascript">
+delayURL("../account/login", 3000);
+function delayURL(url, time) {
+
+setTimeout("top.location.href='" + url + "'", time);
+
+}
+
+</script>
   <script src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
   <script>
   layui.config({

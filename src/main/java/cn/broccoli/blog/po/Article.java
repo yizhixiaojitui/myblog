@@ -1,9 +1,15 @@
 package cn.broccoli.blog.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Article {
-    private Short articleId;
+public class Article implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Short articleId;
 
     private String articleName;
 

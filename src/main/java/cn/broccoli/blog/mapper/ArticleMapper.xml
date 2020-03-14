@@ -1,364 +1,427 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.broccoli.blog.mapper.ArticleMapper" >
- <resultMap id="ArticleListResult" type="cn.broccoli.blog.po.ArticleList" >
-   <result column="article_id" property="articleId"/>  
-    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
-    <result column="article_time" property="articleTime" jdbcType="TIMESTAMP" />
-    <result column="article_click" property="articleClick" jdbcType="INTEGER" />
-    <result column="sort_article_name" property="sortArticleName" jdbcType="VARCHAR" />
-    <result column="article_type" property="articleType" jdbcType="INTEGER" />
-    <result column="article_up" property="articleUp" jdbcType="TINYINT" />
-    <result column="user_nikename" property="userNikename" jdbcType="VARCHAR" />
-    <result column="article_support" property="articleSupport" jdbcType="TINYINT" />
-    <result column="article_label" property="articleLabel" jdbcType="VARCHAR" />
-    <result column="article_description" property="articleDescription" jdbcType="VARCHAR"/>
-    <result column="article_status" property="articleStatus" jdbcType="TINYINT" />
-    <result column="module_type" property="moduleType" jdbcType="TINYINT" />
-  </resultMap>
-   
- <resultMap id="articleInfo" type="cn.broccoli.blog.utils.ArticleInfo" >
- <result column="article_id" property="articleId"/> 
-    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
-    <result column="sort_article_id" property="sortArticleId" jdbcType="INTEGER" />
-    <result column="article_support" property="articleSupport" jdbcType="TINYINT" />
-    <result column="article_label" property="articleLabel" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR" />
-    <result column="type_id" property="typeId" jdbcType="TINYINT" />
-    <result column="article_type" property="articleType" jdbcType="INTEGER" />
-    <result column="article_up" property="articleUp" jdbcType="TINYINT" />
-    <result column="article_description" property="articleDescription" jdbcType="VARCHAR"/>
-    <result column="article_status" property="articleStatus" jdbcType="TINYINT" />
-    <result column="module_type" property="moduleType" jdbcType="TINYINT" />
- </resultMap>
-  <resultMap id="articleDetails" type="cn.broccoli.blog.po.ArticleDetails" >
-   <result column="article_id" property="articleId"/> 
-    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
-    <result column="article_time" property="articleTime" jdbcType="TIMESTAMP" />
-    <result column="article_click" property="articleClick" jdbcType="INTEGER" />
-    <result column="sort_article_name" property="sortArticleName" jdbcType="VARCHAR" />
-   <result column="user_nikename" property="userNikename" jdbcType="VARCHAR" />
-    <result column="article_label" property="articleLabel" jdbcType="VARCHAR" />
-    <result column="article_content" property="articleContent" jdbcType="VARCHAR"/>
-  <result column="type_id" property="typeId" jdbcType="TINYINT" />
-  </resultMap>
-    <resultMap id="articleHots" type="cn.broccoli.blog.utils.ArticleHot" >
-  	<result column="article_id" property="articleId"/> 
-    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
-    <result column="article_click" property="articleClick" jdbcType="INTEGER" />
-  </resultMap>
-   <resultMap id="articleTops" type="cn.broccoli.blog.utils.ArticleTop" >
-  	<result column="article_id" property="articleId"/> 
-    <result column="article_name" property="articleName" jdbcType="VARCHAR" />
-  </resultMap>
-  
- <select id="selectArticleHot" resultMap="articleHots">
- select article_id,article_name,article_click 
- from 
- article where user_id=#{userid} and article_type=1 and article_status=0 ORDER BY article_click DESC limit 0,10;
- </select>
- <select id="selectArticleTop" resultMap="articleTops">
- select article_id ,article_name 
- from 
- article where user_id=#{userid} and article_type=1 and article_status=0 ORDER BY article_support,article_time DESC limit 0,10;
- </select>
+<mapper namespace="cn.broccoli.blog.mapper.ArticleMapper">
+	<cache type="cn.broccoli.blog.redis.RedisCache" />
+	<resultMap id="ArticleListResult"
+		type="cn.broccoli.blog.po.ArticleList">
+		<result column="article_id" property="articleId" />
+		<result column="article_name" property="articleName"
+			jdbcType="VARCHAR" />
+		<result column="article_time" property="articleTime"
+			jdbcType="TIMESTAMP" />
+		<result column="article_click" property="articleClick"
+			jdbcType="INTEGER" />
+		<result column="sort_article_name" property="sortArticleName"
+			jdbcType="VARCHAR" />
+		<result column="article_type" property="articleType"
+			jdbcType="INTEGER" />
+		<result column="article_up" property="articleUp"
+			jdbcType="TINYINT" />
+		<result column="user_nikename" property="userNikename"
+			jdbcType="VARCHAR" />
+		<result column="article_support" property="articleSupport"
+			jdbcType="TINYINT" />
+		<result column="article_label" property="articleLabel"
+			jdbcType="VARCHAR" />
+		<result column="article_description"
+			property="articleDescription" jdbcType="VARCHAR" />
+		<result column="article_status" property="articleStatus"
+			jdbcType="TINYINT" />
+		<result column="module_type" property="moduleType"
+			jdbcType="TINYINT" />
+	</resultMap>
 
- <select id="selectByBlogger" resultMap="ArticleListResult">
- SELECT 
- A.article_id,
- A.article_name,
- A.article_time,
- A.article_click,
- AR.sort_article_name,
- U.user_nikename,
- A.article_type,
- A.article_up,
- A.article_support,
- A.article_label,
- A.article_status,
- A.article_description
- FROM 
- (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.sort_article_id=AR.sort_article_id WHERE A.article_type=1 and A.article_status=0 and A.user_id=(select user_id from user where user_name= #{username}) GROUP BY A.article_id ORDER BY A.article_up DESC, A.article_time DESC limit #{page},10; 
-  </select>
-  <select id="selectByTagsID" resultType="java.lang.Integer">
-select count(*) from (SELECT a.article_id FROM article a  INNER JOIN article_sort AR ON a.sort_article_id=AR.sort_article_id where a.sort_article_id in  
- <foreach collection="list" item="ids" open="(" close=")" separator=",">
-  #{ids.sortArticleId}
-</foreach>
-GROUP BY a.article_id ) t
- </select>
- 
-  <select id="selectArticle" resultMap="articleInfo">
- SELECT 
- A.article_id,
- A.article_name,
- A.sort_article_id,
- A.user_id,
- A.article_content,
- A.type_id,
- A.article_type,
- A.article_up,
- A.article_support,
- A.article_label,
- A.article_status,
- A.article_description,
- A.module_type
- FROM 
- article A
-  where
-  A.user_id=#{userid} and A.article_id=#{articleid}; 
-  </select>
-   <select id="selectArticleByUserid" resultMap="ArticleListResult">
- SELECT 
- A.article_id,
- A.article_name,
- A.article_time,
- A.article_click,
- AR.sort_article_name,
- U.user_nikename,
- A.article_type,
- A.article_up,
- A.article_support,
- A.article_label,
- A.article_status,
- A.article_description,
- A.module_type
- FROM 
- (article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort AR ON A.sort_article_id=AR.sort_article_id
-  <where>
-  A.user_id=#{userid} 
-  and A.article_status <![CDATA[ <> ]]> 2
-  <if test="articleId != null and articleId != ''" >
-        and A.article_id LIKE CONCAT('%',#{articleId},'%') 
-  </if>
-  <if test="articleName != null and articleName !=''" >
-        and A.article_name LIKE CONCAT('%',#{articleName},'%') 
-  </if>
-  <if test="articleStatus != null and articleStatus!=''" >
-        and A.article_status LIKE CONCAT('%',#{articleStatus},'%')
-  </if>
-  
-  </where>   
-  GROUP BY A.article_id ORDER BY A.article_time DESC limit #{page},#{limit}; 
-  </select>
-    <select id="selectArticleByTagName" resultMap="ArticleListResult">
-    SELECT 
- a.article_id,
- a.article_name,
- a.article_time,
- a.article_click,
- ar.sort_article_name,
- u.user_nikename,
- a.article_type,
- a.article_up,
- a.article_support,
- a.article_label,
- a.article_status,
- a.article_description,
- a.module_type
- FROM 
-  (((article_to_tag at INNER JOIN tag t on t.id=at.tag_id) INNER JOIN article a on a.article_id=at.article_id) INNER JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id) INNER JOIN user u on a.user_id=u.user_id
-WHERE t.tag_name=#{tagName} 
-and u.user_name=#{userName} 
-and a.article_status <![CDATA[ <> ]]> 2
-GROUP BY a.article_id 
-ORDER BY a.article_time DESC
-    </select>
-    <select id="selectArticleByModule" resultMap="ArticleListResult">
- SELECT 
- a.article_id,
- a.article_name,
- a.article_time,
- a.article_click,
- ar.sort_article_name,
- u.user_nikename,
- a.article_type,
- a.article_up,
- a.article_support,
- a.article_label,
- a.article_status,
- a.article_description,
- a.module_type
- FROM 
- (article a INNER JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id) INNER JOIN user u on a.user_id=u.user_id
-WHERE a.module_type=#{module} and u.user_name=#{userName} and a.article_status <![CDATA[ <> ]]> 2
-GROUP BY a.article_id 
-ORDER BY a.article_time DESC
-    </select>
-  <select id="selectArticleCount" resultType="java.lang.Integer" >
-  select count(*) from article A 
- <where>
-  A.user_id=#{userid} 
-  and A.article_status <![CDATA[ <> ]]> 2
-  <if test="articleId != null and articleId != ''" >
-        and A.article_id LIKE CONCAT('%',#{articleId},'%') 
-  </if>
-  <if test="articleName != null and articleName !=''" >
-        and A.article_name LIKE CONCAT('%',#{articleName},'%') 
-  </if>
-  <if test="articleStatus != null and articleStatus!=''" >
-        and A.article_status LIKE CONCAT('%',#{articleStatus},'%')
-  </if>
-  
-  </where>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="articleDetails">
-  SELECT  a.article_id, 
-        a.article_name,
-        a.article_time,
-        a.article_click,
-        a.article_label,
-				a.article_content,
-				u.user_nikename,
-				ar.sort_article_name 
-FROM 
-(article a inner join  user u on a.user_id=u.user_id)
-  inner join article_sort ar on a.sort_article_id=ar.sort_article_id where a.article_id=#{id} and a.article_status=0; 
-  </select>
- 
-  <delete id="deleteArticleById" parameterType="java.util.List" >
-delete from article where article_id in
-<foreach collection="list" item="ids" open="(" close=")" separator=",">
-  #{ids.articleId}
-</foreach>
-</delete>
+	<resultMap id="articleInfo"
+		type="cn.broccoli.blog.utils.ArticleInfo">
+		<result column="article_id" property="articleId" />
+		<result column="article_name" property="articleName"
+			jdbcType="VARCHAR" />
+		<result column="sort_article_id" property="sortArticleId"
+			jdbcType="INTEGER" />
+		<result column="article_support" property="articleSupport"
+			jdbcType="TINYINT" />
+		<result column="article_label" property="articleLabel"
+			jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="article_content" property="articleContent"
+			jdbcType="LONGVARCHAR" />
+		<result column="type_id" property="typeId" jdbcType="TINYINT" />
+		<result column="article_type" property="articleType"
+			jdbcType="INTEGER" />
+		<result column="article_up" property="articleUp"
+			jdbcType="TINYINT" />
+		<result column="article_description"
+			property="articleDescription" jdbcType="VARCHAR" />
+		<result column="article_status" property="articleStatus"
+			jdbcType="TINYINT" />
+		<result column="module_type" property="moduleType"
+			jdbcType="TINYINT" />
+	</resultMap>
+	<resultMap id="articleDetails"
+		type="cn.broccoli.blog.po.ArticleDetails">
+		<result column="article_id" property="articleId" />
+		<result column="article_name" property="articleName"
+			jdbcType="VARCHAR" />
+		<result column="article_time" property="articleTime"
+			jdbcType="TIMESTAMP" />
+		<result column="article_click" property="articleClick"
+			jdbcType="INTEGER" />
+		<result column="sort_article_name" property="sortArticleName"
+			jdbcType="VARCHAR" />
+		<result column="user_nikename" property="userNikename"
+			jdbcType="VARCHAR" />
+		<result column="article_label" property="articleLabel"
+			jdbcType="VARCHAR" />
+		<result column="article_content" property="articleContent"
+			jdbcType="VARCHAR" />
+		<result column="type_id" property="typeId" jdbcType="TINYINT" />
+	</resultMap>
+	<resultMap id="articleHots"
+		type="cn.broccoli.blog.utils.ArticleHot">
+		<result column="article_id" property="articleId" />
+		<result column="article_name" property="articleName"
+			jdbcType="VARCHAR" />
+		<result column="article_click" property="articleClick"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="articleTops"
+		type="cn.broccoli.blog.utils.ArticleTop">
+		<result column="article_id" property="articleId" />
+		<result column="article_name" property="articleName"
+			jdbcType="VARCHAR" />
+	</resultMap>
 
-  <insert id="insertArticle" useGeneratedKeys="true" keyProperty="articleId" parameterType="cn.broccoli.blog.po.Article" >
-    insert into article
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="articleName != null" >
-        article_name,
-      </if>
-      <if test="articleTime != null" >
-        article_time,
-      </if>
-      <if test="articleIp != null" >
-        article_ip,
-      </if>
-      <if test="articleClick != null" >
-        article_click,
-      </if>
-      <if test="sortArticleId != null" >
-        sort_article_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="typeId != null" >
-        type_id,
-      </if>
-      <if test="articleType != null" >
-        article_type,
-      </if>
-      <if test="articleUp != null" >
-        article_up,
-      </if>
-      <if test="articleSupport != null" >
-        article_support,
-      </if>
-      <if test="articleLabel != null" >
-        article_label,
-      </if>
-      <if test="articleContent != null" >
-        article_content,
-      </if>
-      <if test="articleDescription != null" >
-        article_description,
-      </if>
-      <if test="articleStatus != null" >
-        article_status,
-      </if>
-      <if test="moduleType != null" >
-        module_type,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	<select id="selectArticleHot" resultMap="articleHots">
+		select article_id,article_name,article_click
+		from
+		article where user_id=#{userid} and article_type=1 and article_status=0 ORDER
+		BY article_click DESC limit 0,10;
+	</select>
+	<select id="selectArticleTop" resultMap="articleTops">
+		select article_id ,article_name
+		from
+		article where user_id=#{userid} and article_type=1 and article_status=0 ORDER
+		BY article_support,article_time DESC limit 0,10;
+	</select>
 
-      <if test="articleName != null" >
-        #{articleName,jdbcType=VARCHAR},
-      </if>
-      <if test="articleTime != null" >
-        #{articleTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="articleIp != null" >
-        #{articleIp,jdbcType=VARCHAR},
-      </if>
-      <if test="articleClick != null" >
-        #{articleClick,jdbcType=INTEGER},
-      </if>
-      <if test="sortArticleId != null" >
-        #{sortArticleId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="typeId != null" >
-        #{typeId,jdbcType=TINYINT},
-      </if>
-      <if test="articleType != null" >
-        #{articleType,jdbcType=INTEGER},
-      </if>
-      <if test="articleUp != null" >
-        #{articleUp,jdbcType=TINYINT},
-      </if>
-      <if test="articleSupport != null" >
-        #{articleSupport,jdbcType=TINYINT},
-      </if>
-      <if test="articleLabel != null" >
-        #{articleLabel,jdbcType=VARCHAR},
-      </if>
-      <if test="articleContent != null" >
-        #{articleContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="articleDescription != null" >
-        #{articleDescription,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="articleStatus != null" >
-         #{articleStatus,jdbcType=TINYINT},
-      </if>
-      <if test="moduleType != null" >
-      #{moduleType,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-    <update id="updateArticle" parameterType="cn.broccoli.blog.utils.ArticleInfo">
-    update article 
-    <set >
-      <if test="articleName != null" >
-      article_name=#{articleName},
-      </if>
-      <if test="sortArticleId != null" >
-      sort_article_id=#{sortArticleId},
-      </if>
-      <if test="articleContent != null" >
-      article_content=#{articleContent},
-      </if>
-      <if test="typeId != null" >
-      type_id=#{typeId},
-      </if>
-      <if test="articleType != null" >
-      article_type=#{articleType},
-      </if>
-      <if test="articleUp != null" >
-      article_up=#{articleUp},
-      </if>
-      <if test="articleSupport != null" >
-      article_support=#{articleSupport},
-      </if>
-      <if test="articleLabel != null" >
-      article_label=#{articleLabel},
-      </if>
-      <if test="articleStatus != null" >
-      article_status=#{articleStatus},
-      </if>
-      <if test="articleDescription != null" >
-      article_description=#{articleDescription},
-      </if>
-      <if test="moduleType != null" >
-      module_type=#{moduleType},
-      </if>
-      </set>
-      where article_id=#{articleId} and user_id=#{userId}
-    </update>
+	<select id="selectByBlogger" resultMap="ArticleListResult">
+		SELECT
+		A.article_id,
+		A.article_name,
+		A.article_time,
+		A.article_click,
+		AR.sort_article_name,
+		U.user_nikename,
+		A.article_type,
+		A.article_up,
+		A.article_support,
+		A.article_label,
+		A.article_status,
+		A.article_description
+		FROM
+		(article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort
+		AR ON A.sort_article_id=AR.sort_article_id WHERE A.article_type=1 and
+		A.article_status=0 and A.user_id=(select user_id from user where
+		user_name= #{username}) GROUP BY A.article_id ORDER BY A.article_up
+		DESC, A.article_time DESC limit #{page},10;
+	</select>
+	<select id="selectByTagsID" resultType="java.lang.Integer">
+		select count(*) from (SELECT a.article_id FROM article a INNER JOIN
+		article_sort AR ON a.sort_article_id=AR.sort_article_id where
+		a.sort_article_id in
+		<foreach collection="list" item="ids" open="(" close=")"
+			separator=",">
+			#{ids.sortArticleId}
+		</foreach>
+		GROUP BY a.article_id ) t
+	</select>
+
+	<select id="selectArticle" resultMap="articleInfo">
+		SELECT
+		A.article_id,
+		A.article_name,
+		A.sort_article_id,
+		A.user_id,
+		A.article_content,
+		A.type_id,
+		A.article_type,
+		A.article_up,
+		A.article_support,
+		A.article_label,
+		A.article_status,
+		A.article_description,
+		A.module_type
+		FROM
+		article A
+		where
+		A.user_id=#{userid} and A.article_id=#{articleid};
+	</select>
+	<select id="selectArticleByUserid" resultMap="ArticleListResult">
+		SELECT
+		A.article_id,
+		A.article_name,
+		A.article_time,
+		A.article_click,
+		AR.sort_article_name,
+		U.user_nikename,
+		A.article_type,
+		A.article_up,
+		A.article_support,
+		A.article_label,
+		A.article_status,
+		A.article_description,
+		A.module_type
+		FROM
+		(article A inner join user U on A.user_id=U.user_id) INNER JOIN article_sort
+		AR ON A.sort_article_id=AR.sort_article_id
+		<where>
+			A.user_id=#{userid}
+			and A.article_status <![CDATA[ <> ]]>
+			2
+			<if test="articleId != null and articleId != ''">
+				and A.article_id LIKE CONCAT('%',#{articleId},'%')
+			</if>
+			<if test="articleName != null and articleName !=''">
+				and A.article_name LIKE CONCAT('%',#{articleName},'%')
+			</if>
+			<if test="articleStatus != null and articleStatus!=''">
+				and A.article_status LIKE CONCAT('%',#{articleStatus},'%')
+			</if>
+
+		</where>
+		GROUP BY A.article_id ORDER BY A.article_time DESC limit
+		#{page},#{limit};
+	</select>
+	<select id="selectArticleByTagName"
+		resultMap="ArticleListResult">
+		SELECT
+		a.article_id,
+		a.article_name,
+		a.article_time,
+		a.article_click,
+		ar.sort_article_name,
+		u.user_nikename,
+		a.article_type,
+		a.article_up,
+		a.article_support,
+		a.article_label,
+		a.article_status,
+		a.article_description,
+		a.module_type
+		FROM
+		(((article_to_tag at INNER JOIN tag t on t.id=at.tag_id) INNER JOIN article a on
+		a.article_id=at.article_id) INNER JOIN article_sort ar ON
+		a.sort_article_id=ar.sort_article_id) INNER JOIN user u on
+		a.user_id=u.user_id
+		WHERE t.tag_name=#{tagName}
+		and u.user_name=#{userName}
+		and a.article_status <![CDATA[ <> ]]>
+		2
+		GROUP BY a.article_id
+		ORDER BY a.article_time DESC
+	</select>
+	<select id="selectArticleByModule" resultMap="ArticleListResult">
+		SELECT
+		a.article_id,
+		a.article_name,
+		a.article_time,
+		a.article_click,
+		ar.sort_article_name,
+		u.user_nikename,
+		a.article_type,
+		a.article_up,
+		a.article_support,
+		a.article_label,
+		a.article_status,
+		a.article_description,
+		a.module_type
+		FROM
+		(article a INNER JOIN article_sort ar ON a.sort_article_id=ar.sort_article_id)
+		INNER JOIN user u on a.user_id=u.user_id
+		WHERE a.module_type=#{module} and u.user_name=#{userName} and
+		a.article_status <![CDATA[ <> ]]>
+		2
+		GROUP BY a.article_id
+		ORDER BY a.article_time DESC
+	</select>
+	<select id="selectArticleCount" resultType="java.lang.Integer">
+		select count(*) from article A
+		<where>
+			A.user_id=#{userid}
+			and A.article_status <![CDATA[ <> ]]>
+			2
+			<if test="articleId != null and articleId != ''">
+				and A.article_id LIKE CONCAT('%',#{articleId},'%')
+			</if>
+			<if test="articleName != null and articleName !=''">
+				and A.article_name LIKE CONCAT('%',#{articleName},'%')
+			</if>
+			<if test="articleStatus != null and articleStatus!=''">
+				and A.article_status LIKE CONCAT('%',#{articleStatus},'%')
+			</if>
+
+		</where>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="articleDetails">
+		SELECT a.article_id,
+		a.article_name,
+		a.article_time,
+		a.article_click,
+		a.article_label,
+		a.article_content,
+		u.user_nikename,
+		ar.sort_article_name
+		FROM
+		(article a inner join user u on a.user_id=u.user_id)
+		inner join article_sort ar on a.sort_article_id=ar.sort_article_id where
+		a.article_id=#{id} and a.article_status=0;
+	</select>
+
+	<delete id="deleteArticleById" parameterType="java.util.List">
+		delete from article where article_id in
+		<foreach collection="list" item="ids" open="(" close=")"
+			separator=",">
+			#{ids.articleId}
+		</foreach>
+	</delete>
+
+	<insert id="insertArticle" useGeneratedKeys="true"
+		keyProperty="articleId" parameterType="cn.broccoli.blog.po.Article">
+		insert into article
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="articleName != null">
+				article_name,
+			</if>
+			<if test="articleTime != null">
+				article_time,
+			</if>
+			<if test="articleIp != null">
+				article_ip,
+			</if>
+			<if test="articleClick != null">
+				article_click,
+			</if>
+			<if test="sortArticleId != null">
+				sort_article_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="typeId != null">
+				type_id,
+			</if>
+			<if test="articleType != null">
+				article_type,
+			</if>
+			<if test="articleUp != null">
+				article_up,
+			</if>
+			<if test="articleSupport != null">
+				article_support,
+			</if>
+			<if test="articleLabel != null">
+				article_label,
+			</if>
+			<if test="articleContent != null">
+				article_content,
+			</if>
+			<if test="articleDescription != null">
+				article_description,
+			</if>
+			<if test="articleStatus != null">
+				article_status,
+			</if>
+			<if test="moduleType != null">
+				module_type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="articleName != null">
+				#{articleName,jdbcType=VARCHAR},
+			</if>
+			<if test="articleTime != null">
+				#{articleTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="articleIp != null">
+				#{articleIp,jdbcType=VARCHAR},
+			</if>
+			<if test="articleClick != null">
+				#{articleClick,jdbcType=INTEGER},
+			</if>
+			<if test="sortArticleId != null">
+				#{sortArticleId,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="typeId != null">
+				#{typeId,jdbcType=TINYINT},
+			</if>
+			<if test="articleType != null">
+				#{articleType,jdbcType=INTEGER},
+			</if>
+			<if test="articleUp != null">
+				#{articleUp,jdbcType=TINYINT},
+			</if>
+			<if test="articleSupport != null">
+				#{articleSupport,jdbcType=TINYINT},
+			</if>
+			<if test="articleLabel != null">
+				#{articleLabel,jdbcType=VARCHAR},
+			</if>
+			<if test="articleContent != null">
+				#{articleContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="articleDescription != null">
+				#{articleDescription,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="articleStatus != null">
+				#{articleStatus,jdbcType=TINYINT},
+			</if>
+			<if test="moduleType != null">
+				#{moduleType,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateArticle"
+		parameterType="cn.broccoli.blog.utils.ArticleInfo">
+		update article
+		<set>
+			<if test="articleName != null">
+				article_name=#{articleName},
+			</if>
+			<if test="sortArticleId != null">
+				sort_article_id=#{sortArticleId},
+			</if>
+			<if test="articleContent != null">
+				article_content=#{articleContent},
+			</if>
+			<if test="typeId != null">
+				type_id=#{typeId},
+			</if>
+			<if test="articleType != null">
+				article_type=#{articleType},
+			</if>
+			<if test="articleUp != null">
+				article_up=#{articleUp},
+			</if>
+			<if test="articleSupport != null">
+				article_support=#{articleSupport},
+			</if>
+			<if test="articleLabel != null">
+				article_label=#{articleLabel},
+			</if>
+			<if test="articleStatus != null">
+				article_status=#{articleStatus},
+			</if>
+			<if test="articleDescription != null">
+				article_description=#{articleDescription},
+			</if>
+			<if test="moduleType != null">
+				module_type=#{moduleType},
+			</if>
+		</set>
+		where article_id=#{articleId} and user_id=#{userId}
+	</update>
 </mapper>

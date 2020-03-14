@@ -3,6 +3,7 @@
  */
 package cn.broccoli.blog.utils;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,12 @@ import java.util.Date;
  *
  * @Date 2019年4月25日
  */
-public class ArticleInfo {
+public class ArticleInfo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Short articleId;
 

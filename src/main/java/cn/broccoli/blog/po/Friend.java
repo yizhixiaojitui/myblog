@@ -1,7 +1,14 @@
 package cn.broccoli.blog.po;
 
-public class Friend {
-    private Short fId;
+import java.io.Serializable;
+
+public class Friend implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Short fId;
 
     private Integer userId;
 

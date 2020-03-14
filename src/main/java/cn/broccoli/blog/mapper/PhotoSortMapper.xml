@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.broccoli.blog.mapper.PhotoSortMapper" >
+<cache type="cn.broccoli.blog.redis.RedisCache" />
   <resultMap id="BaseResultMap" type="cn.broccoli.blog.po.PhotoSort" >
     <id column="sort_img_id" property="sortImgId" jdbcType="INTEGER" />
     <result column="sort_img_name" property="sortImgName" jdbcType="VARCHAR" />

@@ -1,29 +1,31 @@
 package cn.broccoli.blog.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import cn.broccoli.blog.po.ArticleDetails;
+import cn.broccoli.blog.utils.ArticleTop;
 import cn.broccoli.blog.utils.BlogMessage;
 import cn.broccoli.blog.po.User;
 import cn.broccoli.blog.service.AboutBlogService;
 import cn.broccoli.blog.service.ArticleService;
+import cn.broccoli.blog.service.SysAuthorityService;
 import cn.broccoli.blog.service.UserService;
 import cn.broccoli.blog.utils.JWTUtil;
+import cn.broccoli.blog.utils.Menu;
 import cn.broccoli.blog.utils.RandomValidateCode;
 import plm.common.beans.ResultBean;
-import plm.common.exceptions.UnloginException;
 
 
 @Controller
@@ -34,6 +36,9 @@ public class HomeController {
 	private AboutBlogService aboutBlogService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SysAuthorityService sysAuthorityService;
+	
 	@Autowired
 	JWTUtil jwtUtil;
 	/**登录页面
@@ -52,17 +57,29 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/admin",method = RequestMethod.GET)  	
 	public String adminView(HttpServletRequest request,ModelMap model) {
-		Integer userid=10001;
-				//jwtUtil.getUserId(request);
-				
-		User user=userService.findUserById(userid);
+		Integer userid=jwtUtil.getUserId(request);		
+		User user=(User)SecurityUtils.getSubject().getPrincipal();
+		List<Menu> menu=sysAuthorityService.getMenuByUserId(user.getUserId());
 		model.put("userinfo", user);
+		model.put("menuList", menu);
 		return "/home/index";
+	}
+	@RequestMapping(value = "/admin/tree/test",method = RequestMethod.GET)  
+	@ResponseBody
+	public ResultBean<List<Menu>> vtest(HttpServletRequest request, HttpServletResponse response) {
+		Integer userid=jwtUtil.getUserId(request);	
+		return new ResultBean<List<Menu>>(sysAuthorityService.getMenuByUserId(((User)SecurityUtils.getSubject().getPrincipal()).getUserId()));
 	}
 	//进入主页
 	@RequestMapping(value = "/{name}",method = RequestMethod.GET)  	
 	public String blogView(@PathVariable String name,ModelMap model) {
-		model.put("blogMes",aboutBlogService.selectByPrimaryKey(name));
+		BlogMessage blogMessage=aboutBlogService.selectByPrimaryKey(name);
+		System.out.println("blogMessage"+blogMessage);
+		if(blogMessage==null) {
+			System.out.println("blogView=null");
+			return "/template/tips/404";
+		}
+		model.put("blogMes",blogMessage);
 		return "blog/index";
 	}
 	//获取主页信息

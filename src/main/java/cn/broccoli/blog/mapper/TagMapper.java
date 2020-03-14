@@ -5,6 +5,8 @@ import cn.broccoli.blog.utils.TagResultMap;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface TagMapper {
     
     int deleteByPrimaryKey(Integer id);
@@ -25,4 +27,5 @@ public interface TagMapper {
     
     int updateArticleNumById(List<TagResultMap> taglist);
     
+    int insertByTagList(List<Tag> list);
 }

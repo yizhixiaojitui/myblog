@@ -1,8 +1,14 @@
 package cn.broccoli.blog.utils;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserHelper {
+public class UserHelper implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Integer userId;
 
 	private String userName;

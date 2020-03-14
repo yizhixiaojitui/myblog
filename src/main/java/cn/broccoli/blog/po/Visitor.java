@@ -1,9 +1,15 @@
 package cn.broccoli.blog.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Visitor {
-    private Integer vId;
+public class Visitor implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer vId;
 
     private Date visitorTime;
 

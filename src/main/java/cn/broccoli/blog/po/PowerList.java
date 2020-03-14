@@ -1,7 +1,14 @@
 package cn.broccoli.blog.po;
 
-public class PowerList {
-    private Integer pId;
+import java.io.Serializable;
+
+public class PowerList implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer pId;
 
     private Integer powerId;
 

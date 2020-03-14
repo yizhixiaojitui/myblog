@@ -1,7 +1,14 @@
 package cn.broccoli.blog.po;
 
-public class ArticleSort {
-    private Integer sortArticleId;
+import java.io.Serializable;
+
+public class ArticleSort implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer sortArticleId;
 
     private Integer userId;
 

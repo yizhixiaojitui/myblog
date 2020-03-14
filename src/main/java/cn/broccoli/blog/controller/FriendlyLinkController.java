@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.po.FriendlyLink;
 import cn.broccoli.blog.service.FriendlyLinkService;
+import cn.broccoli.blog.service.SysAuthorityService;
+import cn.broccoli.blog.utils.Menu;
 import plm.common.beans.PageResultBean;
 import plm.common.beans.ResultBean;
 
 @Controller
 public class FriendlyLinkController {
-
+	@Autowired
+	private SysAuthorityService sysAuthorityService;
 	@Autowired
 	FriendlyLinkService friendlyLinkService;
 	@RequestMapping(value = "/home/friendlyLink",method = RequestMethod.GET)
@@ -27,10 +30,10 @@ public class FriendlyLinkController {
 	public ResultBean<List<FriendlyLink>> findFriendlyLinkAll(){
 		return new ResultBean<List<FriendlyLink>>(friendlyLinkService.findFriendlyLinkAll());
 	}
-	@RequestMapping(value = "/api/friendlyLink",method = RequestMethod.GET)
+	@RequestMapping(value = "/home/api/friendlyLink",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultBean<List<FriendlyLink>> testAPI(){
-		return new ResultBean<List<FriendlyLink>>(friendlyLinkService.findFriendlyLinkAll());
+	public ResultBean<List<Menu>> testAPI(){
+		return new ResultBean<List<Menu>>(sysAuthorityService.getAllMenuList());
 	}
 	@RequestMapping(value = "/api/friendlyLink/getlist", method = RequestMethod.GET)
 	@ResponseBody

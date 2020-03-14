@@ -1,6 +1,13 @@
 package cn.broccoli.blog.utils;
 
-public class SortList {
+import java.io.Serializable;
+
+public class SortList implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Integer sortArticleId;
 
 	private String userNikename;

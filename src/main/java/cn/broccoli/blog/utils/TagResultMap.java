@@ -8,6 +8,8 @@
 */
 package cn.broccoli.blog.utils;
 
+import java.io.Serializable;
+
 /**  
 * @ClassName: TagResultMap  
 * @Description: TODO(这里用一句话描述这个类的作用)  
@@ -15,9 +17,14 @@ package cn.broccoli.blog.utils;
 * @date 2019年5月30日  
 *    
 */
-public class TagResultMap {
+public class TagResultMap implements Serializable{
 
-	 private Integer id;
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
 	 private Integer tagId;
 

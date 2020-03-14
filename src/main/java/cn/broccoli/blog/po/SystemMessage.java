@@ -1,7 +1,14 @@
 package cn.broccoli.blog.po;
 
-public class SystemMessage {
-    private Integer systemId;
+import java.io.Serializable;
+
+public class SystemMessage implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer systemId;
 
     private Integer sendId;
 

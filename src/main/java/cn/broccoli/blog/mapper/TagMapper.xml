@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.broccoli.blog.mapper.TagMapper" >
+<cache type="cn.broccoli.blog.redis.RedisCache" />
   <resultMap id="BaseResultMap" type="cn.broccoli.blog.po.Tag" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
@@ -38,10 +39,17 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.broccoli.blog.po.Tag" useGeneratedKeys="true" keyProperty="id" >
-  INSERT INTO tag(tag_name) VALUES(#{tagName,jdbcType=VARCHAR}) on DUPLICATE key UPDATE article_number=article_number+1;
-   
+  INSERT INTO tag(tag_name) VALUES(#{tagName,jdbcType=VARCHAR}) on DUPLICATE key UPDATE article_number=article_number+1; 
   </insert>
-   
+  
+   <insert id="insertByTagList" useGeneratedKeys="true" keyProperty="id" >
+    insert into tag (tag_name)
+    values 
+    <foreach collection="list" item="item" separator=",">
+   (#{item.tagName,jdbcType=VARCHAR})
+	</foreach>
+    on duplicate key update article_number=article_number+1; 
+  </insert>
   <insert id="insertSelective" parameterType="cn.broccoli.blog.po.Tag" >
     insert into tag
     <trim prefix="(" suffix=")" suffixOverrides="," >

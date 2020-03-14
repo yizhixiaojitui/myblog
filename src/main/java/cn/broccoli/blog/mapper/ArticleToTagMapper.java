@@ -4,6 +4,8 @@ import cn.broccoli.blog.po.ArticleToTag;
 import cn.broccoli.blog.utils.TagResultMap;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ArticleToTagMapper {
@@ -22,4 +24,6 @@ public interface ArticleToTagMapper {
     int updateByPrimaryKey(ArticleToTag record);
     
     int deleteByIds(List<TagResultMap> taglist);
+    
+    int insertByArticleIdOrTagId(@Param("map")Map<String, Object> map);
 }

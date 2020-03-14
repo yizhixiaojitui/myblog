@@ -20,5 +20,41 @@
 FROM about_blog AS ab inner join user u  on ab.user_id=u.user_id where ab.user_id=#{id};
 
   </select>
-  
+  <insert id="insertBlog" parameterType="cn.broccoli.blog.po.AboutBlog">
+  		insert into about_blog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="blogKeyword != null" >
+        blog_keyword,
+      </if>
+      <if test="blogDescription != null" >
+        blog_description,
+      </if>
+      <if test="blogName != null" >
+        blog_name,
+      </if>
+      <if test="blogTitle != null" >
+        blog_title,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      </trim>
+       <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="blogKeyword != null" >
+        #{blogKeyword},
+      </if>
+      <if test="blogDescription != null" >
+        #{blogDescription},
+      </if>
+      <if test="blogName != null" >
+         #{blogName},
+      </if>
+      <if test="blogTitle != null" >
+         #{blogTitle},
+      </if>
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      </trim>
+  </insert>
 </mapper>

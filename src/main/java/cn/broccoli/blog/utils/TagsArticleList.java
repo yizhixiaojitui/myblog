@@ -8,6 +8,7 @@
 */
 package cn.broccoli.blog.utils;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -19,7 +20,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 * @date 2019年6月28日  
 *    
 */
-public class TagsArticleList {
+public class TagsArticleList implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Integer tagId;
 	

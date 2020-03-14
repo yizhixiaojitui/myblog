@@ -3,13 +3,20 @@
  */
 package cn.broccoli.blog.utils;
 
+import java.io.Serializable;
+
 /**
  * @package cn.broccoli.blog.utils
  * @author yizhixiaojitui
  *
  * @Date 2019年3月26日
  */
-public class LoginHelper {
+public class LoginHelper implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String username;
 	
 	private String password;

@@ -1,7 +1,14 @@
 package cn.broccoli.blog.po;
 
-public class ModuleType {
-    private Integer typeId;
+import java.io.Serializable;
+
+public class ModuleType implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer typeId;
 
     private String userName;
 

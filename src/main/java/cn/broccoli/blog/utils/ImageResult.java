@@ -1,6 +1,13 @@
 package cn.broccoli.blog.utils;
 
-public class ImageResult {
+import java.io.Serializable;
+
+public class ImageResult implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String src;
 	

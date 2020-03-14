@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import plm.common.beans.PageResultBean;
 import cn.broccoli.blog.po.Article;
 import cn.broccoli.blog.po.ArticleList;
 import cn.broccoli.blog.po.FriendlyLink;
+import cn.broccoli.blog.po.User;
 import cn.broccoli.blog.service.ArticleService;
 import cn.broccoli.blog.service.UserService;
 import cn.broccoli.blog.utils.ArticleInfo;
@@ -58,13 +60,13 @@ public class ArticleController {
 	@ResponseBody
 	public ResultBean<List<Map<Integer, String>>> findTagsList(HttpServletRequest request) {
 
-		return new ResultBean<List<Map<Integer, String>>>(articleService.findArticleSortList(jwtUtil.getUserId(request)));
+		return new ResultBean<List<Map<Integer, String>>>(articleService.findArticleSortList(((User)SecurityUtils.getSubject().getPrincipal()).getUserId()));
 	}
 	@RequestMapping(value = "/api/article/tags/getlist", method = RequestMethod.GET)
 	@ResponseBody
 	public PageResultBean<List<SortList>> findTagsByLimitList(HttpServletRequest request,int page,int limit,String sortArticleId,String sortArticleName) {
 		Integer userid=jwtUtil.getUserId(request);
-		return new PageResultBean<List<SortList>>(articleService.findTagsCount(userid, sortArticleId, sortArticleName), articleService.findTagsList(userid, page, limit, sortArticleId, sortArticleName));
+		return new PageResultBean<List<SortList>>(articleService.findTagsCount(((User)SecurityUtils.getSubject().getPrincipal()).getUserId(), sortArticleId, sortArticleName), articleService.findTagsList(((User)SecurityUtils.getSubject().getPrincipal()).getUserId(), page, limit, sortArticleId, sortArticleName));
 	}
 	@RequestMapping(value = "/api/article/tags/update", method = RequestMethod.POST)
 	@ResponseBody
@@ -81,7 +83,7 @@ public class ArticleController {
 	@ResponseBody
 	public ResultBean<Boolean> addSortArticle(String articleSort,HttpServletRequest request) {
 
-		return new ResultBean<Boolean>(articleService.addArticleSort(jwtUtil.getUserId(request), articleSort));
+		return new ResultBean<Boolean>(articleService.addArticleSort(((User)SecurityUtils.getSubject().getPrincipal()).getUserId(), articleSort));
 	}
 	/**文章保存接口
 	 * @param article
@@ -106,8 +108,8 @@ public class ArticleController {
 	@RequestMapping(value = "/api/article/getAllArticle", method = RequestMethod.GET)
 	@ResponseBody
 	public PageResultBean<List<ArticleList>> findAllArticleList( HttpServletRequest request,int page,Integer limit,String articleId,String articleName,String articleStatus) {
-		Integer userid=jwtUtil.getUserId(request);
-		return new PageResultBean<List<ArticleList>>(articleService.findArticleLimitCount(userid, articleId, articleName, articleStatus), articleService.findAllArticleList(userid,page,limit,articleId,articleName,articleStatus));
+		
+		return new PageResultBean<List<ArticleList>>(articleService.findArticleLimitCount(((User)SecurityUtils.getSubject().getPrincipal()).getUserId(), articleId, articleName, articleStatus), articleService.findAllArticleList(((User)SecurityUtils.getSubject().getPrincipal()).getUserId(),page,limit,articleId,articleName,articleStatus));
 	}
 	/**批量删除文章接口
 	 * @param list
@@ -134,12 +136,12 @@ public class ArticleController {
 	@RequestMapping(value = "/api/article/getinfo",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultBean<ArticleInfo> getArticleInfo(HttpServletRequest request,Integer id){
-		return new ResultBean<ArticleInfo>(articleService.findArticleInfo(jwtUtil.getUserId(request), id));
+		return new ResultBean<ArticleInfo>(articleService.findArticleInfo(((User)SecurityUtils.getSubject().getPrincipal()).getUserId(), id));
 	}
 	@RequestMapping(value = "/api/article/update",method = RequestMethod.POST)
 	@ResponseBody
 	public ResultBean<Integer> updateArticle(HttpServletRequest request,@RequestBody ArticleInfo articleinfo){
-		return new ResultBean<Integer>(articleService.modifyArticle(articleinfo, jwtUtil.getUserId(request)));
+		return new ResultBean<Integer>(articleService.modifyArticle(articleinfo, ((User)SecurityUtils.getSubject().getPrincipal()).getUserId()));
 	}
 	
 }

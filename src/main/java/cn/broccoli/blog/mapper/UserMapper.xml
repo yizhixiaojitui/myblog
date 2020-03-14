@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.broccoli.blog.mapper.UserMapper" > 
+<cache type="cn.broccoli.blog.redis.RedisCache" />
   <resultMap id="BaseResultMap" type="cn.broccoli.blog.po.User" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -24,6 +25,25 @@
     <result column="user_freeze" property="userFreeze" jdbcType="TINYINT" />
     <result column="user_power" property="userPower" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="usersMap" type="cn.broccoli.blog.utils.UserList" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_nikename" property="userNikename" jdbcType="VARCHAR" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_sex" property="userSex" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_image_url" property="userImageUrl" jdbcType="VARCHAR" />
+    <result column="user_register_ip" property="userRegisterIp" jdbcType="VARCHAR" />
+    <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP" />
+    <result column="user_lock" property="userLock" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="adminUsersMap" type="cn.broccoli.blog.dto.SysAdminUserDTO" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="roleId" jdbcType="BIGINT" property="roleId" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
   <resultMap id="UserInfoMap" type="cn.broccoli.blog.utils.UserHelper" >
    <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -44,6 +64,63 @@
     user_last_update_time, user_weibo,  user_lock, user_freeze, 
     user_power
   </sql>
+  <select id="selectUsers" resultMap="usersMap">
+    select u.user_id,u.user_nikename, u.user_phone, u.user_sex,u.user_email, u.user_image_url,u.user_register_ip,u.user_register_time,u.user_lock from user u 
+   
+    <where>
+    1=1
+    <if test="userId != null and userId != ''" >
+        and u.user_id LIKE CONCAT('%',#{userId},'%') 
+  </if>
+  <if test="userNikename != null and userNikename !=''" >
+        and u.user_nikename LIKE CONCAT('%',#{userNikename},'%') 
+  </if>
+  <if test="userEmail != null and userEmail !=''" >
+        and u.user_email LIKE CONCAT('%',#{userEmail},'%')
+  </if>
+  <if test="userSex != null and userSex != ''" >
+        and u.user_sex =#{userSex}
+  </if>
+  </where>   
+   limit #{page},#{limit}; 
+  </select>
+  
+  <select id="selectAdminUsers" resultMap="adminUsersMap">
+    select u.user_id,u.user_name, u.user_phone,sur.id as roleId,sr.role_name,sr.description from (user u 
+    INNER JOIN sys_user_role sur ON u.user_id=sur.user_id) INNER JOIN sys_role sr ON sr.id=sur.role_id
+    <where>
+     1=1
+    <if test="userId != null and userId != ''" >
+        and u.user_id LIKE CONCAT('%',#{userId},'%') 
+  </if>
+  <if test="userName != null and userName !=''" >
+        and u.user_name LIKE CONCAT('%',#{userName},'%') 
+  </if>
+  <if test="roleId != null and roleId !=''" >
+        and sur.id = #{roleId}
+  </if>
+  </where>   
+   limit #{page},#{limit}; 
+  </select>
+  <select id="selectAdminUsersCount" resultType="java.lang.Integer">
+    select count(*) from (user u 
+    INNER JOIN sys_user_role sur ON u.user_id=sur.user_id) INNER JOIN sys_role sr ON sr.id=sur.role_id
+    <where>
+     1=1
+    <if test="userId != null and userId != ''" >
+        and u.user_id LIKE CONCAT('%',#{userId},'%') 
+  </if>
+  <if test="userName != null and userName !=''" >
+        and u.user_name LIKE CONCAT('%',#{userName},'%') 
+  </if>
+  <if test="roleId != null and roleId !=''" >
+        and sur.id = #{roleId}
+  </if>
+  </where>   
+  </select>
+  <select id="selectAdminUserRoleByuserIdOrRoleId" resultType="java.lang.Integer">
+    select count(*) from sys_user_role where user_id = #{userId} and role_id = #{roleId}
+  </select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -67,7 +144,22 @@
     delete from user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  
+  <insert id="insertAdminUserRole">
+  	 insert into sys_user_role (role_id,user_id) values(#{roleId},#{userId})
+  </insert>
+  <update id="updateAdminUserRoleByuserIdOrRoleId"  >
+    update sys_user_role
+    set
+    role_id = #{roleId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteAdminUserRoleByuserIdOrRoleId" parameterType="java.util.List">
+		delete from sys_user_role where id in
+		<foreach collection="list" item="sysAdminUserDTO" open="(" close=")"
+			separator=",">
+			#{sysAdminUserDTO.roleId}
+		</foreach>
+	</delete>
   <insert id="insert" parameterType="cn.broccoli.blog.po.User" >
     insert into user (user_id, group_id, user_name, 
       user_nikename, user_pwd, user_phone, 
@@ -88,14 +180,12 @@
       #{userBloodType,jdbcType=CHAR}, #{userSays,jdbcType=VARCHAR}, #{userLock,jdbcType=TINYINT}, 
       #{userFreeze,jdbcType=TINYINT}, #{userPower,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.broccoli.blog.po.User" >
+  <insert id="insertSelective" useGeneratedKeys="true"
+		keyProperty="userId" parameterType="cn.broccoli.blog.po.User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
         user_id,
-      </if>
-      <if test="groupId != null" >
-        group_id,
       </if>
       <if test="userName != null" >
         user_name,
@@ -121,12 +211,6 @@
       <if test="userAddress != null" >
         user_address,
       </if>
-      <if test="userMark != null" >
-        user_mark,
-      </if>
-      <if test="userRankId != null" >
-        user_rank_id,
-      </if>
       <if test="userLastLoginIp != null" >
         user_last_login_ip,
       </if>
@@ -139,9 +223,6 @@
       <if test="userImageUrl != null" >
         user_image_url,
       </if>
-      <if test="userSchool != null" >
-        user_school,
-      </if>
       <if test="userRegisterTime != null" >
         user_register_time,
       </if>
@@ -153,12 +234,6 @@
       </if>
       <if test="userWeibo != null" >
         user_weibo,
-      </if>
-      <if test="userBloodType != null" >
-        user_blood_type,
-      </if>
-      <if test="userSays != null" >
-        user_says,
       </if>
       <if test="userLock != null" >
         user_lock,
@@ -173,9 +248,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="groupId != null" >
-        #{groupId,jdbcType=INTEGER},
       </if>
       <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},
@@ -201,12 +273,6 @@
       <if test="userAddress != null" >
         #{userAddress,jdbcType=VARCHAR},
       </if>
-      <if test="userMark != null" >
-        #{userMark,jdbcType=INTEGER},
-      </if>
-      <if test="userRankId != null" >
-        #{userRankId,jdbcType=TINYINT},
-      </if>
       <if test="userLastLoginIp != null" >
         #{userLastLoginIp,jdbcType=VARCHAR},
       </if>
@@ -219,9 +285,6 @@
       <if test="userImageUrl != null" >
         #{userImageUrl,jdbcType=VARCHAR},
       </if>
-      <if test="userSchool != null" >
-        #{userSchool,jdbcType=VARCHAR},
-      </if>
       <if test="userRegisterTime != null" >
         #{userRegisterTime,jdbcType=TIMESTAMP},
       </if>
@@ -233,12 +296,6 @@
       </if>
       <if test="userWeibo != null" >
         #{userWeibo,jdbcType=VARCHAR},
-      </if>
-      <if test="userBloodType != null" >
-        #{userBloodType,jdbcType=CHAR},
-      </if>
-      <if test="userSays != null" >
-        #{userSays,jdbcType=VARCHAR},
       </if>
       <if test="userLock != null" >
         #{userLock,jdbcType=TINYINT},
@@ -273,7 +330,12 @@
     user_pwd = #{password,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  
+  <update id="updateUserLockByUserId"  >
+    update user
+    set
+    user_lock = #{userLock,jdbcType=TINYINT}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
   
   <update id="updateByPrimaryKeySelective" parameterType="cn.broccoli.blog.po.User" >
     update user

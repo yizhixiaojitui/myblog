@@ -20,7 +20,7 @@ public class ApiController {
 	FileUtils fileUtils = new FileUtils();
 
 	//图片上传
-	// 这个临时用户指定的自己的名称 以后从token中获取
+	//记录上传人信息 和图片信息
 	/**图片上传 接口
 	 * @param file
 	 * @param session

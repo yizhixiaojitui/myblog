@@ -1,6 +1,13 @@
 package cn.broccoli.blog.po;
 
-public class AboutBlog {
+import java.io.Serializable;
+
+public class AboutBlog implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Integer blogId;
 
 	private String blogKeyword;

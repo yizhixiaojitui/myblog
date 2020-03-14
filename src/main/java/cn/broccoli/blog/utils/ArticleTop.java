@@ -8,6 +8,8 @@
 */
 package cn.broccoli.blog.utils;
 
+import java.io.Serializable;
+
 /**  
 * @ClassName: ArticleTop  
 * @Description: TODO(这里用一句话描述这个类的作用)  
@@ -15,8 +17,13 @@ package cn.broccoli.blog.utils;
 * @date 2019年5月20日  
 *    
 */
-public class ArticleTop {
+public class ArticleTop implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Short articleId;
 	
 	private String articleName;

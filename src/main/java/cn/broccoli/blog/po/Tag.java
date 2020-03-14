@@ -1,7 +1,14 @@
 package cn.broccoli.blog.po;
 
-public class Tag {
-    private Integer id;
+import java.io.Serializable;
+
+public class Tag implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private String tagName;
 
@@ -29,5 +36,14 @@ public class Tag {
 
     public void setArticleNumber(Integer articleNumber) {
         this.articleNumber = articleNumber;
+    }
+
+    public Tag() {
+    	super();
+    }
+    
+    public Tag(String tagName) {
+    	super();
+    	this.tagName=tagName;
     }
 }

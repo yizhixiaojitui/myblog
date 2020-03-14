@@ -107,8 +107,9 @@
     color: #FFF;
 }
 
-.my-content .detail {
+.my-content .detail .my-article-content{
     min-height: 600px;
+    margin-bottom: 20px;
 }
 
 .tags ul a:nth-child(8n-7) {
@@ -171,7 +172,50 @@
 .links ul {
     overflow: hidden;
 }
-
+.my-content .detail .biaoqian{
+	overflow: hidden;
+    margin-bottom: 20px;
+}
+.my-content .detail .biaoqian a{
+	background: #00c1de;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 2px;
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+.my-content .detail .share{
+	padding: 10px 20px;
+    background: #f7f7f7;
+    border-left: 3px solid #000;
+    overflow: hidden;
+}
+.my-content .detail .share img{
+	width: 100px;
+    float: left;
+    margin-right: 20px;
+}
+.my-content .detail .diggit{
+	display: block;
+    width: 160px;
+    margin: 20px auto;
+    background: #E2523A;
+    color: #fff;
+    box-shadow: 1px 2px 6px 0px rgba(0,0,0,.2);
+    border-radius: 3px;
+    line-height: 40px;
+    text-align: center;
+}
+.nextinfo p,.share p{
+	    margin: 15px 0;
+}
+.my-content .detail .diggit a {
+    color: #fff;
+}
+.my-content .detail .nextinfo a{
+	color: #000;
+}
 .my-content .links ul a {
     line-height: 24px;
     height: 24px;
@@ -185,6 +229,7 @@
     transition: all 0.5s;
     color: #333;
 }
+
 
 .links ul a:hover {
     color: #000;
@@ -560,11 +605,6 @@ min-height: 800px;
     text-align: center;
     color: #01AAED;
 }
-
-
-
-
-
 
 
 .editor-image{

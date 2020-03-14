@@ -1,9 +1,15 @@
 package cn.broccoli.blog.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PhoneMessage {
-    private Integer phoneId;
+public class PhoneMessage implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer phoneId;
 
     private String phoneNum;
 

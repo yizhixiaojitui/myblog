@@ -1,5 +1,6 @@
 package cn.broccoli.blog.utils;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -8,8 +9,13 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import cn.broccoli.blog.po.FriendlyLink;
 import cn.broccoli.blog.po.Tag;
 
-public class BlogMessage {
-	 private Integer blogId;
+public class BlogMessage implements Serializable{
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer blogId;
 
 	    private String blogKeyword;
 
@@ -30,9 +36,9 @@ public class BlogMessage {
 	    
 	    private String userDescription;
 	    
-	    private int pageView;
+	    private Integer pageView;
 	    
-	    private int articleNum;
+	    private Integer articleNum;
 	    @TableField(exist = false)
 	    private List<Tag> tags;
 	    @TableField(exist = false)
@@ -77,19 +83,19 @@ public class BlogMessage {
 			this.userDescription = userDescription;
 		}
 
-		public int getPageView() {
+		public Integer getPageView() {
 			return pageView;
 		}
 
-		public void setPageView(int pageView) {
+		public void setPageView(Integer pageView) {
 			this.pageView = pageView;
 		}
 
-		public int getArticleNum() {
+		public Integer getArticleNum() {
 			return articleNum;
 		}
 
-		public void setArticleNum(int articleNum) {
+		public void setArticleNum(Integer articleNum) {
 			this.articleNum = articleNum;
 		}
 	    

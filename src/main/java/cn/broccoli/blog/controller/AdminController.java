@@ -50,6 +50,39 @@ public class AdminController {
 	public String adminWebSite() {
 		return "set/system/website";
 	}
+	@RequestMapping(value = "admin/user/administrators/list",method = RequestMethod.GET)  	
+	public String administratorsList() {
+		return "user/administrators/list";
+	}
+	@RequestMapping(value = "admin/user/administrators/roles",method = RequestMethod.GET)  	
+	public String rolesList() {
+		return "user/administrators/role";
+	}
+	@RequestMapping(value = "admin/user/administrators/adminform",method = RequestMethod.GET)  	
+	public String administratorsFrom() {
+		return "user/administrators/adminform";
+	}
+	@RequestMapping(value = "admin/user/administrators/roleform",method = RequestMethod.GET)  	
+	public String roleform() {
+		return "user/administrators/roleform";
+	}
+	@RequestMapping(value = "admin/user/administrators/editroleform",method = RequestMethod.GET)  	
+	public String editroleform() {
+		return "user/administrators/editroleform";
+	}
+	@RequestMapping(value = "admin/user/users/userform",method = RequestMethod.GET)  	
+	public String userForm() {
+		return "user/user/userform";
+	}
+	@RequestMapping(value = "admin/user/users/list",method = RequestMethod.GET)  	
+	public String adminUsersList() {
+		return "user/user/list";
+	}
+	@RequestMapping(value = "admin/content/comment",method = RequestMethod.GET)  	
+	public String adminCommentList() {
+		return "app/content/comment";
+	}
+	
 	
 	
 }

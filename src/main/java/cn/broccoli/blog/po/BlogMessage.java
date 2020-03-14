@@ -1,8 +1,15 @@
 package cn.broccoli.blog.po;
 
-public class BlogMessage {
+import java.io.Serializable;
 
-	    private String blogKeyword;
+public class BlogMessage implements Serializable{
+
+	    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+		private String blogKeyword;
 
 	    private String blogDescription;
 

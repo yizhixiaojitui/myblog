@@ -1,70 +1,140 @@
 
-
+<#assign base=request.contextPath />
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>layuiAdmin 角色管理 iframe 框</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+<meta charset="utf-8">
+<title>layuiAdmin 角色管理 iframe 框</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet"
+	href="${base}/static/layuiadmin/layui/css/layui.css" media="all">
+<link rel="stylesheet"
+	href="${base}/static/css/my.css"
+	media="all">	
+	<link rel="stylesheet"
+	href="${base}/static/layuiadmin/style/admin.css"
+	media="all">
 </head>
 <body>
+<div class="layui-fluid">
+    <div class="layui-card pd-20">
+	<div class="layui-form" lay-filter="layuiadmin-form-role"
+		id="layuiadmin-form-role" style="padding: 20px 30px 0 0;">
 
-  <div class="layui-form" lay-filter="layuiadmin-form-role" id="layuiadmin-form-role" style="padding: 20px 30px 0 0;">
-    <div class="layui-form-item">
-      <label class="layui-form-label">角色</label>
-      <div class="layui-input-block">
-        <select name="rolename">
-          <option value="0">管理员</option>
-          <option value="1">超级管理员</option>
-          <option value="2">纠错员</option>
-          <option value="3">采购员</option>
-          <option value="4">推销员</option>
-          <option value="5">运营人员</option>
-          <option value="6">编辑</option>
-        </select>
-      </div>
-    </div>
-    <div class="layui-form-item">
-      <label class="layui-form-label">权限范围</label>
-      <div class="layui-input-block">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="内容系统">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="社区系统">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="用户">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="角色">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="评论审核">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="发货">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="采购">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="系统设置">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="发邮件">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="发短信">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="审核">
-        <input type="checkbox" name="limits[]" lay-skin="primary" title="删库跑路">
-      </div>
-    </div>
-    <div class="layui-form-item">
-      <label class="layui-form-label">具体描述</label>
-      <div class="layui-input-block">
-        <textarea type="text" name="descr" lay-verify="required" autocomplete="off" class="layui-textarea"></textarea>
-      </div>
-    </div>
-    <div class="layui-form-item layui-hide">
-      <button class="layui-btn" lay-submit lay-filter="LAY-user-role-submit" id="LAY-user-role-submit">提交</button>
-    </div>
-  </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">角色名称</label>
+			<div class="layui-input-block">
+				<input type="text" name="roleName" lay-verify="required" placeholder="请输入"
+					autocomplete="off" class="layui-input">
 
-  <script src="../../../layuiadmin/layui/layui.js"></script>  
-  <script>
-  layui.config({
-    base: '../../../layuiadmin/' //静态资源所在路径
-  }).extend({
-    index: 'lib/index' //主入口模块
-  }).use(['index', 'form'], function(){
-    var $ = layui.$
-    ,form = layui.form ;
-  })
-  </script>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">具体描述</label>
+			<div class="layui-input-block">
+				<textarea type="text" name="desciption" lay-verify="required"
+					autocomplete="off" class="layui-textarea"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item layui-hide">
+			<label class="layui-form-label"></label>
+			<div class="layui-input-block">
+				<input type="text" name="menu" lay-verify="tree"
+					autocomplete="off" class="layui-textarea"></input>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">权限范围</label>
+			<div class="layui-input-block">
+				<div id="authTree" class="demo-tree-more"></div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit  lay-filter="LAY-user-role-submit" id="LAY-user-role-submit">提交</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+		</div>
+		
+	</div>
+	</div>
+	</div>
+	<script src="${base}/static/layuiadmin/layui/layui.js"></script>
+	
+	<script>
+		layui.config({
+				base : '${base}/static/layuiadmin/' //静态资源所在路径
+		}).extend({
+				index : 'lib/index' //主入口模块
+		}).use([ 'index', 'form', 'tree', 'util' ],function() {
+				var $ = layui.$, form = layui.form, tree = layui.tree, layer = layui.layer, util = layui.util;
+				var addTree;
+				$.ajax({
+					url : "../../../api/authority/list",
+					type : "GET",
+					contentType : "application/json",
+					dataType : "json",
+					success : function(res) {
+						if (res.code == 0) {
+							addTree=tree.render({
+								elem : '#authTree',
+								data : res.data,
+								showCheckbox : true, //是否显示复选框
+								id : 'authTreeId',
+								isJump : false, //是否允许点击节点时弹出新窗口跳转
+								click : function(obj) {
+								var data = obj.data; //获取当前点击的节点数据
+								layer.msg('状态：' + obj.state + '<br>节点数据：'+ JSON.stringify(data));
+						}
+					});
+						} else {
+							layer.msg(res.msg);
+						}
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						// 状态码
+						console.log(XMLHttpRequest.status);
+						// 状态
+						console.log(XMLHttpRequest.readyState);
+						// 错误信息   
+						console.log(textStatus);
+					}
+				});
+				form.verify({
+					  tree: function(value, item){ //value：表单的值、item：表单的DOM对象
+						
+					    $("input[name='menu']").val(JSON.stringify(addTree.getChecked()));
+					  }
+					});      
+				form.on('submit(LAY-user-role-submit)', function(data){
+					$.ajax({
+						url : "../../../api/administrators/role/add",
+						type : "POST",
+						data :JSON.stringify(data.field),
+						contentType : "application/json",
+						dataType : "json",
+						success : function(res) {
+							if (res.code == 0) {
+								alert(res.data);
+							}else {
+								layer.msg(res.msg);
+							}
+						},
+						error : function(XMLHttpRequest, textStatus, errorThrown) {
+							// 状态码
+							console.log(XMLHttpRequest.status);
+							// 状态
+							console.log(XMLHttpRequest.readyState);
+							// 错误信息   
+							console.log(textStatus);
+						}
+					});
+				});
+
+})
+	</script>
 </body>
 </html>

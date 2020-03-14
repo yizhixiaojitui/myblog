@@ -102,107 +102,53 @@
 								<cite>控制台</cite>
 						</a>
 						</li>
-						<li data-name="article" data-jump="" class="layui-nav-item">
-							<a href="javascript:;" lay-tips="写博客" lay-direction="2"> <i
-								class="layui-icon layui-icon-edit"></i> <cite>写博客</cite> <span
-								class="layui-nav-more"></span></a>
-							<dl class="layui-nav-child">
-								<dd data-name="edit" data-jump="article/edit" class="">
-									<a href="javascript:;" lay-href="admin/article/edit">写文章</a>
-								</dd>
-								<dd data-name="trash" data-jump="article/trash" class="">
-									<a href="javascript:;" lay-href="admin/article/trash">垃圾桶</a>
-								</dd>
-							</dl>
-						</li>
-						<li data-name="content" data-jump="" class="layui-nav-item">
-							<a href="javascript:;" lay-tips="内容管理" lay-direction="2"> <i
-								class="layui-icon layui-icon-app"></i> <cite>内容管理</cite> <span
-								class="layui-nav-more"></span></a>
-							<dl class="layui-nav-child">
-								<dd data-name="list" data-jump="content/list" class="">
-									<a href="javascript:;" lay-href="admin/content/list">文章列表</a>
-								</dd>
-								<dd data-name="tags" data-jump="tags/list" class="">
-									<a href="javascript:;" lay-href="admin/content/tags/list">分类管理</a>
-								</dd>
-								<dd data-name="comment" data-jump="content/comment" class="">
-									<a href="javascript:;" lay-href="admin/content/comment">评论管理</a>
-								</dd>
-							</dl>
-						</li>
 						
-						<li data-name="senior" class="layui-nav-item"><a
-							href="javascript:;" lay-tips="高级" lay-direction="2"> <i
-								class="layui-icon layui-icon-senior"></i> <cite>高级</cite>
+							 <#list menuList as item>
+						<li data-name="${item.description}" class="layui-nav-item">
+						<#if item.url=="#">
+						<a
+							href="javascript:;"   lay-tips="${item.title}" lay-direction="2"> <i
+								class="layui-icon ${item.icon}"></i> <cite>${item.title}</cite>
 						</a>
-							<dl class="layui-nav-child">
-								<dd>
-									<a layadmin-event="im">LayIM 通讯系统</a>
-								</dd>
-								<dd data-name="echarts">
-									<a href="javascript:;">Echarts集成</a>
-									<dl class="layui-nav-child">
-										<dd>
-											<a lay-href="senior/echarts/line.html">折线图</a>
-										</dd>
-										<dd>
-											<a lay-href="senior/echarts/bar.html">柱状图</a>
-										</dd>
-										<dd>
-											<a lay-href="senior/echarts/map.html">地图</a>
-										</dd>
-									</dl>
-								</dd>
-							</dl></li>
-						<li data-name="user" class="layui-nav-item"><a
-							href="javascript:;" lay-tips="用户" lay-direction="2"> <i
-								class="layui-icon layui-icon-user"></i> <cite>用户</cite>
+						<#else >
+						<a
+							href="javascript:;"  lay-href="${item.url}" lay-tips="${item.icon}" lay-direction="2"> <i
+								class="layui-icon ${item.icon}"></i> <cite>${item.title}</cite>
 						</a>
+						</#if>
+							 <#if item.children?? && item.children?size gt 0>
+						   
 							<dl class="layui-nav-child">
-								<dd>
-									<a lay-href="user/user/list.html">网站用户</a>
-								</dd>
-								<dd>
-									<a lay-href="user/administrators/list.html">后台管理员</a>
-								</dd>
-								<dd>
-									<a lay-href="user/administrators/role.html">角色管理</a>
-								</dd>
-							</dl></li>
-						<li data-name="set" class="layui-nav-item"><a
-							href="javascript:;" lay-tips="设置" lay-direction="2"> <i
-								class="layui-icon layui-icon-set"></i> <cite>设置</cite>
-						</a>
-							<dl class="layui-nav-child">
+							 
+							  <#list item.children as children1>
+							  
 								<dd >
-									<a href="javascript:;">系统设置</a>
+								  <#if children1.url=="#">
+									<a href="javascript:;" >${children1.title}</a>
+									<#else >
+									
+									<a href="javascript:;" lay-href="${children1.url}">${children1.title}</a>
+									</#if >
+									<#if children1.children?? && children1.children?size gt 0>
 									<dl class="layui-nav-child">
-										<dd>
-											<a lay-href="admin/set/system/website">网站设置</a>
+										<#list children1.children as children2>
+										<dd > 
+										<a href="javascript:;" lay-href="${children2.url}">${children2.title}</a>
 										</dd>
-										<dd>
-											<a lay-href="set/system/email.html">邮件服务</a>
-										</dd>
+										</#list>
 									</dl>
-								</dd>
-								<dd >
-									<a href="javascript:;">我的设置</a>
-									<dl class="layui-nav-child">
-										<dd>
-											<a lay-href="admin/set/user/info">基本资料</a>
-										</dd>
-										<dd>
-											<a lay-href="admin/set/user/password">修改密码</a>
-										</dd>
-										<dd>
-											<a lay-href="admin/set/friendlylink/list">友情链接</a>
-										</dd>
-									</dl>
+									</#if>
 								</dd>
 								
-							</dl></li>
+								</#list>
+								 
+								
+							</dl>
+							
+							  </#if>
+							</li>
 						
+						</#list>
 					</ul>
 				</div>
 			</div>
